@@ -12,20 +12,21 @@
           <div class="title">Sign in</div>
         </div>
         <div>
-          <el-form label-position="top" label-width="80px" :model="params">
-            <el-form-item label="Username or email">
-              <el-input v-model="params.username" size="medium"></el-input>
+          <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
+                   v-loading="loading">
+            <el-form-item label="Username or email" prop="username">
+              <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
-            <el-form-item label="Password">
+            <el-form-item label="Password" prop="password">
               <router-link class="forgot" to="/users/forgotPassword">Forgot your password?</router-link>
-              <el-input v-model="params.password" size="medium"></el-input>
+              <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-radio-group v-model="params.rememberMe">
               <el-checkbox label="Remember me" name="rememberMe"></el-checkbox>
             </el-radio-group>
             <router-link to="/users/sign_up">Sign up →</router-link>
             <el-form-item>
-              <el-button type="success" size="medium">Sign in</el-button>
+              <el-button type="success" size="medium" @click="submit">Sign in</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -38,10 +39,37 @@
     export default {
         data() {
             return {
-                params: {}
+                loading: false,
+                params: {},
+                rules: {
+                    username: [
+                        {required: true, message: 'Username or email is required'}
+                    ],
+                    password: [
+                        {required: true, message: 'Password is required'}
+                    ]
+                }
             };
         },
-        methods: {}
+        methods: {
+            submit: function () {
+                this.$refs.form.validate((valid) => {
+                    if (!valid) {
+                        return;
+                    }
+
+                    this.loading = true;
+                    this.axios.post('users/signIn', this.params).then(data => {
+                        this.success('sign in success');
+                        console.log(data.user);
+                    }).catch(res => {
+                        this.error(res.respMsg);
+                    }).finally(() => {
+                        this.loading = false;
+                    });
+                });
+            }
+        }
     };
 </script>
 
@@ -110,9 +138,10 @@
     .forgot {
       position: absolute;
       right: 0;
-      top: -32px;
+      top: -20px;
       font-size: 12px;
       z-index: 9;
+      line-height: normal;
     }
 
     /deep/ .el-button {

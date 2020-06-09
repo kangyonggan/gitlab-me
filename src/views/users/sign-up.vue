@@ -15,16 +15,16 @@
           <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
                    v-loading="loading">
             <el-form-item label="Full name" prop="fullName">
-              <el-input v-model="params.fullName" size="medium"></el-input>
+              <el-input v-model="params.fullName" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-form-item label="Username" prop="username">
-              <el-input v-model="params.username" size="medium"></el-input>
+              <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-form-item label="Email" prop="email">
-              <el-input type="email" v-model="params.email" size="medium"></el-input>
+              <el-input type="email" v-model="params.email" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="password">
-              <el-input type="password" v-model="params.password" size="medium"></el-input>
+              <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <router-link to="/users/sign_in">← Sign in</router-link>
             <el-form-item>
