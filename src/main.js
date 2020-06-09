@@ -4,7 +4,10 @@ import Router from './router';
 import Store from './store';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import '@/libs/env';
 import '@/libs/util';
+import '@/libs/http';
+import '@/libs/common';
 
 Vue.use(ElementUI);
 

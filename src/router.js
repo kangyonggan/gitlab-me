@@ -15,6 +15,13 @@ const routers = [
                     title: 'Sign in'
                 },
                 component: (resolve) => require(['./views/users/sign-in.vue'], resolve)
+            },
+            {
+                path: 'sign_up',
+                meta: {
+                    title: 'Sign up'
+                },
+                component: (resolve) => require(['./views/users/sign-up.vue'], resolve)
             }
         ]
     },

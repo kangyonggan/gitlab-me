@@ -6,7 +6,7 @@
       <p>Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
         enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.</p>
     </div>
-    <div class="login-form">
+    <div class="users-form">
       <el-card>
         <div slot="header">
           <div class="title">Sign in</div>
@@ -17,13 +17,13 @@
               <el-input v-model="params.username" size="medium"></el-input>
             </el-form-item>
             <el-form-item label="Password">
-              <a class="forgot" href="/">Forgot your password?</a>
+              <router-link class="forgot" to="/users/forgotPassword">Forgot your password?</router-link>
               <el-input v-model="params.password" size="medium"></el-input>
             </el-form-item>
             <el-radio-group v-model="params.rememberMe">
               <el-checkbox label="Remember me" name="rememberMe"></el-checkbox>
             </el-radio-group>
-            <a href="/">Sign up now!</a>
+            <router-link to="/users/sign_up">Sign up →</router-link>
             <el-form-item>
               <el-button type="success" size="medium">Sign in</el-button>
             </el-form-item>
@@ -78,7 +78,7 @@
     }
   }
 
-  .login-form {
+  .users-form {
     width: 380px;
     margin-right: 10px;
     margin-top: 65px;
