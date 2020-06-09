@@ -1,15 +1,22 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Util from './libs/util';
 
 Vue.use(VueRouter);
 
 const routers = [
     {
-        path: '/login',
-        meta: {
-            title: '登录'
-        },
-        component: (resolve) => require(['./views/login.vue'], resolve)
+        path: '/users/',
+        component: (resolve) => require(['./views/users/layout.vue'], resolve),
+        children: [
+            {
+                path: 'sign_in',
+                meta: {
+                    title: 'Sign in'
+                },
+                component: (resolve) => require(['./views/users/sign-in.vue'], resolve)
+            }
+        ]
     },
     {
         path: '/',
@@ -49,6 +56,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+    Util.title(to.meta.title);
     next();
 });
 
