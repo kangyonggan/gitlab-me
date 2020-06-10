@@ -22,6 +22,13 @@ const routers = [
                     title: 'Sign up'
                 },
                 component: (resolve) => require(['./views/users/sign-up.vue'], resolve)
+            },
+            {
+                path: 'reset_password',
+                meta: {
+                    title: 'Reset password'
+                },
+                component: (resolve) => require(['./views/users/reset-password.vue'], resolve)
             }
         ]
     },

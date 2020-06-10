@@ -9,30 +9,32 @@
     <div class="users-form">
       <el-card>
         <div slot="header">
-          <div class="title">Sign up</div>
+          <div class="title">Reset password</div>
         </div>
         <div>
           <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
                    v-loading="loading">
-            <el-form-item label="Full name" prop="fullName">
-              <el-input v-model="params.fullName" size="medium" @keyup.enter.native="submit"></el-input>
-            </el-form-item>
-            <el-form-item label="Username" prop="username">
-              <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
-            </el-form-item>
             <el-form-item label="Email" prop="email">
-              <el-input type="email" v-model="params.email" size="medium" @keyup.enter.native="submit"></el-input>
+              <el-input v-model="params.email" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password">
+            <el-form-item label="New password" prop="password">
               <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
-            <router-link to="/users/sign_in">← Sign in</router-link>
+            <el-form-item label="Verify code" prop="verifyCode">
+              <el-button class="send" size="medium" plain v-loading="sending" @click="sendVerifyCode">{{ text }}
+              </el-button>
+              <el-input v-model="params.verifyCode" size="medium" @keyup.enter.native="submit"></el-input>
+            </el-form-item>
             <el-form-item>
-              <el-button type="primary" size="medium" @click="submit">Sign up</el-button>
+              <el-button type="primary" size="medium" @click="submit">Reset password</el-button>
             </el-form-item>
           </el-form>
         </div>
       </el-card>
+      <div class="bottom">
+        Already have login and password?
+        <router-link to="/users/sign_in">Sign in</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -42,12 +44,12 @@
         data() {
             return {
                 loading: false,
+                sending: false,
+                text: 'Send',
+                timer: undefined,
+                count: 60,
                 params: {},
                 rules: {
-                    fullName: [
-                        {required: true, message: 'Full name is required'},
-                        {max: 20, message: 'Maximum length is 20 characters'}
-                    ],
                     email: [
                         {required: true, message: 'Email is required'},
                         {max: 128, message: 'Maximum length is 128 characters'},
@@ -57,48 +59,64 @@
                         },
                         {validator: this.validateEmail}
                     ],
-                    username: [
-                        {required: true, message: 'Username is required'},
-                        {max: 20, message: 'Maximum length is 20 characters'},
-                        {
-                            pattern: /^[a-zA-Z][a-zA-Z0-9]*$/,
-                            message: 'Can only contain letters,numbers and begin with letters'
-                        },
-                        {validator: this.validateUsername}
-                    ],
                     password: [
                         {required: true, message: 'Password is required'},
                         {
                             pattern: /^[a-zA-Z0-9]{8,20}$/,
                             message: 'Must be composed of 8 to 20 letters and Numbers'
                         }
+                    ],
+                    verifyCode: [
+                        {required: true, message: 'Verification code is required'}
                     ]
                 }
             };
         },
         methods: {
-            validateUsername: function (rule, value, callback) {
-                if (!value) {
-                    callback();
-                    return;
-                }
-
-                this.axios.get('validate/username?username=' + value).then(() => {
-                    callback();
-                }).catch(res => {
-                    callback(new Error(res.respMsg));
-                });
-            },
             validateEmail: function (rule, value, callback) {
                 if (!value) {
                     callback();
                     return;
                 }
 
-                this.axios.get('validate/email?email=' + value).then(() => {
+                this.axios.get('validate/emailNotExists?email=' + value).then(() => {
                     callback();
                 }).catch(res => {
                     callback(new Error(res.respMsg));
+                });
+            },
+            setInterval() {
+                let that = this;
+                this.timer = setInterval(function () {
+                    that.count--;
+                    that.text = that.count + 's';
+                    if (that.count <= 0) {
+                        clearInterval(that.timer);
+                        that.sending = false;
+                        that.text = 'Send';
+                    }
+                }, 1000);
+            },
+            sendVerifyCode() {
+                if (this.text !== 'Send') {
+                    return;
+                }
+                this.$refs.form.validateField('email', valid => {
+                    if (valid) {
+                        return;
+                    }
+                    this.text = 'Sending';
+                    this.sending = true;
+                    this.axios.post('users/sendResetPasswordEmail', this.params).then(data => {
+                        this.success('Send succeed');
+                        this.params.emailId = data.emailId;
+                        this.setInterval();
+                    }).catch(res => {
+                        this.text = 'Send';
+                        this.error(res.respMsg);
+                    }).finally(() => {
+                        this.sending = false;
+                    });
                 });
             },
             submit: function () {
@@ -108,8 +126,13 @@
                     }
 
                     this.loading = true;
-                    this.axios.post('users/signUp', this.params).then(() => {
-                        this.success('sign up success');
+                    this.axios.put('users/resetPassword', this.params).then(() => {
+                        this.$router.push({
+                            path: '/users/sign_in',
+                            query: {
+                                source: 'reset'
+                            }
+                        });
                     }).catch(res => {
                         this.error(res.respMsg);
                     }).finally(() => {
@@ -157,7 +180,7 @@
   .users-form {
     width: 380px;
     margin-right: 10px;
-    margin-top: 45px;
+    margin-top: 65px;
     float: right;
 
     .title {
@@ -181,7 +204,21 @@
 
     /deep/ .el-button {
       width: 100%;
-      margin-top: 20px;
     }
+
+    .send {
+      position: absolute;
+      right: 0;
+      width: 80px;
+      top: 2px;
+      font-size: 12px;
+      z-index: 9;
+      line-height: normal;
+    }
+  }
+
+  .bottom {
+    margin-top: 20px;
+    font-size: 13px;
   }
 </style>

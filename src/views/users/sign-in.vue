@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="height25"></div>
+    <el-alert
+      v-if="source==='reset'"
+      title="Reset password success"
+      description="You have successfully changed the password, please log in with the new password."
+      type="warning"
+      show-icon>
+    </el-alert>
+    <div class="height25"></div>
     <div class="intro">
       <h1>GitLab Mini Edition</h1>
       <h3>Open source software to collaborate on code</h3>
@@ -18,7 +27,7 @@
               <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="password">
-              <router-link class="forgot" to="/users/forgotPassword">Forgot your password?</router-link>
+              <router-link class="forgot" to="/users/reset_password">Forgot your password?</router-link>
               <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
             </el-form-item>
             <el-radio-group v-model="params.rememberMe">
@@ -26,7 +35,7 @@
             </el-radio-group>
             <router-link to="/users/sign_up">Sign up →</router-link>
             <el-form-item>
-              <el-button type="success" size="medium" @click="submit">Sign in</el-button>
+              <el-button type="primary" size="medium" @click="submit">Sign in</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -48,7 +57,8 @@
                     password: [
                         {required: true, message: 'Password is required'}
                     ]
-                }
+                },
+                source: ''
             };
         },
         methods: {
@@ -58,6 +68,7 @@
                         return;
                     }
 
+                    console.log(this);
                     this.loading = true;
                     this.axios.post('users/signIn', this.params).then(data => {
                         this.success('sign in success');
@@ -69,6 +80,9 @@
                     });
                 });
             }
+        },
+        mounted() {
+            this.source = this.$route.query.source;
         }
     };
 </script>
@@ -78,9 +92,12 @@
     padding: 20px 20px 0 20px;
   }
 
+  .height25 {
+    height: 25px;
+  }
+
   .intro {
     width: 530px;
-    margin-top: 50px;
     float: left;
 
     h1 {
@@ -109,7 +126,7 @@
   .users-form {
     width: 380px;
     margin-right: 10px;
-    margin-top: 65px;
+    margin-top: 15px;
     float: right;
 
     .title {
