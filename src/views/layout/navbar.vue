@@ -47,11 +47,11 @@
                         path: '/profile'
                     });
                 } else if (command === '1') {
-                    this.axios.get('signOut').finally(() => {
+                    this.axios.get('users/signOut').finally(() => {
+                        localStorage.removeItem('token');
                         this.$store.commit('setUser', {});
                         this.$router.push({
-                            path: '/user/sign_in',
-                            query: {logout: 1}
+                            path: '/users/sign_in'
                         });
                     });
                 }

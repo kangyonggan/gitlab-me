@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Util from './libs/util';
+import store from './store';
 
 // Avoided redundant navigation to current location
 const VueRouterPush = VueRouter.prototype.push;
@@ -44,45 +44,26 @@ const routers = [
         children: [
             {
                 path: '/',
-                meta: {
-                    title: 'Overview'
-                },
                 component: (resolve) => require(['./views/admin/index.vue'], resolve)
             },
             {
                 path: 'manage',
-                redirect: 'manage/projects',
-                meta: {
-                    icon: 'el-icon-menu',
-                    title: 'Manage'
-                }
+                redirect: 'manage/projects'
             },
             {
                 path: 'manage/projects',
-                meta: {
-                    title: 'Projects'
-                },
                 component: (resolve) => require(['./views/admin/manage/projects/index.vue'], resolve)
             },
             {
                 path: 'manage/users',
-                meta: {
-                    title: 'Users'
-                },
                 component: (resolve) => require(['./views/admin/manage/users/index.vue'], resolve)
             },
             {
                 path: 'manage/groups',
-                meta: {
-                    title: 'Groups'
-                },
                 component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
             },
             {
                 path: 'application_settings',
-                meta: {
-                    title: 'Settings'
-                },
                 component: (resolve) => require(['./views/admin/settings/index.vue'], resolve)
             }
         ]
@@ -93,18 +74,10 @@ const routers = [
         children: [
             {
                 path: '/',
-                meta: {
-                    icon: 'el-icon-dashboard',
-                    title: 'Dashboard'
-                },
                 component: (resolve) => require(['./views/dashboard/index.vue'], resolve)
             },
             {
                 path: 'profile',
-                meta: {
-                    icon: 'el-icon-s-custom',
-                    title: 'Profile'
-                },
                 component: (resolve) => require(['./views/dashboard/profile/index.vue'], resolve)
             },
             {
@@ -132,12 +105,44 @@ const router = new VueRouter({
     routes: routers
 });
 
+
 router.beforeEach(async (to, from, next) => {
-    Util.title(to.meta.title);
+    store.commit('setLoading', true);
+
+    // 如果是去users界面，直接放行
+    if (to.path.startsWith('/users')) {
+        next();
+        return;
+    }
+
+    // 如果没有token，重定向到登录界面
+    let token = localStorage.getItem('token');
+    if (!token) {
+        next({
+            path: '/users/sign_in',
+            query: {
+                redirectUrl: to.fullPath
+            }
+        });
+        return;
+    }
+
+    // Tips：只有登录之后才能走到这里
+
+    // 登录了，但是没有权限，到403界面
+    if (to.fullPath.startsWith('/admin') && store.getters.getUser.accessLevel !== 'Admin') {
+        next({
+            path: '/403'
+        });
+        return;
+    }
+
+    // 鉴权成功，放行
     next();
 });
 
 router.afterEach(() => {
+    store.commit('setLoading', false);
 });
 
 export default router;

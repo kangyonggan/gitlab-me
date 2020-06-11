@@ -20,13 +20,13 @@ export default [
         ]
     },
     {
-        name: 'Profile',
-        url: '/profile',
-        icon: 'el-icon-s-custom'
-    },
-    {
         name: 'Authentication log',
         url: '/audit_log',
         icon: 'el-icon-notebook-2'
+    },
+    {
+        name: 'Profile',
+        url: '/profile',
+        icon: 'el-icon-s-custom'
     }
 ];

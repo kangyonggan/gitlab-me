@@ -63,14 +63,18 @@
 <script>
     import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition';
     import Menus from './menus';
-    import adminMenus from './admin-menus';
 
     export default {
         components: {ElCollapseTransition, Menus},
+        props: {
+          menus: {
+              required: true,
+              type: Array
+          }
+        },
         data() {
             return {
                 active: '',
-                menus: adminMenus,
                 isCollapse: false
             };
         },

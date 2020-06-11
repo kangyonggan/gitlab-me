@@ -109,13 +109,15 @@
                         return;
                     }
 
-                    console.log(this);
                     this.loading = true;
                     this.axios.post('users/signIn', this.params).then(data => {
                         this.$store.commit('setUser', data.user);
                         let redirectUrl = '/';
                         if (data.user.accessLevel === 'Admin') {
                             redirectUrl = '/admin';
+                        }
+                        if (this.$route.query.redirectUrl) {
+                            redirectUrl = this.$route.query.redirectUrl;
                         }
                         this.$router.push({
                             path: redirectUrl

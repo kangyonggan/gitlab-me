@@ -8,8 +8,9 @@
         :to="breadcrumb.url"
         v-if="index !== breadcrumbs.length - 1"
       >
-        {{ breadcrumb.title ? breadcrumb.title : breadcrumb.name }}
+        {{ breadcrumb.name }}
       </router-link>
+
       <span v-else>
         {{ breadcrumb.name }}
       </span>
@@ -18,13 +19,16 @@
 </template>
 
 <script>
-    import adminMenus from './admin-menus';
-
     export default {
+        props: {
+            menus: {
+                required: true,
+                type: Array
+            }
+        },
         data() {
             return {
-                breadcrumbs: [],
-                menus: adminMenus
+                breadcrumbs: []
             };
         },
         methods: {
@@ -47,22 +51,49 @@
                 }
 
                 return breadcrumbs;
+            },
+            setTitle(route) {
+                if (route.meta.title) {
+                    this.util.title(route.meta.title);
+                } else if (this.breadcrumbs.length) {
+                    this.util.title(this.breadcrumbs[this.breadcrumbs.length - 1].name);
+                }
             }
         },
         mounted() {
-            this.breadcrumbs = this.getBreadcrumbs(this.$route, this.menus);
-            this.util.title(this.$route.meta.title);
+            this.breadcrumbs = [];
+            if (this.$route.fullPath.startsWith('/admin')) {
+                this.breadcrumbs.push({
+                    name: 'Admin Area',
+                    url: '/admin'
+                });
+            }
+            this.$nextTick(function () {
+                this.breadcrumbs = this.breadcrumbs.concat(this.getBreadcrumbs(this.$route, this.menus));
+                this.setTitle(this.$route);
+            });
         },
         watch: {
             '$route'(newRoute) {
-                this.breadcrumbs = this.getBreadcrumbs(newRoute, this.menus);
-                this.util.title(newRoute.meta.title);
+                this.breadcrumbs = [];
+                if (this.$route.fullPath.startsWith('/admin')) {
+                    this.breadcrumbs.push({
+                        name: 'Admin Area',
+                        url: '/admin'
+                    });
+                }
+                this.$nextTick(function () {
+                    this.breadcrumbs = this.breadcrumbs.concat(this.getBreadcrumbs(newRoute, this.menus));
+                    this.setTitle(newRoute);
+                });
             }
         }
     };
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss">
   .el-breadcrumb {
     line-height: 35px;
     border-bottom: 1px solid #eee;
