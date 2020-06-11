@@ -1,9 +1,16 @@
 <template>
   <div class="footer">
     <div class="content">
-      <router-link to="/explore">Explore</router-link>
-      <router-link to="/help">Help</router-link>
-      <a href="https://about.github.com" target="_blank">About GitLab</a>
+      <router-link to="/explore">
+        Explore
+      </router-link>
+      <router-link to="/help">
+        Help
+      </router-link>
+      <a
+        href="https://about.github.com"
+        target="_blank"
+      >About GitLab</a>
     </div>
   </div>
 </template>

@@ -3,32 +3,80 @@
     <div class="intro">
       <h1>GitLab Mini Edition</h1>
       <h3>Open source software to collaborate on code</h3>
-      <p>Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
-        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.</p>
+      <p>
+        Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
+        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.
+      </p>
     </div>
     <div class="users-form">
       <el-card>
         <div slot="header">
-          <div class="title">Sign up</div>
+          <div class="title">
+            Sign up
+          </div>
         </div>
         <div>
-          <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
-                   v-loading="loading">
-            <el-form-item label="Full name" prop="fullName">
-              <el-input v-model="params.fullName" size="medium" @keyup.enter.native="submit"></el-input>
+          <el-form
+            ref="form"
+            label-position="top"
+            label-width="80px"
+            :model="params"
+            :rules="rules"
+            v-loading="loading"
+          >
+            <el-form-item
+              label="Full name"
+              prop="fullName"
+            >
+              <el-input
+                v-model="params.fullName"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="Username" prop="username">
-              <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
+            <el-form-item
+              label="Username"
+              prop="username"
+            >
+              <el-input
+                v-model="params.username"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="Email" prop="email">
-              <el-input type="email" v-model="params.email" size="medium" @keyup.enter.native="submit"></el-input>
+            <el-form-item
+              label="Email"
+              prop="email"
+            >
+              <el-input
+                type="email"
+                v-model="params.email"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="Password" prop="password">
-              <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
+            <el-form-item
+              label="Password"
+              prop="password"
+            >
+              <el-input
+                type="password"
+                v-model="params.password"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <router-link to="/users/sign_in">← Sign in</router-link>
+            <router-link to="/users/sign_in">
+              ← Sign in
+            </router-link>
             <el-form-item>
-              <el-button type="primary" size="medium" @click="submit">Sign up</el-button>
+              <el-button
+                type="primary"
+                size="medium"
+                @click="submit"
+              >
+                Sign up
+              </el-button>
             </el-form-item>
           </el-form>
         </div>

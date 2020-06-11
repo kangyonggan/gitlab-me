@@ -1,41 +1,82 @@
 <template>
   <div>
-    <div class="height25"></div>
+    <div class="height25" />
     <el-alert
       v-if="source==='reset'"
       title="Reset password success"
       description="You have successfully changed the password, please log in with the new password."
       type="warning"
-      show-icon>
-    </el-alert>
-    <div class="height25"></div>
+      show-icon
+    />
+    <div class="height25" />
     <div class="intro">
       <h1>GitLab Mini Edition</h1>
       <h3>Open source software to collaborate on code</h3>
-      <p>Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
-        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.</p>
+      <p>
+        Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
+        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.
+      </p>
     </div>
     <div class="users-form">
       <el-card>
         <div slot="header">
-          <div class="title">Sign in</div>
+          <div class="title">
+            Sign in
+          </div>
         </div>
         <div>
-          <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
-                   v-loading="loading">
-            <el-form-item label="Username or email" prop="username">
-              <el-input v-model="params.username" size="medium" @keyup.enter.native="submit"></el-input>
+          <el-form
+            ref="form"
+            label-position="top"
+            label-width="80px"
+            :model="params"
+            :rules="rules"
+            v-loading="loading"
+          >
+            <el-form-item
+              label="Username or email"
+              prop="username"
+            >
+              <el-input
+                v-model="params.username"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="Password" prop="password">
-              <router-link class="forgot" to="/users/reset_password">Forgot your password?</router-link>
-              <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
+            <el-form-item
+              label="Password"
+              prop="password"
+            >
+              <router-link
+                class="forgot"
+                to="/users/reset_password"
+              >
+                Forgot your password?
+              </router-link>
+              <el-input
+                type="password"
+                v-model="params.password"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
             <el-radio-group v-model="params.rememberMe">
-              <el-checkbox label="Remember me" name="rememberMe"></el-checkbox>
+              <el-checkbox
+                label="Remember me"
+                name="rememberMe"
+              />
             </el-radio-group>
-            <router-link to="/users/sign_up">Sign up →</router-link>
+            <router-link to="/users/sign_up">
+              Sign up →
+            </router-link>
             <el-form-item>
-              <el-button type="primary" size="medium" @click="submit">Sign in</el-button>
+              <el-button
+                type="primary"
+                size="medium"
+                @click="submit"
+              >
+                Sign in
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -71,8 +112,14 @@
                     console.log(this);
                     this.loading = true;
                     this.axios.post('users/signIn', this.params).then(data => {
-                        this.success('sign in success');
-                        console.log(data.user);
+                        this.$store.commit('setUser', data.user);
+                        let redirectUrl = '/';
+                        if (data.user.accessLevel === 'Admin') {
+                            redirectUrl = '/admin';
+                        }
+                        this.$router.push({
+                            path: redirectUrl
+                        });
                     }).catch(res => {
                         this.error(res.respMsg);
                     }).finally(() => {

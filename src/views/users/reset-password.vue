@@ -3,37 +3,84 @@
     <div class="intro">
       <h1>GitLab Mini Edition</h1>
       <h3>Open source software to collaborate on code</h3>
-      <p>Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
-        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.</p>
+      <p>
+        Manage Git repositories with fine-grained access controls that keep your code secure. Perform code reviews and
+        enhance collaboration with merge requests. Each project can also have an issue tracker and a wiki.
+      </p>
     </div>
     <div class="users-form">
       <el-card>
         <div slot="header">
-          <div class="title">Reset password</div>
+          <div class="title">
+            Reset password
+          </div>
         </div>
         <div>
-          <el-form ref="form" label-position="top" label-width="80px" :model="params" :rules="rules"
-                   v-loading="loading">
-            <el-form-item label="Email" prop="email">
-              <el-input v-model="params.email" size="medium" @keyup.enter.native="submit"></el-input>
+          <el-form
+            ref="form"
+            label-position="top"
+            label-width="80px"
+            :model="params"
+            :rules="rules"
+            v-loading="loading"
+          >
+            <el-form-item
+              label="Email"
+              prop="email"
+            >
+              <el-input
+                v-model="params.email"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="New password" prop="password">
-              <el-input type="password" v-model="params.password" size="medium" @keyup.enter.native="submit"></el-input>
+            <el-form-item
+              label="New password"
+              prop="password"
+            >
+              <el-input
+                type="password"
+                v-model="params.password"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
-            <el-form-item label="Verify code" prop="verifyCode">
-              <el-button class="send" size="medium" plain v-loading="sending" @click="sendVerifyCode">{{ text }}
+            <el-form-item
+              label="Verify code"
+              prop="verifyCode"
+            >
+              <el-button
+                class="send"
+                size="medium"
+                plain
+                v-loading="sending"
+                @click="sendVerifyCode"
+              >
+                {{ text }}
               </el-button>
-              <el-input v-model="params.verifyCode" size="medium" @keyup.enter.native="submit"></el-input>
+              <el-input
+                v-model="params.verifyCode"
+                size="medium"
+                @keyup.enter.native="submit"
+              />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" size="medium" @click="submit">Reset password</el-button>
+              <el-button
+                type="primary"
+                size="medium"
+                @click="submit"
+              >
+                Reset password
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
       </el-card>
       <div class="bottom">
         Already have login and password?
-        <router-link to="/users/sign_in">Sign in</router-link>
+        <router-link to="/users/sign_in">
+          Sign in
+        </router-link>
       </div>
     </div>
   </div>

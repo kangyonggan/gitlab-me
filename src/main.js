@@ -12,7 +12,7 @@ import '@/libs/common';
 Vue.use(ElementUI);
 
 new Vue({
-  router: Router,
-  store: Store,
-  render: h => h(App),
+    router: Router,
+    store: Store,
+    render: h => h(App)
 }).$mount('#app');
