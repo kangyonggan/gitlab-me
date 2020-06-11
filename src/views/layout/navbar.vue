@@ -8,6 +8,21 @@
 
       <span>GitLab</span>
     </router-link>
+    
+    <router-link
+      to="/admin"
+      class="admin-area"
+      v-show="$store.getters.getUser.accessLevel === 'Admin' && !$route.fullPath.startsWith('/admin')"
+    >
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="Admin area"
+      >
+        <i class="el-icon-monitor" />
+      </el-tooltip>
+    </router-link>
+    
 
     <el-dropdown
       trigger="click"
@@ -72,6 +87,7 @@
       width: 90px;
       color: #e2e2e2;
       font-size: 18px;
+      float: left;
 
       img {
         height: 24px;
@@ -83,6 +99,13 @@
         float: left;
         margin-left: 6px;
       }
+    }
+
+    .admin-area {
+      float: left;
+      color: #fff;
+      margin-left: 100px;
+      font-size: 20px;
     }
 
     .avatar {

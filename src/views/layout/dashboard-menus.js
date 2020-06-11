@@ -1,10 +1,5 @@
 export default [
     {
-        name: 'Overview',
-        url: '/dashboard',
-        icon: 'el-icon-monitor'
-    },
-    {
         name: 'Projects',
         url: '/projects',
         icon: 'el-icon-s-grid',

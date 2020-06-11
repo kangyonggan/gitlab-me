@@ -1,5 +1,8 @@
 <template>
-  <el-breadcrumb separator-class="el-icon-arrow-right">
+  <el-breadcrumb
+    separator-class="el-icon-arrow-right"
+    v-show="breadcrumbs.length"
+  >
     <el-breadcrumb-item
       v-for="(breadcrumb, index) in breadcrumbs"
       :key="index"
@@ -64,7 +67,7 @@
             this.breadcrumbs = [];
             if (this.$route.fullPath.startsWith('/admin')) {
                 this.breadcrumbs.push({
-                    name: 'Admin Area',
+                    name: 'Admin area',
                     url: '/admin'
                 });
             }
@@ -78,7 +81,7 @@
                 this.breadcrumbs = [];
                 if (this.$route.fullPath.startsWith('/admin')) {
                     this.breadcrumbs.push({
-                        name: 'Admin Area',
+                        name: 'Admin area',
                         url: '/admin'
                     });
                 }
