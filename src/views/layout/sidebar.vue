@@ -81,11 +81,19 @@
         methods: {},
         watch: {
             '$route'(newRoute) {
-                this.active = newRoute.path;
+                if (newRoute.meta.parentPath) {
+                    this.active = newRoute.meta.parentPath;
+                } else {
+                    this.active = newRoute.path;
+                }
             }
         },
         mounted() {
-            this.active = this.$route.path;
+            if (this.$route.meta.parentPath) {
+                this.active = this.$route.meta.parentPath;
+            } else {
+                this.active = this.$route.path;
+            }
         }
     };
 </script>

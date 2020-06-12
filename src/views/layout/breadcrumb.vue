@@ -42,6 +42,10 @@
                     if (menu.url === route.path) {
                         breadcrumbs.push(menu);
                         return breadcrumbs;
+                    } else if (menu.url === route.meta.parentPath) {
+                        breadcrumbs.push(menu);
+                        breadcrumbs.push({name: route.meta.title});
+                        return breadcrumbs;
                     }
                     if (menu.children) {
                         const subBreadcrumbs = this.getBreadcrumbs(route, menu.children);

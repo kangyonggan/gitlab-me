@@ -67,6 +67,16 @@ const routers = [
                 component: (resolve) => require(['./views/admin/manage/users/index.vue'], resolve)
             },
             {
+                path: 'manage/users/new',
+                meta: {
+                    title: 'New User',
+                    permission: true,
+                    menuType: 'Admin',
+                    parentPath: '/admin/manage/users'
+                },
+                component: (resolve) => require(['./views/admin/manage/users/new-user.vue'], resolve)
+            },
+            {
                 path: 'manage/groups',
                 meta: {
                     permission: true,

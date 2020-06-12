@@ -20,7 +20,7 @@
       <template #actions>
         <el-button
           type="success"
-          @click="$refs['create-modal'].show()"
+          @click="newUser"
         >
           New User
         </el-button>
@@ -103,6 +103,11 @@
             };
         },
         methods: {
+            newUser() {
+                this.$router.push({
+                    path: '/admin/manage/users/new'
+                });
+            },
             handleCommand: function (command, row) {
                 if (command === '0') {
                     console.log(row);

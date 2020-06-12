@@ -6,12 +6,7 @@
         :menus="menus"
         v-show="menus.length"
       />
-      <el-main
-        v-loading="$store.getters.getLoading"
-        element-loading-text="拼命加载中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.5)"
-      >
+      <el-main v-loading="$store.getters.getLoading">
         <breadcrumb :menus="menus" />
         <router-view />
       </el-main>
