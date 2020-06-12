@@ -60,12 +60,12 @@
                 @keyup.enter.native="submit"
               />
             </el-form-item>
-            <el-radio-group v-model="params.rememberMe">
-              <el-checkbox
-                label="Remember me"
-                name="rememberMe"
-              />
-            </el-radio-group>
+            <el-checkbox
+              v-model="params.rememberMe"
+              label="Remember me"
+              true-label="1"
+              false-label="0"
+            />
             <router-link to="/users/sign_up">
               Sign up →
             </router-link>
