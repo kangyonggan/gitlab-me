@@ -10,16 +10,16 @@ export default [
         icon: 'el-icon-menu',
         children: [
             {
-                name: 'Projects',
-                url: '/admin/manage/projects'
-            },
-            {
                 name: 'Users',
                 url: '/admin/manage/users'
             },
             {
                 name: 'Groups',
                 url: '/admin/manage/groups'
+            },
+            {
+                name: 'Projects',
+                url: '/admin/manage/projects'
             }
         ]
     },

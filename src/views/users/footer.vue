@@ -8,7 +8,7 @@
         Help
       </router-link>
       <a
-        href="https://about.github.com"
+        href="https://about.gitlab.com"
         target="_blank"
       >About GitLab</a>
     </div>
