@@ -79,24 +79,16 @@ const routers = [
             {
                 path: 'profile',
                 component: (resolve) => require(['./views/dashboard/profile/index.vue'], resolve)
-            },
-            {
-                path: '403',
-                meta: {
-                    icon: 'el-icon-warning',
-                    title: 'Permission deny'
-                },
-                component: (resolve) => require(['./views/403.vue'], resolve)
-            },
-            {
-                path: '*',
-                meta: {
-                    icon: 'el-icon-warning',
-                    title: 'Page not found'
-                },
-                component: (resolve) => require(['./views/404.vue'], resolve)
             }
         ]
+    },
+    {
+        path: '*',
+        meta: {
+            icon: 'el-icon-warning',
+            title: 'The page could not be found or you don\'t have permission to view it.'
+        },
+        component: (resolve) => require(['./views/404.vue'], resolve)
     }
 ];
 
@@ -132,7 +124,7 @@ router.beforeEach(async (to, from, next) => {
     // 登录了，但是没有权限，到403界面
     if (to.fullPath.startsWith('/admin') && store.getters.getUser.accessLevel !== 'Admin') {
         next({
-            path: '/403'
+            path: '/404'
         });
         return;
     }
