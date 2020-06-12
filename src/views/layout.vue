@@ -2,7 +2,10 @@
   <div>
     <navbar />
     <el-container>
-      <sidebar :menus="menus" v-show="menus.length"/>
+      <sidebar
+        :menus="menus"
+        v-show="menus.length"
+      />
       <el-main
         v-loading="$store.getters.getLoading"
         element-loading-text="拼命加载中"
