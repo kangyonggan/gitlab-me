@@ -45,6 +45,15 @@ util.formatTimestamp = function (timestamp, format) {
     return format;
 };
 
+/**
+ * 格式化状态
+ *
+ * @param isDeleted
+ */
+util.formatStatus = function (isDeleted) {
+    return isDeleted ? 'Logic removed' : 'Normal';
+};
+
 export default util;
 
 Vue.prototype.util = util;

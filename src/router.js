@@ -56,15 +56,7 @@ const routers = [
                     permission: true,
                     menuType: 'Admin'
                 },
-                redirect: 'manage/projects'
-            },
-            {
-                path: 'manage/projects',
-                meta: {
-                    permission: true,
-                    menuType: 'Admin'
-                },
-                component: (resolve) => require(['./views/admin/manage/projects/index.vue'], resolve)
+                redirect: 'manage/users'
             },
             {
                 path: 'manage/users',
@@ -81,6 +73,14 @@ const routers = [
                     menuType: 'Admin'
                 },
                 component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
+            },
+            {
+                path: 'manage/projects',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
+                component: (resolve) => require(['./views/admin/manage/projects/index.vue'], resolve)
             },
             {
                 path: 'application_settings',
