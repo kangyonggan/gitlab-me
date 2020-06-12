@@ -8,7 +8,7 @@
 
       <span>GitLab</span>
     </router-link>
-    
+
     <router-link
       to="/admin"
       class="admin-area"
@@ -22,20 +22,43 @@
         <i class="el-icon-monitor" />
       </el-tooltip>
     </router-link>
-    
+
 
     <el-dropdown
       trigger="click"
       @command="handleCommand"
     >
       <span>
-        {{ $store.getters.getUser.fullName }}
+
+        <img
+          v-if="$store.getters.getUser.avatar"
+          class="avatar"
+          :src="axios.defaults.baseURL + $store.getters.getUser.avatar"
+        >
+
+        <img
+          v-else
+          class="avatar"
+          src="../../assets/images/avatar.png"
+        >
 
         <i class="el-icon-arrow-down el-icon--right" />
       </span>
 
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="0">
+        <el-dropdown-item
+          disabled
+          style="line-height: 20px;color: #333;"
+        >
+          {{ $store.getters.getUser.fullName }}
+          <br>
+          @{{ $store.getters.getUser.username }}
+        </el-dropdown-item>
+
+        <el-dropdown-item
+          divided
+          command="0"
+        >
           Profile
         </el-dropdown-item>
 
@@ -44,12 +67,6 @@
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-
-    <img
-      v-if="$store.getters.getUser.avatar"
-      class="avatar"
-      :src="axios.defaults.baseURL + $store.getters.getUser.avatar"
-    >
   </el-header>
 </template>
 
@@ -109,11 +126,12 @@
     }
 
     .avatar {
-      float: right;
-      width: 30px;
-      height: 30px;
-      margin: 8px 10px 0 0;
+      float: left;
+      width: 26px;
+      height: 26px;
+      margin-top: 7px;
       border-radius: 50%;
+      border: 1px solid #d1d1f0;
       box-shadow: 0 1px 5px rgba(27, 31, 35, .15);
     }
 

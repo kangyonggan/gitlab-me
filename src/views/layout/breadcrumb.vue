@@ -60,6 +60,8 @@
                     this.util.title(route.meta.title);
                 } else if (this.breadcrumbs.length) {
                     this.util.title(this.breadcrumbs[this.breadcrumbs.length - 1].name);
+                } else {
+                    this.util.title();
                 }
             }
         },
