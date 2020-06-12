@@ -39,7 +39,7 @@
         <img
           v-else
           class="avatar"
-          src="../../assets/images/avatar.png"
+          src="../../assets/images/logo.png"
         >
 
         <i class="el-icon-arrow-down el-icon--right" />
