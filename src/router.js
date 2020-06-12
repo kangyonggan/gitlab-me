@@ -44,26 +44,50 @@ const routers = [
         children: [
             {
                 path: '/',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 component: (resolve) => require(['./views/admin/index.vue'], resolve)
             },
             {
                 path: 'manage',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 redirect: 'manage/projects'
             },
             {
                 path: 'manage/projects',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 component: (resolve) => require(['./views/admin/manage/projects/index.vue'], resolve)
             },
             {
                 path: 'manage/users',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 component: (resolve) => require(['./views/admin/manage/users/index.vue'], resolve)
             },
             {
                 path: 'manage/groups',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
             },
             {
                 path: 'application_settings',
+                meta: {
+                    permission: true,
+                    menuType: 'Admin'
+                },
                 component: (resolve) => require(['./views/admin/settings/index.vue'], resolve)
             }
         ]
@@ -74,10 +98,18 @@ const routers = [
         children: [
             {
                 path: '/',
+                meta: {
+                    permission: true,
+                    menuType: 'Dashboard'
+                },
                 component: (resolve) => require(['./views/dashboard/index.vue'], resolve)
             },
             {
                 path: 'profile',
+                meta: {
+                    permission: true,
+                    menuType: 'Dashboard'
+                },
                 component: (resolve) => require(['./views/dashboard/profile/index.vue'], resolve)
             }
         ]
@@ -101,8 +133,8 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
     store.commit('setLoading', true);
 
-    // 如果是去users界面，直接放行
-    if (to.path.startsWith('/users')) {
+    // 无需权限的界面
+    if (!to.meta.permission) {
         next();
         return;
     }

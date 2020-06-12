@@ -2,7 +2,7 @@
   <div>
     <navbar />
     <el-container>
-      <sidebar :menus="menus" />
+      <sidebar :menus="menus" v-show="menus.length"/>
       <el-main
         v-loading="$store.getters.getLoading"
         element-loading-text="拼命加载中"
@@ -32,10 +32,12 @@
         },
         methods: {
             changeMenus(route) {
-                if (this.$store.getters.getUser.accessLevel === 'Admin' && route.path.startsWith('/admin')) {
+                if (route.meta.menuType === 'Admin' && this.$store.getters.getUser.accessLevel === 'Admin') {
                     this.menus = adminMenus;
-                } else {
+                } else if (route.meta.menuType === 'Dashboard') {
                     this.menus = dashboardMenus;
+                } else {
+                    this.menus = [];
                 }
             }
         },
