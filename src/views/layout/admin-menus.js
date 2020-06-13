@@ -11,15 +11,15 @@ export default [
         children: [
             {
                 name: 'Users',
-                url: '/admin/manage/users'
+                url: '/admin/users'
             },
             {
                 name: 'Groups',
-                url: '/admin/manage/groups'
+                url: '/admin/groups'
             },
             {
                 name: 'Projects',
-                url: '/admin/manage/projects'
+                url: '/admin/projects'
             }
         ]
     },

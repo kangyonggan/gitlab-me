@@ -37,12 +37,12 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     img {
-      margin-top: 40px;
+      margin-top: 20px;
     }
 
     h1 {
       font-size: 56px;
-      line-height: 100px;
+      line-height: 60px;
       font-weight: 400;
       color: #456;
     }
@@ -60,7 +60,7 @@
 
     hr {
       max-width: 800px;
-      margin: 18px auto;
+      margin: 15px auto;
       border: 0;
       border-top: 1px solid #EEE;
       border-bottom: 1px solid white;

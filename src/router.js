@@ -52,14 +52,10 @@ const routers = [
             },
             {
                 path: 'manage',
-                meta: {
-                    permission: true,
-                    menuType: 'Admin'
-                },
-                redirect: 'manage/users'
+                redirect: '/admin/users'
             },
             {
-                path: 'manage/users',
+                path: 'users',
                 meta: {
                     permission: true,
                     menuType: 'Admin'
@@ -67,17 +63,17 @@ const routers = [
                 component: (resolve) => require(['./views/admin/manage/users/index.vue'], resolve)
             },
             {
-                path: 'manage/users/new',
+                path: 'users/new',
                 meta: {
                     title: 'New User',
                     permission: true,
                     menuType: 'Admin',
-                    parentPath: '/admin/manage/users'
+                    parentPath: '/admin/users'
                 },
                 component: (resolve) => require(['./views/admin/manage/users/new-user.vue'], resolve)
             },
             {
-                path: 'manage/groups',
+                path: 'groups',
                 meta: {
                     permission: true,
                     menuType: 'Admin'
@@ -85,7 +81,7 @@ const routers = [
                 component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
             },
             {
-                path: 'manage/projects',
+                path: 'projects',
                 meta: {
                     permission: true,
                     menuType: 'Admin'
