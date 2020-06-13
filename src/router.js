@@ -70,7 +70,17 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/users'
         },
-        component: (resolve) => require(['./views/admin/manage/users/new-user.vue'], resolve)
+        component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
+      },
+      {
+        path: 'users/:id/edit',
+        meta: {
+          title: 'Edit User',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/users'
+        },
+        component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
       },
       {
         path: 'groups',

@@ -38,7 +38,7 @@
           split-button
           trigger="click"
           size="small"
-          @click="$refs['edit-modal'].show(row)"
+          @click="editUer(row)"
           @command="handleCommand($event, row)"
         >
           Edit
@@ -107,6 +107,11 @@
       newUser() {
         this.$router.push({
           path: '/admin/users/new'
+        });
+      },
+      editUer(user) {
+        this.$router.push({
+          path: '/admin/users/' + user.id + '/edit'
         });
       },
       handleCommand: function (command, row) {

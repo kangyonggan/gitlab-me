@@ -91,6 +91,6 @@
 <style scoped lang="scss">
   .form-panel {
     max-width: 900px;
-    margin: 0 auto;
+    margin: 30px auto;
   }
 </style>

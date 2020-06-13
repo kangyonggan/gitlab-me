@@ -88,11 +88,19 @@
     data() {
       return {
         loading: false,
+        isEdit: false,
         params: {
+          username: '',
+          fullName: '',
+          email: '',
+          password: '',
+          rePassword: '',
           projectsLimit: 100,
           canCreateGroup: '0',
           accessLevel: 'Regular'
         },
+        oldUsername: '',
+        oldEmail: '',
         rules: {
           fullName: [
             {required: true, message: 'Full name is required'},
@@ -141,7 +149,7 @@
         callback();
       },
       validateUsername: function (rule, value, callback) {
-        if (!value) {
+        if (!value || value === this.oldUsername) {
           callback();
           return;
         }
@@ -153,7 +161,7 @@
         });
       },
       validateEmail: function (rule, value, callback) {
-        if (!value) {
+        if (!value || value === this.oldEmail) {
           callback();
           return;
         }
@@ -173,9 +181,23 @@
     mounted() {
       let id = this.$route.params.id;
       if (id) {
+        this.isEdit = true;
+        this.rules.password[0].required = false;
+        this.rules.rePassword[0].required = false;
+
         this.loading = true;
         this.axios.get('admin/users/' + id).then(data => {
-          this.params = data.user;
+          let user = data.user;
+          this.params.id = user.id;
+          this.params.username = user.username;
+          this.params.fullName = user.fullName;
+          this.params.email = user.email;
+          this.params.projectsLimit = user.projectsLimit;
+          this.params.canCreateGroup = user.canCreateGroup + '';
+          this.params.accessLevel = user.accessLevel;
+
+          this.oldUsername = user.username;
+          this.oldEmail = user.email;
         }).catch(res => {
           this.error(res.respMsg);
         }).finally(() => {
