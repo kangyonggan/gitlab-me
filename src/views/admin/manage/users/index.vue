@@ -41,14 +41,31 @@
           @click="editUer(row)"
           @command="handleCommand($event, row)"
         >
+          <i class="el-icon-edit-outline" />
           Edit
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="0">
-              Password
+            <el-dropdown-item
+              command="0"
+              :disabled="row.isDeleted ? true : false"
+            >
+              <i class="el-icon-circle-close" />
+              Remove by logic
             </el-dropdown-item>
-            <el-dropdown-item command="1">
-              <span v-if="!row.isDeleted">Remove by logic</span>
-              <span v-else>Recovery of logic</span>
+            <el-dropdown-item
+              command="1"
+              :disabled="row.isDeleted ? false : true"
+            >
+              <i class="el-icon-refresh-left" />
+              Recovery of logic
+            </el-dropdown-item>
+            <el-dropdown-item
+              command="2"
+              divided
+            >
+              <span style="color: #f56c6c">
+                <i class="el-icon-delete" />
+                Remove by physics
+              </span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -115,10 +132,21 @@
         });
       },
       handleCommand: function (command, row) {
-        if (command === '0') {
-          console.log(row);
-        } else if (command === '1') {
-          console.log(row);
+        if (command === '0' || command === '1') {
+          this.axios.put('admin/users/' + row.id + '/delete/' + !row.isDeleted * 1).then(() => {
+            this.$refs.table.request();
+          }).catch(res => {
+            this.error(res.respMsg);
+          });
+        } else if (command === '2') {
+          this.$confirm('Physics remove ' + row.fullName + ', are you sure?', 'Confirmation',
+            {type: 'warning'}).then(() => {
+            this.axios.delete('admin/users/' + row.id).then(() => {
+              this.$refs.table.request();
+            }).catch(res => {
+              this.error(res.respMsg);
+            });
+          });
         }
       }
     }

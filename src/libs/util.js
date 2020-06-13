@@ -51,7 +51,7 @@ util.formatTimestamp = function (timestamp, format) {
  * @param isDeleted
  */
 util.formatStatus = function (isDeleted) {
-  return isDeleted ? 'Logic removed' : 'Normal';
+  return isDeleted ? 'Removed' : 'Normal';
 };
 
 
