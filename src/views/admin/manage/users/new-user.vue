@@ -27,11 +27,13 @@
 
     <base-form-group name="Password" />
     <base-input
+      type="password"
       label="Password"
       v-model="params.password"
       prop="password"
     />
     <base-input
+      type="password"
       label="Password Confirmation"
       v-model="params.rePassword"
       prop="rePassword"
@@ -43,17 +45,41 @@
       label="Projects limit"
       v-model="params.projectsLimit"
       prop="projectsLimit"
+      type="number"
     />
-    <base-input
+    <el-form-item
       label="Can create group"
-      v-model="params.canCreateGroup"
       prop="canCreateGroup"
-    />
-    <base-input
+    >
+      <el-checkbox
+        v-model="params.canCreateGroup"
+        true-label="1"
+        false-label="0"
+      />
+    </el-form-item>
+    <el-form-item
       label="Access level"
-      v-model="params.accessLevel"
       prop="accessLevel"
-    />
+    >
+      <el-radio
+        v-model="params.accessLevel"
+        label="Regular"
+      >
+        Regular
+      </el-radio>
+      <div class="access-desc">
+        Regular user have access to their groups and projects
+      </div>
+      <el-radio
+        v-model="params.accessLevel"
+        label="Admin"
+      >
+        Admin
+      </el-radio>
+      <div class="access-desc">
+        Administrators have access all groups, projects and users and can manage all features in this installation
+      </div>
+    </el-form-item>
   </base-form>
 </template>
 
@@ -62,7 +88,11 @@
         data() {
             return {
                 loading: false,
-                params: {},
+                params: {
+                    projectsLimit: 100,
+                    canCreateGroup: '0',
+                    accessLevel: 'Regular'
+                },
                 rules: {
                     fullName: [
                         {required: true, message: 'Full name is required'},
@@ -96,6 +126,9 @@
                     rePassword: [
                         {required: true, message: 'Password Confirmation is required'},
                         {validator: this.validateRePassword}
+                    ],
+                    projectsLimit: [
+                        {pattern: /^[0-9]*$/, message: 'Must be a natural number'},
                     ]
                 }
             };
@@ -152,3 +185,11 @@
         }
     };
 </script>
+
+<style scoped lang="scss">
+    .access-desc {
+        line-height: normal;
+        color: #777;
+        margin-left: 30px;
+    }
+</style>

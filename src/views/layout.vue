@@ -11,6 +11,8 @@
         <router-view />
       </el-main>
     </el-container>
+
+    <back-top />
   </div>
 </template>
 
@@ -20,9 +22,10 @@
     import breadcrumb from './layout/breadcrumb';
     import adminMenus from './layout/admin-menus';
     import dashboardMenus from './layout/dashboard-menus';
+    import BackTop from './layout/back-top';
 
     export default {
-        components: {navbar, sidebar, breadcrumb},
+        components: {navbar, sidebar, breadcrumb, BackTop},
         data() {
             return {
                 menus: []

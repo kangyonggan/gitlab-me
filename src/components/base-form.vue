@@ -16,6 +16,9 @@
     >
       Submit
     </el-button>
+    <el-button @click="cancel">
+      Cancel
+    </el-button>
   </div>
 </template>
 
@@ -54,6 +57,9 @@
         methods: {
             validateField(prop, callback) {
                 this.$refs.form.validateField(prop, callback);
+            },
+            cancel() {
+                history.back();
             },
             submit: function () {
                 this.$refs.form.validate((valid) => {
