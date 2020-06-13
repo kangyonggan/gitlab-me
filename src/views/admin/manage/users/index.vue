@@ -94,15 +94,6 @@
             width: 200
           },
           {
-            label: 'Sign up',
-            prop: 'signUpIp'
-          },
-          {
-            label: 'Access level',
-            prop: 'accessLevel',
-            width: 140
-          },
-          {
             label: 'Status',
             prop: 'isDeleted',
             render: row => {

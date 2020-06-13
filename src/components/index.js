@@ -5,6 +5,7 @@ import BaseDaterange from './base-daterange';
 import BaseTable from './base-table';
 import BaseForm from './base-form';
 import BaseFormGroup from './base-form-group';
+import BaseAvatar from './base-avatar';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -12,3 +13,4 @@ Vue.component('BaseDaterange', BaseDaterange);
 Vue.component('BaseTable', BaseTable);
 Vue.component('BaseForm', BaseForm);
 Vue.component('BaseFormGroup', BaseFormGroup);
+Vue.component('BaseAvatar', BaseAvatar);

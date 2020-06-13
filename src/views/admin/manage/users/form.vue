@@ -80,6 +80,14 @@
         Administrators have access all groups, projects and users and can manage all features in this installation
       </div>
     </el-form-item>
+
+    <base-form-group name="Profile" />
+
+    <base-avatar
+      label="Avatar"
+      v-model="params.avatar"
+      prop="avatar"
+    />
   </base-form>
 </template>
 
@@ -97,7 +105,8 @@
           rePassword: '',
           projectsLimit: 100,
           canCreateGroup: '0',
-          accessLevel: 'Regular'
+          accessLevel: 'Regular',
+          avatar: ''
         },
         oldUsername: '',
         oldEmail: '',
@@ -195,6 +204,7 @@
           this.params.projectsLimit = user.projectsLimit;
           this.params.canCreateGroup = user.canCreateGroup + '';
           this.params.accessLevel = user.accessLevel;
+          this.params.avatar = user.avatar;
 
           this.oldUsername = user.username;
           this.oldEmail = user.email;
