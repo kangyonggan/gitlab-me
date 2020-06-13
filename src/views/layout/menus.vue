@@ -36,13 +36,13 @@
 </template>
 
 <script>
-    export default {
-        name: 'Menus',
-        props: {
-            parentMenu: {
-                required: true,
-                type: Object
-            }
-        }
-    };
+  export default {
+    name: 'Menus',
+    props: {
+      parentMenu: {
+        required: true,
+        type: Object
+      }
+    }
+  };
 </script>

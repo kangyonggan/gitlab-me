@@ -61,41 +61,41 @@
 </template>
 
 <script>
-    import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition';
-    import Menus from './menus';
+  import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+  import Menus from './menus';
 
-    export default {
-        components: {ElCollapseTransition, Menus},
-        props: {
-          menus: {
-              required: true,
-              type: Array
-          }
-        },
-        data() {
-            return {
-                active: '',
-                isCollapse: false
-            };
-        },
-        methods: {},
-        watch: {
-            '$route'(newRoute) {
-                if (newRoute.meta.parentPath) {
-                    this.active = newRoute.meta.parentPath;
-                } else {
-                    this.active = newRoute.path;
-                }
-            }
-        },
-        mounted() {
-            if (this.$route.meta.parentPath) {
-                this.active = this.$route.meta.parentPath;
-            } else {
-                this.active = this.$route.path;
-            }
+  export default {
+    components: {ElCollapseTransition, Menus},
+    props: {
+      menus: {
+        required: true,
+        type: Array
+      }
+    },
+    data() {
+      return {
+        active: '',
+        isCollapse: false
+      };
+    },
+    methods: {},
+    watch: {
+      '$route'(newRoute) {
+        if (newRoute.meta.parentPath) {
+          this.active = newRoute.meta.parentPath;
+        } else {
+          this.active = newRoute.path;
         }
-    };
+      }
+    },
+    mounted() {
+      if (this.$route.meta.parentPath) {
+        this.active = this.$route.meta.parentPath;
+      } else {
+        this.active = this.$route.path;
+      }
+    }
+  };
 </script>
 
 <style

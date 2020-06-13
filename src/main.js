@@ -11,10 +11,10 @@ import '@/libs/http';
 import '@/libs/common';
 import './components/index';
 
-Vue.use(ElementUI, { locale });
+Vue.use(ElementUI, {locale});
 
 new Vue({
-    router: Router,
-    store: Store,
-    render: h => h(App)
+  router: Router,
+  store: Store,
+  render: h => h(App)
 }).$mount('#app');

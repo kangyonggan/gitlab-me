@@ -87,108 +87,108 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                loading: false,
-                sending: false,
-                text: 'Send',
-                timer: undefined,
-                count: 60,
-                params: {},
-                rules: {
-                    email: [
-                        {required: true, message: 'Email is required'},
-                        {max: 128, message: 'Maximum length is 128 characters'},
-                        {
-                            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-                            message: 'Incorrect email address'
-                        },
-                        {validator: this.validateEmail}
-                    ],
-                    password: [
-                        {required: true, message: 'Password is required'},
-                        {
-                            pattern: /^[a-zA-Z0-9]{8,20}$/,
-                            message: 'Must be composed of 8 to 20 letters and Numbers'
-                        }
-                    ],
-                    verifyCode: [
-                        {required: true, message: 'Verification code is required'}
-                    ]
-                }
-            };
-        },
-        methods: {
-            validateEmail: function (rule, value, callback) {
-                if (!value) {
-                    callback();
-                    return;
-                }
-
-                this.axios.get('validate/emailNotExists?email=' + value).then(() => {
-                    callback();
-                }).catch(res => {
-                    callback(new Error(res.respMsg));
-                });
+  export default {
+    data() {
+      return {
+        loading: false,
+        sending: false,
+        text: 'Send',
+        timer: undefined,
+        count: 60,
+        params: {},
+        rules: {
+          email: [
+            {required: true, message: 'Email is required'},
+            {max: 128, message: 'Maximum length is 128 characters'},
+            {
+              pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+              message: 'Incorrect email address'
             },
-            setInterval() {
-                let that = this;
-                this.timer = setInterval(function () {
-                    that.count--;
-                    that.text = that.count + 's';
-                    if (that.count <= 0) {
-                        clearInterval(that.timer);
-                        that.sending = false;
-                        that.text = 'Send';
-                    }
-                }, 1000);
-            },
-            sendVerifyCode() {
-                if (this.text !== 'Send') {
-                    return;
-                }
-                this.$refs.form.validateField('email', valid => {
-                    if (valid) {
-                        return;
-                    }
-                    this.text = 'Sending';
-                    this.sending = true;
-                    this.axios.post('users/sendResetPasswordEmail', this.params).then(data => {
-                        this.success('Send succeed');
-                        this.params.emailId = data.emailId;
-                        this.setInterval();
-                    }).catch(res => {
-                        this.text = 'Send';
-                        this.error(res.respMsg);
-                    }).finally(() => {
-                        this.sending = false;
-                    });
-                });
-            },
-            submit: function () {
-                this.$refs.form.validate((valid) => {
-                    if (!valid) {
-                        return;
-                    }
-
-                    this.loading = true;
-                    this.axios.put('users/resetPassword', this.params).then(() => {
-                        this.$router.push({
-                            path: '/users/sign_in',
-                            query: {
-                                source: 'reset'
-                            }
-                        });
-                    }).catch(res => {
-                        this.error(res.respMsg);
-                    }).finally(() => {
-                        this.loading = false;
-                    });
-                });
+            {validator: this.validateEmail}
+          ],
+          password: [
+            {required: true, message: 'Password is required'},
+            {
+              pattern: /^[a-zA-Z0-9]{8,20}$/,
+              message: 'Must be composed of 8 to 20 letters and Numbers'
             }
+          ],
+          verifyCode: [
+            {required: true, message: 'Verification code is required'}
+          ]
         }
-    };
+      };
+    },
+    methods: {
+      validateEmail: function (rule, value, callback) {
+        if (!value) {
+          callback();
+          return;
+        }
+
+        this.axios.get('validate/emailNotExists?email=' + value).then(() => {
+          callback();
+        }).catch(res => {
+          callback(new Error(res.respMsg));
+        });
+      },
+      setInterval() {
+        let that = this;
+        this.timer = setInterval(function () {
+          that.count--;
+          that.text = that.count + 's';
+          if (that.count <= 0) {
+            clearInterval(that.timer);
+            that.sending = false;
+            that.text = 'Send';
+          }
+        }, 1000);
+      },
+      sendVerifyCode() {
+        if (this.text !== 'Send') {
+          return;
+        }
+        this.$refs.form.validateField('email', valid => {
+          if (valid) {
+            return;
+          }
+          this.text = 'Sending';
+          this.sending = true;
+          this.axios.post('users/sendResetPasswordEmail', this.params).then(data => {
+            this.success('Send succeed');
+            this.params.emailId = data.emailId;
+            this.setInterval();
+          }).catch(res => {
+            this.text = 'Send';
+            this.error(res.respMsg);
+          }).finally(() => {
+            this.sending = false;
+          });
+        });
+      },
+      submit: function () {
+        this.$refs.form.validate((valid) => {
+          if (!valid) {
+            return;
+          }
+
+          this.loading = true;
+          this.axios.put('users/resetPassword', this.params).then(() => {
+            this.$router.push({
+              path: '/users/sign_in',
+              query: {
+                source: 'reset'
+              }
+            });
+          }).catch(res => {
+            this.error(res.respMsg);
+          }).finally(() => {
+            this.loading = false;
+          });
+        });
+      }
+    }
+  };
 </script>
 
 <style scoped lang="scss">

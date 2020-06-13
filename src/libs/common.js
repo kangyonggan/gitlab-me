@@ -18,7 +18,7 @@ const messageQueue = [];
  * @param msg
  */
 function success(msg) {
-    message('success', msg);
+  message('success', msg);
 }
 
 /**
@@ -27,7 +27,7 @@ function success(msg) {
  * @param msg
  */
 function warning(msg) {
-    message('warning', msg);
+  message('warning', msg);
 }
 
 /**
@@ -36,7 +36,7 @@ function warning(msg) {
  * @param msg
  */
 function error(msg) {
-    message('error', msg);
+  message('error', msg);
 }
 
 /**
@@ -46,19 +46,19 @@ function error(msg) {
  * @param msg
  */
 function message(type, msg) {
-    // 消息去重
-    if (messageQueue.includes(msg)) {
-        return;
+  // 消息去重
+  if (messageQueue.includes(msg)) {
+    return;
+  }
+  // 消息放入队列
+  messageQueue.push(msg);
+  Message({
+    showClose: true,
+    message: msg,
+    type: type,
+    onClose: function () {
+      // 从队列移除消息
+      messageQueue.splice(messageQueue.indexOf(msg), 1);
     }
-    // 消息放入队列
-    messageQueue.push(msg);
-    Message({
-        showClose: true,
-        message: msg,
-        type: type,
-        onClose: function () {
-            // 从队列移除消息
-            messageQueue.splice(messageQueue.indexOf(msg), 1);
-        }
-    });
+  });
 }

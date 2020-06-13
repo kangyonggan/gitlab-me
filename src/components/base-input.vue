@@ -19,43 +19,43 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            prop: {
-                required: true,
-                type: String
-            },
-            label: {
-                required: true,
-                type: String
-            },
-            value: {
-                required: false,
-                type: [String, Number],
-                default: ''
-            },
-            type: {
-                required: false,
-                type: String,
-                default: 'text'
-            },
-            placeholder: {
-                required: false,
-                type: String,
-                default: undefined
-            },
-            readonly: {
-                required: false,
-                type: Boolean,
-                default: false
-            },
-            rows: {
-                required: false,
-                type: Number,
-                default: 3
-            }
-        }
-    };
+  export default {
+    props: {
+      prop: {
+        required: true,
+        type: String
+      },
+      label: {
+        required: true,
+        type: String
+      },
+      value: {
+        required: false,
+        type: [String, Number],
+        default: ''
+      },
+      type: {
+        required: false,
+        type: String,
+        default: 'text'
+      },
+      placeholder: {
+        required: false,
+        type: String,
+        default: undefined
+      },
+      readonly: {
+        required: false,
+        type: Boolean,
+        default: false
+      },
+      rows: {
+        required: false,
+        type: Number,
+        default: 3
+      }
+    }
+  };
 </script>
 
 <style scoped lang="scss">

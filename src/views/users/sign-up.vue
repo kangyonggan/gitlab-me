@@ -86,87 +86,87 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                loading: false,
-                params: {},
-                rules: {
-                    fullName: [
-                        {required: true, message: 'Full name is required'},
-                        {max: 20, message: 'Maximum length is 20 characters'}
-                    ],
-                    email: [
-                        {required: true, message: 'Email is required'},
-                        {max: 128, message: 'Maximum length is 128 characters'},
-                        {
-                            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-                            message: 'Incorrect email address'
-                        },
-                        {validator: this.validateEmail}
-                    ],
-                    username: [
-                        {required: true, message: 'Username is required'},
-                        {max: 20, message: 'Maximum length is 20 characters'},
-                        {
-                            pattern: /^[a-zA-Z][a-zA-Z0-9]*$/,
-                            message: 'Can only contain letters,numbers and begin with letters'
-                        },
-                        {validator: this.validateUsername}
-                    ],
-                    password: [
-                        {required: true, message: 'Password is required'},
-                        {
-                            pattern: /^[a-zA-Z0-9]{8,20}$/,
-                            message: 'Must be composed of 8 to 20 letters and Numbers'
-                        }
-                    ]
-                }
-            };
-        },
-        methods: {
-            validateUsername: function (rule, value, callback) {
-                if (!value) {
-                    callback();
-                    return;
-                }
-
-                this.axios.get('validate/username?username=' + value).then(() => {
-                    callback();
-                }).catch(res => {
-                    callback(new Error(res.respMsg));
-                });
+  export default {
+    data() {
+      return {
+        loading: false,
+        params: {},
+        rules: {
+          fullName: [
+            {required: true, message: 'Full name is required'},
+            {max: 20, message: 'Maximum length is 20 characters'}
+          ],
+          email: [
+            {required: true, message: 'Email is required'},
+            {max: 128, message: 'Maximum length is 128 characters'},
+            {
+              pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+              message: 'Incorrect email address'
             },
-            validateEmail: function (rule, value, callback) {
-                if (!value) {
-                    callback();
-                    return;
-                }
-
-                this.axios.get('validate/email?email=' + value).then(() => {
-                    callback();
-                }).catch(res => {
-                    callback(new Error(res.respMsg));
-                });
+            {validator: this.validateEmail}
+          ],
+          username: [
+            {required: true, message: 'Username is required'},
+            {max: 20, message: 'Maximum length is 20 characters'},
+            {
+              pattern: /^[a-zA-Z][a-zA-Z0-9]*$/,
+              message: 'Can only contain letters,numbers and begin with letters'
             },
-            submit: function () {
-                this.$refs.form.validate((valid) => {
-                    if (!valid) {
-                        return;
-                    }
-
-                    this.loading = true;
-                    this.axios.post('users/signUp', this.params).then(() => {
-                        this.success('sign up success');
-                    }).catch(res => {
-                        this.error(res.respMsg);
-                    }).finally(() => {
-                        this.loading = false;
-                    });
-                });
+            {validator: this.validateUsername}
+          ],
+          password: [
+            {required: true, message: 'Password is required'},
+            {
+              pattern: /^[a-zA-Z0-9]{8,20}$/,
+              message: 'Must be composed of 8 to 20 letters and Numbers'
             }
+          ]
         }
-    };
+      };
+    },
+    methods: {
+      validateUsername: function (rule, value, callback) {
+        if (!value) {
+          callback();
+          return;
+        }
+
+        this.axios.get('validate/username?username=' + value).then(() => {
+          callback();
+        }).catch(res => {
+          callback(new Error(res.respMsg));
+        });
+      },
+      validateEmail: function (rule, value, callback) {
+        if (!value) {
+          callback();
+          return;
+        }
+
+        this.axios.get('validate/email?email=' + value).then(() => {
+          callback();
+        }).catch(res => {
+          callback(new Error(res.respMsg));
+        });
+      },
+      submit: function () {
+        this.$refs.form.validate((valid) => {
+          if (!valid) {
+            return;
+          }
+
+          this.loading = true;
+          this.axios.post('users/signUp', this.params).then(() => {
+            this.success('sign up success');
+          }).catch(res => {
+            this.error(res.respMsg);
+          }).finally(() => {
+            this.loading = false;
+          });
+        });
+      }
+    }
+  };
 </script>
 
 <style scoped lang="scss">

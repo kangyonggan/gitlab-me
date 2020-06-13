@@ -86,54 +86,54 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                loading: false,
-                params: {},
-                rules: {
-                    username: [
-                        {required: true, message: 'Username or email is required'}
-                    ],
-                    password: [
-                        {required: true, message: 'Password is required'}
-                    ]
-                },
-                source: ''
-            };
+  export default {
+    data() {
+      return {
+        loading: false,
+        params: {},
+        rules: {
+          username: [
+            {required: true, message: 'Username or email is required'}
+          ],
+          password: [
+            {required: true, message: 'Password is required'}
+          ]
         },
-        methods: {
-            submit: function () {
-                this.$refs.form.validate((valid) => {
-                    if (!valid) {
-                        return;
-                    }
+        source: ''
+      };
+    },
+    methods: {
+      submit: function () {
+        this.$refs.form.validate((valid) => {
+          if (!valid) {
+            return;
+          }
 
-                    this.loading = true;
-                    this.axios.post('users/signIn', this.params).then(data => {
-                        this.$store.commit('setUser', data.user);
-                        let redirectUrl = '/';
-                        if (data.user.accessLevel === 'Admin') {
-                            redirectUrl = '/admin';
-                        }
-                        if (this.$route.query.redirectUrl) {
-                            redirectUrl = this.$route.query.redirectUrl;
-                        }
-                        this.$router.push({
-                            path: redirectUrl
-                        });
-                    }).catch(res => {
-                        this.error(res.respMsg);
-                    }).finally(() => {
-                        this.loading = false;
-                    });
-                });
+          this.loading = true;
+          this.axios.post('users/signIn', this.params).then(data => {
+            this.$store.commit('setUser', data.user);
+            let redirectUrl = '/';
+            if (data.user.accessLevel === 'Admin') {
+              redirectUrl = '/admin';
             }
-        },
-        mounted() {
-            this.source = this.$route.query.source;
-        }
-    };
+            if (this.$route.query.redirectUrl) {
+              redirectUrl = this.$route.query.redirectUrl;
+            }
+            this.$router.push({
+              path: redirectUrl
+            });
+          }).catch(res => {
+            this.error(res.respMsg);
+          }).finally(() => {
+            this.loading = false;
+          });
+        });
+      }
+    },
+    mounted() {
+      this.source = this.$route.query.source;
+    }
+  };
 </script>
 
 <style scoped lang="scss">

@@ -70,25 +70,25 @@
 </template>
 
 <script>
-    export default {
-        methods: {
-            handleCommand: function (command) {
-                if (command === '0') {
-                    this.$router.push({
-                        path: '/profile'
-                    });
-                } else if (command === '1') {
-                    this.axios.get('users/signOut').finally(() => {
-                        localStorage.removeItem('token');
-                        this.$store.commit('setUser', {});
-                        this.$router.push({
-                            path: '/users/sign_in'
-                        });
-                    });
-                }
-            }
+  export default {
+    methods: {
+      handleCommand: function (command) {
+        if (command === '0') {
+          this.$router.push({
+            path: '/profile'
+          });
+        } else if (command === '1') {
+          this.axios.get('users/signOut').finally(() => {
+            localStorage.removeItem('token');
+            this.$store.commit('setUser', {});
+            this.$router.push({
+              path: '/users/sign_in'
+            });
+          });
         }
-    };
+      }
+    }
+  };
 </script>
 
 <style lang="scss">

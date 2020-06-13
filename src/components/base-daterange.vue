@@ -17,33 +17,33 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            prop: {
-                required: true,
-                type: String
-            },
-            label: {
-                required: true,
-                type: String
-            },
-            value: {
-                required: false,
-                type: Array,
-                default: function () {
-                    return [];
-                }
-            },
-            startPlaceholder: {
-                required: false,
-                type: String,
-                default: undefined
-            },
-            endPlaceholder: {
-                required: false,
-                type: String,
-                default: undefined
-            }
+  export default {
+    props: {
+      prop: {
+        required: true,
+        type: String
+      },
+      label: {
+        required: true,
+        type: String
+      },
+      value: {
+        required: false,
+        type: Array,
+        default: function () {
+          return [];
         }
-    };
+      },
+      startPlaceholder: {
+        required: false,
+        type: String,
+        default: undefined
+      },
+      endPlaceholder: {
+        required: false,
+        type: String,
+        default: undefined
+      }
+    }
+  };
 </script>
