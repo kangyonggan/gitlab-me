@@ -61,7 +61,7 @@
             <span>Access</span>
           </div>
           <div class="card-body">
-            <div class="info">
+            <div class="info info-plus">
               <div class="item">
                 Projects limit:
                 <span class="value">
@@ -100,7 +100,7 @@
             <span>Account</span>
           </div>
           <div class="card-body">
-            <div class="info">
+            <div class="info info-plus">
               <div class="item">
                 Username:
                 <span class="value">
@@ -200,5 +200,9 @@
         font-weight: bold;
       }
     }
+  }
+
+  .info-plus {
+    min-width: 350px;
   }
 </style>
