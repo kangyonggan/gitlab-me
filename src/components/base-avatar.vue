@@ -7,7 +7,7 @@
       :action="axios.defaults.baseURL + 'fileUpload'"
       :before-upload="beforeUpload"
       :on-success="uploadSuccess"
-      class="avatar-uploader"
+      :class="{'avatar-uploader': true, 'circular-avatar': circular}"
       :show-file-list="false"
     >
       <img
@@ -15,10 +15,11 @@
         :src="axios.defaults.baseURL + value"
         class="avatar"
       >
-      <i
+      <img
         v-else
-        class="el-icon-plus avatar-uploader-icon"
-      />
+        src="../assets/images/avatar.png"
+        class="avatar"
+      >
     </el-upload>
   </el-form-item>
 </template>
@@ -31,8 +32,14 @@
         type: String
       },
       label: {
-        required: true,
-        type: String
+        required: false,
+        type: String,
+        default: undefined
+      },
+      circular: {
+        required: false,
+        type: Boolean,
+        default: false
       },
       value: {
         required: false,
@@ -42,7 +49,7 @@
       size: {
         required: false,
         type: Number,
-        default: 1
+        default: 2
       }
     },
     data() {
@@ -93,6 +100,10 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+  }
+
+  /deep/ .circular-avatar .el-upload {
+    border-radius: 50% !important;
   }
 
   /deep/ .avatar-uploader .el-upload:hover {

@@ -22,7 +22,7 @@
             <img
               class="avatar"
               v-else
-              src="../../../../assets/images/logo.png"
+              src="../../../../assets/images/avatar.png"
             >
             <div class="info">
               <div class="item">

@@ -51,7 +51,7 @@
             <img
               class="avatar"
               v-else
-              src="../../../../assets/images/logo.png"
+              src="../../../../assets/images/avatar.png"
             >
             <span style="float: left;margin-top: 5px;margin-left: 5px;">
               {{ scope.row.username }}

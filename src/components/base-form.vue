@@ -2,7 +2,7 @@
   <div class="form-panel">
     <el-form
       ref="form"
-      label-width="220px"
+      :label-width="labelUp ? '220px' : undefined"
       :model="params"
       :rules="rules"
     >
@@ -47,6 +47,11 @@
         default: function () {
           return {};
         }
+      },
+      labelUp: {
+        required: false,
+        type: Boolean,
+        default: true
       }
     },
     data() {
