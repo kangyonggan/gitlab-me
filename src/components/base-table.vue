@@ -7,6 +7,9 @@
       @sort-change="changeSort"
       :empty-text="emptyText"
     >
+      <slot
+        name="prev"
+      />
       <el-table-column
         v-for="(column, index) in columns"
         :key="index"

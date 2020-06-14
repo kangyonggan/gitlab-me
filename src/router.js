@@ -83,6 +83,16 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
       },
       {
+        path: 'users/:id',
+        meta: {
+          title: 'Detail',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/users'
+        },
+        component: (resolve) => require(['./views/admin/manage/users/detail.vue'], resolve)
+      },
+      {
         path: 'groups',
         meta: {
           permission: true,

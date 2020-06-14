@@ -6,6 +6,7 @@ import BaseTable from './base-table';
 import BaseForm from './base-form';
 import BaseFormGroup from './base-form-group';
 import BaseAvatar from './base-avatar';
+import BaseHr from './base-hr';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -14,3 +15,4 @@ Vue.component('BaseTable', BaseTable);
 Vue.component('BaseForm', BaseForm);
 Vue.component('BaseFormGroup', BaseFormGroup);
 Vue.component('BaseAvatar', BaseAvatar);
+Vue.component('BaseHr', BaseHr);

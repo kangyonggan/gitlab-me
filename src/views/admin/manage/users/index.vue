@@ -33,6 +33,20 @@
       :columns="columns"
       ref="table"
     >
+      <template #prev>
+        <el-table-column
+          label="Username"
+        >
+          <template slot-scope="scope">
+            <router-link
+              :to="'/admin/users/' + scope.row.id"
+              style="font-weight: 500;"
+            >
+              {{ scope.row.username }}
+            </router-link>
+          </template>
+        </el-table-column>
+      </template>
       <template #actions="{row}">
         <el-dropdown
           split-button
@@ -80,10 +94,6 @@
       return {
         params: {},
         columns: [
-          {
-            label: 'Username',
-            prop: 'username'
-          },
           {
             label: 'Full name',
             prop: 'fullName'

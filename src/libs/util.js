@@ -54,6 +54,15 @@ util.formatStatus = function (isDeleted) {
   return isDeleted ? 'Removed' : 'Normal';
 };
 
+/**
+ * 格式化是否
+ *
+ * @param val
+ */
+util.formatYesNo = function (val) {
+  return val ? 'Yes' : 'No';
+};
+
 
 const isServer = Vue.prototype.$isServer;
 /* istanbul ignore next */
