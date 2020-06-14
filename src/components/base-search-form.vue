@@ -16,7 +16,7 @@
       </el-button>
       <el-button
         type="warning"
-        @click="$refs.form.resetFields()"
+        @click="reset"
       >
         Reset
       </el-button>
@@ -50,9 +50,13 @@
         let that = this;
         this.$refs.form.validate(function (res) {
           if (res) {
-            that.$parent.$refs[that.table].reload(that.model);
+            that.$parent.$refs[that.table].jump();
           }
         });
+      },
+      reset() {
+        this.$refs.form.resetFields();
+        this.$emit('reset');
       }
     }
   };

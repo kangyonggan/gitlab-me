@@ -4,62 +4,11 @@
       :data="list"
       stripe
       border
-      @sort-change="changeSort"
       :empty-text="emptyText"
+      @sort-change="sortChange"
     >
-      <slot
-        name="prev"
-      />
-      <el-table-column
-        v-for="(column, index) in columns"
-        :key="index"
-        :prop="column.prop"
-        :label="column.label"
-        :sortable="column.sortable === udf || column.sortable"
-        :fixed="column.fixed"
-        :width="column.width"
-      >
-        <template slot-scope="scope">
-          <span v-if="column.render">
-            {{ column.render(scope.row) }}
-          </span>
-          <span v-else>
-            {{ scope.row[column.prop] }}
-          </span>
-        </template>
-      </el-table-column>
-
       <slot />
-      <el-table-column
-        label="Operation"
-        v-if="actions"
-        :fixed="fixedAction ? 'right' : false"
-        width="135"
-      >
-        <template slot-scope="scope">
-          <slot
-            name="actions"
-            :row="scope.row"
-          />
-        </template>
-      </el-table-column>
     </el-table>
-
-    <el-row
-      v-if="pagination"
-      style="margin-top: 20px;"
-    >
-      <el-pagination
-        :current-page="params.pageNum"
-        :page-size="params.pageSize"
-        :layout="$store.getters.getSmallScreen ? 'total, sizes, prev, next, jumper' : 'total, sizes, prev, pager, next, jumper'"
-        :total="total"
-        @next-click="jump"
-        @prev-click="jump"
-        @current-change="jump"
-        @size-change="changeSize"
-      />
-    </el-row>
   </div>
 </template>
 
@@ -69,31 +18,15 @@
   export default {
     props: {
       url: {
-        required: false,
-        type: String,
-        default: ''
+        required: true,
+        type: String
       },
-      columns: {
+      params: {
         required: false,
-        type: Array,
+        type: Object,
         default: function () {
-          return [];
+          return {};
         }
-      },
-      actions: {
-        required: false,
-        type: Boolean,
-        default: true
-      },
-      fixedAction: {
-        required: false,
-        type: Boolean,
-        default: false
-      },
-      lazy: {
-        required: false,
-        type: Boolean,
-        default: false
       },
       pagination: {
         required: false,
@@ -103,18 +36,13 @@
     },
     data() {
       return {
-        udf: undefined,
-        params: {
-          pageNum: 1,
-          pageSize: 10
-        },
-        emptyText: 'No data',
         total: 0,
-        list: []
+        list: [],
+        emptyText: 'No data'
       };
     },
     methods: {
-      request: function () {
+      reload: function () {
         this.$store.commit('setLoading', true);
         this.emptyText = 'Loading';
         this.axios.get(this.url + '?' + qs.stringify(this.params)).then(data => {
@@ -138,39 +66,27 @@
           this.$store.commit('setLoading', false);
         });
       },
-      reload: function (params) {
-        if (!params) {
-          params = {};
-        }
-        this.params = Object.assign({
-          pageNum: 1,
-          pageSize: this.params.pageSize,
-          sortColumn: this.params.sortColumn,
-          sortOrder: this.params.sortOrder
-        }, params);
-        this.request();
-      },
       jump: function (pageNum) {
+        if (!pageNum) {
+          pageNum = 1;
+        }
         this.params.pageNum = pageNum;
-        this.request();
+
+        this.$router.push({
+          path: this.url,
+          query: this.params
+        });
       },
       changeSize: function (pageSize) {
-        this.params.pageNum = 1;
         this.params.pageSize = pageSize;
-        this.request();
+        this.jump();
       },
-      changeSort: function (column) {
-        this.params.pageNum = 1;
+      sortChange: function (column) {
         this.params.prop = column.prop;
         this.params.order = column.order;
         if (this.pagination) {
-          this.request();
+          this.jump();
         }
-      }
-    },
-    mounted() {
-      if (!this.lazy) {
-        this.request();
       }
     }
   };
