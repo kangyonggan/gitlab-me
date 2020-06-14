@@ -7,7 +7,7 @@
         :md="24"
         :sm="24"
         :xs="24"
-        style="margin-bottom: 40px;"
+        style="margin-top: 20px;"
       >
         <el-card>
           <div slot="header">
@@ -49,7 +49,7 @@
         </el-card>
       </el-col>
       <el-col
-        style="float: right; margin-bottom: 40px;"
+        style="float: right; margin-top: 20px;"
         :xl="11"
         :lg="11"
         :md="24"
@@ -88,6 +88,7 @@
     </el-row>
     <el-row>
       <el-col
+        style="margin-top: 30px;"
         :xl="12"
         :lg="12"
         :md="24"

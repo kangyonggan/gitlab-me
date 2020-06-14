@@ -42,7 +42,19 @@
               :to="'/admin/users/' + scope.row.id"
               style="font-weight: 500;"
             >
-              {{ scope.row.username }}
+              <img
+                v-if="scope.row.avatar"
+                :src="axios.defaults.baseURL + scope.row.avatar"
+                class="avatar"
+              >
+              <img
+                class="avatar"
+                v-else
+                src="../../../../assets/images/logo.png"
+              >
+              <span style="float: left;margin-top: 5px;margin-left: 5px;">
+                {{ scope.row.username }}
+              </span>
             </router-link>
           </template>
         </el-table-column>
@@ -153,3 +165,13 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  .avatar {
+    float: left;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid #e5e5e5;
+  }
+</style>

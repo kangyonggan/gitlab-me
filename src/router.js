@@ -85,7 +85,7 @@ const routers = [
       {
         path: 'users/:id',
         meta: {
-          title: 'Detail',
+          title: 'User detail',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
