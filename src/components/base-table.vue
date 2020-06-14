@@ -11,13 +11,13 @@
     </el-table>
 
     <el-row
-      v-if="pagination"
+      v-if="pagination && total > list.length"
       style="margin-top: 20px;"
     >
       <el-pagination
-        :current-page="params.pageNum"
-        :page-size="params.pageSize"
-        :layout="'total, sizes, prev, pager, next, jumper'"
+        :current-page="params.pageNum * 1"
+        :page-size="params.pageSize * 1"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
         @next-click="jump"
         @prev-click="jump"
