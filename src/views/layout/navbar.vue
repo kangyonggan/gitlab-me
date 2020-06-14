@@ -58,7 +58,7 @@
           divided
           command="0"
         >
-          Profile
+          Settings
         </el-dropdown-item>
 
         <el-dropdown-item command="1">

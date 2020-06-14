@@ -35,6 +35,19 @@
       };
     },
     methods: {
+      getPrefix(route) {
+        if (route.meta.menuType === 'Admin') {
+          this.breadcrumbs.push({
+            name: 'Admin area',
+            url: '/admin'
+          });
+        } else if (route.meta.menuType === 'Profile') {
+          this.breadcrumbs.push({
+            name: 'User Settings',
+            url: '/profile'
+          });
+        }
+      },
       getBreadcrumbs: function (route, menus) {
         let breadcrumbs = [];
         for (let i in menus) {
@@ -71,12 +84,7 @@
     },
     mounted() {
       this.breadcrumbs = [];
-      if (this.$route.fullPath.startsWith('/admin')) {
-        this.breadcrumbs.push({
-          name: 'Admin area',
-          url: '/admin'
-        });
-      }
+      this.getPrefix(this.$route);
       this.$nextTick(function () {
         this.breadcrumbs = this.breadcrumbs.concat(this.getBreadcrumbs(this.$route, this.menus));
         this.setTitle(this.$route);
@@ -85,12 +93,7 @@
     watch: {
       '$route'(newRoute) {
         this.breadcrumbs = [];
-        if (this.$route.fullPath.startsWith('/admin')) {
-          this.breadcrumbs.push({
-            name: 'Admin area',
-            url: '/admin'
-          });
-        }
+        this.getPrefix(newRoute);
         this.$nextTick(function () {
           this.breadcrumbs = this.breadcrumbs.concat(this.getBreadcrumbs(newRoute, this.menus));
           this.setTitle(newRoute);

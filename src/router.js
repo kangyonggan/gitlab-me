@@ -119,24 +119,37 @@ const routers = [
     ]
   },
   {
-    path: '/',
+    path: '/profile',
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
       {
         path: '/',
         meta: {
           permission: true,
-          menuType: 'Dashboard'
+          menuType: 'Profile'
         },
-        component: (resolve) => require(['./views/dashboard/index.vue'], resolve)
+        component: (resolve) => require(['./views/profile/index.vue'], resolve)
       },
       {
-        path: 'profile',
+        path: 'audit_log',
         meta: {
           permission: true,
-          menuType: 'Dashboard'
+          menuType: 'Profile'
         },
-        component: (resolve) => require(['./views/dashboard/profile/index.vue'], resolve)
+        component: (resolve) => require(['./views/profile/auditLog/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: (resolve) => require(['./views/layout.vue'], resolve),
+    children: [
+      {
+        path: '/',
+        meta: {
+          permission: true
+        },
+        component: (resolve) => require(['./views/index.vue'], resolve)
       }
     ]
   },

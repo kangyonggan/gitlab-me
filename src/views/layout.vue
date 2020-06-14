@@ -20,8 +20,8 @@
   import navbar from './layout/navbar';
   import sidebar from './layout/sidebar';
   import breadcrumb from './layout/breadcrumb';
-  import adminMenus from './layout/admin-menus';
-  import dashboardMenus from './layout/dashboard-menus';
+  import adminMenus from '../menus/admin-menus';
+  import profileMenus from '../menus/profile-menus';
   import BackTop from './layout/back-top';
 
   export default {
@@ -35,8 +35,8 @@
       changeMenus(route) {
         if (route.meta.menuType === 'Admin' && this.$store.getters.getUser.accessLevel === 'Admin') {
           this.menus = adminMenus;
-        } else if (route.meta.menuType === 'Dashboard') {
-          this.menus = dashboardMenus;
+        } else if (route.meta.menuType === 'Profile') {
+          this.menus = profileMenus;
         } else {
           this.menus = [];
         }
