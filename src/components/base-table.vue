@@ -9,6 +9,22 @@
     >
       <slot />
     </el-table>
+
+    <el-row
+      v-if="pagination"
+      style="margin-top: 20px;"
+    >
+      <el-pagination
+        :current-page="params.pageNum"
+        :page-size="params.pageSize"
+        :layout="'total, sizes, prev, pager, next, jumper'"
+        :total="total"
+        @next-click="jump"
+        @prev-click="jump"
+        @current-change="jump"
+        @size-change="changeSize"
+      />
+    </el-row>
   </div>
 </template>
 
