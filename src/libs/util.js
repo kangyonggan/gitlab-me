@@ -132,6 +132,21 @@ util.scrollTop = function (el, from = 0, to, duration = 500) {
   scroll(from, to, step);
 };
 
+/**
+ * 检测是否是保留字
+ *
+ * @param that
+ * @param value
+ * @param callback
+ */
+util.checkReserved = function (that, value, callback) {
+  that.axios.get('validate/reserved?word=' + value).then(() => {
+    callback();
+  }).catch(res => {
+    callback(new Error(res.respMsg));
+  });
+};
+
 export default util;
 
 Vue.prototype.util = util;

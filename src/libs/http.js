@@ -8,14 +8,7 @@ axios.defaults.timeout = 10000;
 
 // 请求拦截器
 axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('token');
-  if (!token && !config.url.startsWith('users')) {
-    return Promise.reject({
-      respCo: '9998',
-      respMsg: 'You are not sign in or expired'
-    });
-  }
-  config.headers['x-auth-token'] = token;
+  config.headers['x-auth-token'] = localStorage.getItem('token');
   if (config.data && config.type !== 'upload') {
     config.data = qs.stringify(config.data, {
       // 解决数组传递问题
