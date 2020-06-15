@@ -2,11 +2,7 @@
   <div>
     <el-row>
       <el-col
-        :xl="12"
-        :lg="12"
-        :md="24"
-        :sm="24"
-        :xs="24"
+        :span="12"
         style="margin-top: 20px;"
       >
         <el-card>
@@ -50,11 +46,7 @@
       </el-col>
       <el-col
         style="float: right; margin-top: 20px;"
-        :xl="11"
-        :lg="11"
-        :md="24"
-        :sm="24"
-        :xs="24"
+        :span="11"
       >
         <el-card>
           <div slot="header">
@@ -89,11 +81,7 @@
     <el-row>
       <el-col
         style="margin-top: 30px;"
-        :xl="12"
-        :lg="12"
-        :md="24"
-        :sm="24"
-        :xs="24"
+        :span="12"
       >
         <el-card>
           <div slot="header">

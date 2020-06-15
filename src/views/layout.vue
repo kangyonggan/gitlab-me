@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width: 1300px;">
     <navbar />
     <el-container>
       <sidebar

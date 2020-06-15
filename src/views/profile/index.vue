@@ -15,29 +15,16 @@
       url="/profile"
     >
       <el-row class="info">
-        <el-col
-          :xl="8"
-          :lg="8"
-          :md="10"
-          :sm="24"
-          :xs="24"
-        >
-          <h4>Public Avatar</h4>
+        <base-panel-left title="Public Avatar">
           <p>
             You can change your avatar here or remove the current avatar to revert to <a
               target="_blank"
               href="https://gravatar.com/"
             >gravatar.com</a>
           </p>
-        </el-col>
+        </base-panel-left>
 
-        <el-col
-          :xl="16"
-          :lg="16"
-          :md="14"
-          :sm="24"
-          :xs="24"
-        >
+        <base-panel-right>
           <base-avatar
             v-model="params.avatar"
             :params="params"
@@ -60,30 +47,17 @@
               >Remove avatar</a>
             </div>
           </div>
-        </el-col>
+        </base-panel-right>
       </el-row>
       <base-hr />
       <el-row class="info">
-        <el-col
-          :xl="8"
-          :lg="8"
-          :md="10"
-          :sm="24"
-          :xs="24"
-        >
-          <h4>Main settings</h4>
+        <base-panel-left title="Main settings">
           <p>
             This information will appear on your profile
           </p>
-        </el-col>
+        </base-panel-left>
 
-        <el-col
-          :xl="16"
-          :lg="16"
-          :md="14"
-          :sm="24"
-          :xs="24"
-        >
+        <base-panel-right>
           <base-input
             prop="fullName"
             label="Full name"
@@ -94,7 +68,7 @@
             label="Email"
             v-model="params.email"
           />
-        </el-col>
+        </base-panel-right>
       </el-row>
     </base-form>
   </div>
@@ -166,18 +140,6 @@
 <style scoped lang="scss">
   .info {
     margin-top: 20px;
-
-    h4 {
-      font-weight: 600;
-      line-height: 1.2;
-      color: #2e2e2e;
-      margin: 0 0 10px 0;
-      font-size: 20px;
-    }
-
-    p {
-      line-height: 1.5;
-    }
 
     /deep/ .avatar .el-form-item__content {
       margin-left: 30px !important;

@@ -7,6 +7,8 @@ import BaseForm from './base-form';
 import BaseFormGroup from './base-form-group';
 import BaseAvatar from './base-avatar';
 import BaseHr from './base-hr';
+import BasePanelLeft from './base-panel-left.vue';
+import BasePanelRight from './base-panel-right.vue';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -16,3 +18,5 @@ Vue.component('BaseForm', BaseForm);
 Vue.component('BaseFormGroup', BaseFormGroup);
 Vue.component('BaseAvatar', BaseAvatar);
 Vue.component('BaseHr', BaseHr);
+Vue.component('BasePanelLeft', BasePanelLeft);
+Vue.component('BasePanelRight', BasePanelRight);
