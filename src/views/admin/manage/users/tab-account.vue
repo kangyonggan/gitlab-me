@@ -22,7 +22,7 @@
             <img
               class="avatar"
               v-else
-              src="../../../../assets/images/avatar.png"
+              :src="defaultAvatar"
             >
             <div class="info">
               <div class="item">
@@ -159,11 +159,18 @@
 </template>
 
 <script>
+  import md5Hex from 'md5-hex';
+
   export default {
     props: {
       user: {
         required: true,
         type: Object
+      }
+    },
+    computed: {
+      defaultAvatar() {
+        return 'https://www.gravatar.com/avatar/' + md5Hex(this.user.email) + '.jpg?d=identicon';
       }
     }
   };

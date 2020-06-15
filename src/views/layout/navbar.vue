@@ -1,6 +1,7 @@
 <template>
   <el-header>
     <!--logo-->
+
     <router-link
       to="/"
       class="logo"
@@ -11,6 +12,7 @@
     </router-link>
 
     <!--navbar left-->
+
     <ul
       class="navbar"
       style="float: left"
@@ -22,6 +24,7 @@
         >
           <span class="el-dropdown-link item">
             Projects
+
             <i
               class="el-icon-arrow-down el-icon--right"
               style="margin-left: 0"
@@ -33,7 +36,9 @@
             style="min-width: 180px"
           >
             <el-dropdown-item>Your projects</el-dropdown-item>
+
             <el-dropdown-item>Starred projects</el-dropdown-item>
+
             <el-dropdown-item>Explore projects</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -85,22 +90,26 @@
     </ul>
 
     <!--avatar-->
+
     <el-dropdown
       style="float: right"
       trigger="click"
       @command="handleCommand"
     >
       <span>
+
         <img
           v-if="$store.getters.getUser.avatar"
           class="avatar"
           :src="axios.defaults.baseURL + $store.getters.getUser.avatar"
         >
+
         <img
           v-else
           class="avatar"
-          src="../../assets/images/avatar.png"
+          :src="defaultAvatar"
         >
+
         <i class="el-icon-arrow-down el-icon--right" />
       </span>
 
@@ -110,6 +119,7 @@
           style="line-height: 20px;color: #333;"
         >
           {{ $store.getters.getUser.fullName }}
+
           <br>
           @{{ $store.getters.getUser.username }}
         </el-dropdown-item>
@@ -128,22 +138,23 @@
     </el-dropdown>
 
     <!--navbar right-->
+
     <ul
       class="navbar"
       style="float: right;margin-right: 20px;"
     >
       <li style="line-height: 18px;">
-        <el-dropdown
-          trigger="click"
-        >
+        <el-dropdown trigger="click">
           <span
             class="el-dropdown-link item"
             style="display: inline-block;width: 55px;height: 32px;padding: 0;margin: 4px 0 0 0"
           >
+
             <i
               class="el-icon-circle-plus"
               style="float: left;font-size: 20px;margin-top: 5px;margin-left: 13px"
             />
+
             <i
               class="el-icon-arrow-down el-icon--right"
               style="margin-left: 0;float: left;margin-top: 8px;"
@@ -155,7 +166,9 @@
             style="min-width: 180px"
           >
             <el-dropdown-item>New project</el-dropdown-item>
+
             <el-dropdown-item>New group</el-dropdown-item>
+
             <el-dropdown-item>New snippet</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -218,30 +231,37 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                key: ''
-            };
-        },
-        methods: {
-            handleCommand: function (command) {
-                if (command === '0') {
-                    this.$router.push({
-                        path: '/profile'
-                    });
-                } else if (command === '1') {
-                    this.axios.get('users/signOut').finally(() => {
-                        localStorage.removeItem('token');
-                        this.$store.commit('setUser', {});
-                        this.$router.push({
-                            path: '/users/sign_in'
-                        });
-                    });
-                }
-            }
+  import md5Hex from 'md5-hex';
+
+  export default {
+    data() {
+      return {
+        key: ''
+      };
+    },
+    computed: {
+      defaultAvatar() {
+        return 'https://www.gravatar.com/avatar/' + md5Hex(this.$store.getters.getUser.email) + '.jpg?d=identicon';
+      }
+    },
+    methods: {
+      handleCommand: function (command) {
+        if (command === '0') {
+          this.$router.push({
+            path: '/profile'
+          });
+        } else if (command === '1') {
+          this.axios.get('users/signOut').finally(() => {
+            localStorage.removeItem('token');
+            this.$store.commit('setUser', {});
+            this.$router.push({
+              path: '/users/sign_in'
+            });
+          });
         }
-    };
+      }
+    }
+  };
 </script>
 
 <style lang="scss">

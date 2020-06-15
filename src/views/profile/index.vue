@@ -40,6 +40,7 @@
         >
           <base-avatar
             v-model="params.avatar"
+            :params="params"
             style="float: left"
             prop="avatar"
             class="avatar"

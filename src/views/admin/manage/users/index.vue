@@ -51,7 +51,7 @@
             <img
               class="avatar"
               v-else
-              src="../../../../assets/images/avatar.png"
+              :src="defaultAvatar(scope.row.email)"
             >
             <span style="float: left;margin-top: 5px;margin-left: 5px;">
               {{ scope.row.username }}
@@ -122,6 +122,8 @@
 </template>
 
 <script>
+  import md5Hex from 'md5-hex';
+
   export default {
     data() {
       return {
@@ -129,6 +131,9 @@
       };
     },
     methods: {
+      defaultAvatar(email) {
+        return 'https://www.gravatar.com/avatar/' + md5Hex(email) + '.jpg?d=identicon';
+      },
       newUser() {
         this.$router.push({
           path: '/admin/users/new'

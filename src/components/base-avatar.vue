@@ -17,7 +17,7 @@
       >
       <img
         v-else
-        src="../assets/images/avatar.png"
+        :src="defaultAvatar"
         class="avatar"
       >
     </el-upload>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+  import md5Hex from 'md5-hex';
+
   export default {
     props: {
       prop: {
@@ -35,6 +37,13 @@
         required: false,
         type: String,
         default: undefined
+      },
+      params: {
+        required: false,
+        type: Object,
+        default: function () {
+          return {};
+        }
       },
       circular: {
         required: false,
@@ -63,6 +72,11 @@
           'image/webp'
         ]
       };
+    },
+    computed: {
+      defaultAvatar() {
+        return 'https://www.gravatar.com/avatar/' + md5Hex(this.params.email) + '.jpg?d=identicon';
+      }
     },
     methods: {
       beforeUpload(file) {

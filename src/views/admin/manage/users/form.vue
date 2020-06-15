@@ -86,6 +86,7 @@
     <base-avatar
       label="Avatar"
       v-model="params.avatar"
+      :params="params"
       prop="avatar"
     />
   </base-form>
