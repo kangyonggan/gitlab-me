@@ -2,8 +2,8 @@
   <div style="margin-top: 20px;">
     <el-table
       :data="list"
-      stripe
-      border
+      :stripe="stripe"
+      :border="border"
       :empty-text="emptyText"
       @sort-change="sortChange"
     >
@@ -37,6 +37,11 @@
         required: true,
         type: String
       },
+      jumpUrl: {
+        required: false,
+        type: String,
+        default: ''
+      },
       params: {
         required: false,
         type: Object,
@@ -45,6 +50,16 @@
         }
       },
       pagination: {
+        required: false,
+        type: Boolean,
+        default: true
+      },
+      border: {
+        required: false,
+        type: Boolean,
+        default: true
+      },
+      stripe: {
         required: false,
         type: Boolean,
         default: true
@@ -89,7 +104,7 @@
         this.params.pageNum = pageNum;
 
         this.$router.push({
-          path: this.url,
+          path: this.jumpUrl ? this.jumpUrl : this.url,
           query: this.params
         });
       },

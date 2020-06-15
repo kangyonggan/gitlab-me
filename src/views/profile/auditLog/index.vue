@@ -5,24 +5,34 @@
     </base-panel-left>
     <base-panel-right>
       <h4>History of authentications</h4>
-      <el-table
-        :data="tableData"
+      <base-table
+        url="/profile/signInLog"
+        jump-url="/profile/audit_log"
+        ref="table"
+        :params="params"
+        :border="false"
+        :stripe="false"
       >
         <el-table-column
-          prop="date"
+          prop="id"
+          label="Log id"
+          sortable
+        />
+        <el-table-column
+          prop="signInTime"
           label="Sign in time"
-          width="180"
-        />
+          sortable
+        >
+          <template slot-scope="scope">
+            {{ util.formatTimestamp(scope.row.signInTime) }}
+          </template>
+        </el-table-column>
         <el-table-column
-          prop="address"
+          prop="signInIp"
           label="Sign in ip"
-          width="180"
+          sortable
         />
-        <el-table-column
-          prop="name"
-          label="Log description"
-        />
-      </el-table>
+      </base-table>
     </base-panel-right>
   </div>
 </template>
@@ -31,8 +41,18 @@
   export default {
     data() {
       return {
-        tableData: []
+        params: {}
       };
+    },
+    mounted() {
+      Object.keys(this.$route.query).forEach(key => {
+        this.params[key] = this.$route.query[key];
+      });
+      this.$refs.table.reload();
+    },
+    beforeRouteUpdate(to, from, next) {
+      this.$refs.table.reload();
+      next();
     }
   };
 </script>
