@@ -320,6 +320,8 @@
           border: none;
           outline: none;
           color: #e1e1e1;
+          height: 30px;
+          line-height: 30px;
         }
       }
     }
