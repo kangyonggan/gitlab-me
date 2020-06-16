@@ -40,7 +40,7 @@
       >
         <template slot-scope="scope">
           <router-link
-            :to="'/admin/users/' + scope.row.id"
+            :to="'/admin/users/' + scope.row.username"
             style="font-weight: 500;"
           >
             <base-avatar
@@ -136,7 +136,7 @@
       },
       editUer(user) {
         this.$router.push({
-          path: '/admin/users/' + user.id + '/edit'
+          path: '/admin/users/' + user.username + '/edit'
         });
       },
       handleCommand: function (command, row) {

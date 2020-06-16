@@ -73,7 +73,7 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
       },
       {
-        path: 'users/:id/edit',
+        path: 'users/:username/edit',
         meta: {
           title: 'Edit user',
           permission: true,
@@ -83,7 +83,7 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
       },
       {
-        path: 'users/:id',
+        path: 'users/:username',
         meta: {
           title: 'User detail',
           permission: true,
@@ -111,7 +111,7 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
       },
       {
-        path: 'groups/:id/edit',
+        path: 'groups/:groupPath/edit',
         meta: {
           title: 'Edit group',
           permission: true,
@@ -121,7 +121,7 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
       },
       {
-        path: 'groups/:id',
+        path: 'groups/:groupPath',
         meta: {
           title: 'Groups detail',
           permission: true,

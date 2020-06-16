@@ -1,12 +1,5 @@
 <template>
   <div>
-    <el-alert
-      style="margin-bottom: 20px;"
-      v-show="showAlert"
-      :title="alertTitle"
-      type="success"
-      :closable="false"
-    />
     <el-card>
       <div slot="header">
         <span>Group info:</span>
@@ -159,8 +152,6 @@
     data() {
       return {
         loading: false,
-        showAlert: false,
-        alertTitle: '',
         group: {},
         params: {
           userIds: [],
@@ -212,20 +203,6 @@
           return 'Owner';
         }
       },
-      updateAlert() {
-        if (this.$route.query.from === 'edit') {
-          this.showAlert = true;
-          this.alertTitle = 'Group was successfully updated.';
-        } else if (this.$route.query.from === 'new') {
-          this.showAlert = true;
-          this.alertTitle = 'Group ' + this.group.groupName + ' was successfully created.';
-        }
-
-        let that = this;
-        setTimeout(function () {
-          that.showAlert = false;
-        }, 2000);
-      },
       loadUsers() {
         this.axios.get('admin/users/all').then(data => {
           this.users = data.users;
@@ -267,18 +244,17 @@
       }
     },
     mounted() {
-      let id = this.$route.params.id;
-      this.params.id = id;
+      let groupPath = this.$route.params.groupPath;
+      this.params.groupPath = groupPath;
 
       this.loadUsers();
-      this.loadGroupUsers(id);
 
-      if (id) {
+      if (groupPath) {
         this.loading = true;
-        this.axios.get('admin/groups/' + id).then(data => {
+        this.axios.get('admin/groups/' + groupPath).then(data => {
           this.group = data.group;
           this.$parent.$children[0].updateTitle(data.group.groupName);
-          this.updateAlert();
+          this.loadGroupUsers(this.group.id);
         }).catch(res => {
           this.error(res.respMsg);
         }).finally(() => {

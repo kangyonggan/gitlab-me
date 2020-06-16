@@ -3,7 +3,7 @@
     <h3 class="page-title">
       {{ user.fullName }}
       <span>({{ user.username }})</span>
-      <router-link :to="'/admin/users/' + user.id + '/edit'">
+      <router-link :to="'/admin/users/' + user.username + '/edit'">
         <i class="el-icon-edit-outline">Edit</i>
       </router-link>
     </h3>
@@ -58,10 +58,10 @@
     },
     mounted() {
       this.tab = this.$route.query.tab || 'account';
-      let id = this.$route.params.id;
-      if (id) {
+      let username = this.$route.params.username;
+      if (username) {
         this.loading = true;
-        this.axios.get('admin/users/' + id).then(data => {
+        this.axios.get('admin/users/' + username).then(data => {
           this.user = data.user;
           this.$parent.$children[0].updateTitle(data.user.fullName);
         }).catch(res => {

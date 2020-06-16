@@ -183,21 +183,21 @@
           callback(new Error(res.respMsg));
         });
       },
-      handleSuccess() {
+      handleSuccess(data) {
         this.$router.push({
-          path: '/admin/users'
+          path: '/admin/users/' + data.user.username
         });
       }
     },
     mounted() {
-      let id = this.$route.params.id;
-      if (id) {
+      let username = this.$route.params.username;
+      if (username) {
         this.isEdit = true;
         this.rules.password[0].required = false;
         this.rules.rePassword[0].required = false;
 
         this.loading = true;
-        this.axios.get('admin/users/' + id).then(data => {
+        this.axios.get('admin/users/' + username).then(data => {
           let user = data.user;
           this.params.id = user.id;
           this.params.username = user.username;

@@ -2,7 +2,7 @@
   <base-form
     :params="params"
     :rules="rules"
-    :method="params.id ? 'PUT' : 'POST'"
+    :method="isEdit ? 'PUT' : 'POST'"
     url="/admin/groups"
     @success="handleSuccess"
     v-loading="loading"
@@ -152,19 +152,16 @@
       },
       handleSuccess(data) {
         this.$router.push({
-          path: '/admin/groups/' + data.group.id,
-          query: {
-            from: 'edit'
-          }
+          path: '/admin/groups/' + data.group.groupPath
         });
       }
     },
     mounted() {
-      let id = this.$route.params.id;
-      if (id) {
+      let groupPath = this.$route.params.groupPath;
+      if (groupPath) {
         this.isEdit = true;
         this.loading = true;
-        this.axios.get('admin/groups/' + id).then(data => {
+        this.axios.get('admin/groups/' + groupPath).then(data => {
           let group = data.group;
           this.params.id = group.id;
           this.params.groupPath = group.groupPath;

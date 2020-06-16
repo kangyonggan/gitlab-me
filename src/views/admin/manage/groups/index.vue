@@ -35,7 +35,7 @@
       >
         <template slot-scope="scope">
           <router-link
-            :to="'/admin/groups/' + scope.row.id"
+            :to="'/admin/groups/' + scope.row.groupPath"
             style="font-weight: 500;"
           >
             <base-avatar
@@ -131,7 +131,7 @@
       },
       editGroup(group) {
         this.$router.push({
-          path: '/admin/groups/' + group.id + '/edit'
+          path: '/admin/groups/' + group.groupPath + '/edit'
         });
       },
       handleCommand: function (command, row) {
