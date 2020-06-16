@@ -61,6 +61,7 @@
               :label="user.fullName"
               :value="user.id"
               style="height: 48px;"
+              :disabled="groupUserIds.includes(user.id)"
             >
               <div style="height: 48px;margin-top: 7px;">
                 <base-avatar
@@ -172,6 +173,7 @@
         },
         users: [],
         groupUsers: [],
+        groupUserIds: [],
         accessList: [
           {
             code: 0,
@@ -234,6 +236,11 @@
       loadGroupUsers(groupId) {
         this.axios.get('admin/groups/' + groupId + '/users').then(data => {
           this.groupUsers = data.groupUsers;
+
+          this.groupUserIds = [];
+          for (let i = 0; i < this.groupUsers.length; i++) {
+            this.groupUserIds[i] = this.groupUsers[i].id;
+          }
         }).catch(res => {
           this.error(res.respMsg);
         });
