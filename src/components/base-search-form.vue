@@ -3,7 +3,7 @@
     :inline="true"
     :model="model"
     ref="form"
-    label-width="90px"
+    label-width="100px"
     :rules="rules"
   >
     <slot />

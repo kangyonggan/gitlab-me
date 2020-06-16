@@ -3,7 +3,7 @@
     <!--搜索表单-->
     <base-search-form :model="params">
       <base-input
-        label="username"
+        label="Username"
         v-model="params.username"
         prop="username"
       />
@@ -22,7 +22,7 @@
           type="success"
           @click="newUser"
         >
-          New User
+          New user
         </el-button>
       </template>
     </base-search-form>

@@ -9,7 +9,7 @@
       :rows="rows"
       @keyup.enter.native="$emit('on-enter')"
       @input="$emit('input', $event)"
-      :placeholder="placeholder ? placeholder : 'Please enter ' + label"
+      :placeholder="placeholder ? placeholder : label"
       clearable
       :readonly="readonly"
     />

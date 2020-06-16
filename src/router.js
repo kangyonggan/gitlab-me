@@ -65,7 +65,7 @@ const routers = [
       {
         path: 'users/new',
         meta: {
-          title: 'New User',
+          title: 'New user',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
@@ -75,7 +75,7 @@ const routers = [
       {
         path: 'users/:id/edit',
         meta: {
-          title: 'Edit User',
+          title: 'Edit user',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
@@ -99,6 +99,16 @@ const routers = [
           menuType: 'Admin'
         },
         component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
+      },
+      {
+        path: 'groups/new',
+        meta: {
+          title: 'New group',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/groups'
+        },
+        component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
       },
       {
         path: 'projects',

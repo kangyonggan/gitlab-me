@@ -140,9 +140,7 @@ util.scrollTop = function (el, from = 0, to, duration = 500) {
  * @param callback
  */
 util.checkReserved = function (that, value, callback) {
-  that.axios.get('validate/reserved?word=' + value).then(() => {
-    callback();
-  }).catch(res => {
+  that.axios.get('validate/reserved?word=' + value).catch(res => {
     callback(new Error(res.respMsg));
   });
 };

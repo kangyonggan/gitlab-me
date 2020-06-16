@@ -45,6 +45,16 @@
           return {};
         }
       },
+      emptyAvatar: {
+        required: false,
+        type: String,
+        default: 'email'
+      },
+      avatarType: {
+        required: false,
+        type: String,
+        default: 'identicon'
+      },
       circular: {
         required: false,
         type: Boolean,
@@ -75,7 +85,7 @@
     },
     computed: {
       defaultAvatar() {
-        return 'https://www.gravatar.com/avatar/' + md5Hex(this.params.email) + '.jpg?d=identicon';
+        return 'https://www.gravatar.com/avatar/' + md5Hex(this.params[this.emptyAvatar]) + '.jpg?d=' + this.avatarType;
       }
     },
     methods: {
