@@ -121,6 +121,16 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
       },
       {
+        path: 'groups/:id',
+        meta: {
+          title: 'Groups detail',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/groups'
+        },
+        component: (resolve) => require(['./views/admin/manage/groups/detail.vue'], resolve)
+      },
+      {
         path: 'projects',
         meta: {
           permission: true,
@@ -213,7 +223,7 @@ router.beforeEach(async (to, from, next) => {
   // Tips：只有登录之后才能走到这里
 
   // 登录了，但是没有权限，到403界面
-  if (to.fullPath.startsWith('/admin') && store.getters.getUser.accessLevel !== 'Admin') {
+  if (to.meta.menuType === 'Admin' && store.getters.getUser.accessLevel !== 'Admin') {
     next({
       path: '/404'
     });

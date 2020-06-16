@@ -10,16 +10,11 @@
             <span>Profile</span>
           </div>
           <div class="card-body">
-            <img
-              v-if="user.avatar"
-              :src="axios.defaults.baseURL + user.avatar"
-              class="avatar"
-            >
-            <img
-              class="avatar"
-              v-else
-              :src="defaultAvatar"
-            >
+            <base-avatar
+              style="float: left"
+              :avatar="user.avatar"
+              :empty-avatar="user.email"
+            />
             <div class="info">
               <div class="item">
                 ID:
@@ -147,32 +142,17 @@
 </template>
 
 <script>
-  import md5Hex from 'md5-hex';
-
   export default {
     props: {
       user: {
         required: true,
         type: Object
       }
-    },
-    computed: {
-      defaultAvatar() {
-        return 'https://www.gravatar.com/avatar/' + md5Hex(this.user.email) + '.jpg?d=identicon';
-      }
     }
   };
 </script>
 
 <style scoped lang="scss">
-  .avatar {
-    float: left;
-    height: 128px;
-    width: 128px;
-    border-radius: 50%;
-    border: 1px solid #e5e5e5;
-  }
-
   .card-body {
     padding-bottom: 15px;
   }

@@ -80,6 +80,10 @@
         } else {
           this.util.title();
         }
+      },
+      updateTitle(title) {
+        this.util.title(title);
+        this.breadcrumbs[this.breadcrumbs.length - 1].name = title;
       }
     },
     mounted() {

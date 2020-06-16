@@ -25,7 +25,7 @@
         </base-panel-left>
 
         <base-panel-right>
-          <base-avatar
+          <base-upload-avatar
             v-model="params.avatar"
             :params="params"
             style="float: left"

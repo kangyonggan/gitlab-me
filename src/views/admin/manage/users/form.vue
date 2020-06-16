@@ -83,7 +83,7 @@
 
     <base-form-group name="Profile" />
 
-    <base-avatar
+    <base-upload-avatar
       label="Avatar"
       v-model="params.avatar"
       :params="params"

@@ -75,7 +75,7 @@
       </div>
     </el-form-item>
 
-    <base-avatar
+    <base-upload-avatar
       label="Group avatar"
       v-model="params.groupAvatar"
       :params="params"
@@ -152,7 +152,10 @@
       },
       handleSuccess(data) {
         this.$router.push({
-          path: '/admin/groups/' + data.group.id
+          path: '/admin/groups/' + data.group.id,
+          query: {
+            from: 'edit'
+          }
         });
       }
     },

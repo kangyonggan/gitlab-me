@@ -38,16 +38,13 @@
             :to="'/admin/groups/' + scope.row.id"
             style="font-weight: 500;"
           >
-            <img
-              v-if="scope.row.groupAvatar"
-              :src="axios.defaults.baseURL + scope.row.groupAvatar"
-              class="avatar"
-            >
-            <img
-              class="avatar"
-              v-else
-              :src="defaultAvatar(scope.row.groupPath)"
-            >
+            <base-avatar
+              style="float: left"
+              :size="30"
+              type="retro"
+              :avatar="scope.row.groupAvatar"
+              :empty-avatar="scope.row.groupPath"
+            />
             <span style="float: left;margin-top: 5px;margin-left: 5px;">
               {{ scope.row.groupPath }}
             </span>
@@ -117,8 +114,6 @@
 </template>
 
 <script>
-  import md5Hex from 'md5-hex';
-
   export default {
     data() {
       return {
@@ -129,9 +124,6 @@
       };
     },
     methods: {
-      defaultAvatar(groupPath) {
-        return 'https://www.gravatar.com/avatar/' + md5Hex(groupPath) + '.jpg?d=retro';
-      },
       newGroup() {
         this.$router.push({
           path: '/admin/groups/new'
@@ -167,13 +159,3 @@
     }
   };
 </script>
-
-<style scoped lang="scss">
-  .avatar {
-    float: left;
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    border: 1px solid #e5e5e5;
-  }
-</style>

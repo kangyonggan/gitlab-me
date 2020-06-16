@@ -43,16 +43,12 @@
             :to="'/admin/users/' + scope.row.id"
             style="font-weight: 500;"
           >
-            <img
-              v-if="scope.row.avatar"
-              :src="axios.defaults.baseURL + scope.row.avatar"
-              class="avatar"
-            >
-            <img
-              class="avatar"
-              v-else
-              :src="defaultAvatar(scope.row.email)"
-            >
+            <base-avatar
+              :size="30"
+              style="float: left"
+              :avatar="scope.row.avatar"
+              :empty-avatar="scope.row.email"
+            />
             <span style="float: left;margin-top: 5px;margin-left: 5px;">
               {{ scope.row.username }}
             </span>
@@ -122,8 +118,6 @@
 </template>
 
 <script>
-  import md5Hex from 'md5-hex';
-
   export default {
     data() {
       return {
@@ -135,9 +129,6 @@
       };
     },
     methods: {
-      defaultAvatar(email) {
-        return 'https://www.gravatar.com/avatar/' + md5Hex(email) + '.jpg?d=identicon';
-      },
       newUser() {
         this.$router.push({
           path: '/admin/users/new'
@@ -179,13 +170,3 @@
     }
   };
 </script>
-
-<style scoped lang="scss">
-  .avatar {
-    float: left;
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    border: 1px solid #e5e5e5;
-  }
-</style>

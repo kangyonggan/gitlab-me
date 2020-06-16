@@ -97,18 +97,12 @@
       @command="handleCommand"
     >
       <span>
-
-        <img
-          v-if="$store.getters.getUser.avatar"
-          class="avatar"
-          :src="axios.defaults.baseURL + $store.getters.getUser.avatar"
-        >
-
-        <img
-          v-else
-          class="avatar"
-          :src="defaultAvatar"
-        >
+        <base-avatar
+          style="margin-top: 7px;float: left"
+          :size="26"
+          :avatar="$store.getters.getUser.avatar"
+          :empty-avatar="$store.getters.getUser.email"
+        />
 
         <i class="el-icon-arrow-down el-icon--right" />
       </span>
@@ -231,18 +225,11 @@
 </template>
 
 <script>
-  import md5Hex from 'md5-hex';
-
   export default {
     data() {
       return {
         key: ''
       };
-    },
-    computed: {
-      defaultAvatar() {
-        return 'https://www.gravatar.com/avatar/' + md5Hex(this.$store.getters.getUser.email) + '.jpg?d=identicon';
-      }
     },
     methods: {
       handleCommand: function (command) {
@@ -344,16 +331,6 @@
           line-height: 30px;
         }
       }
-    }
-
-    .avatar {
-      float: left;
-      width: 26px;
-      height: 26px;
-      margin-top: 7px;
-      border-radius: 50%;
-      border: 1px solid #d1d1f0;
-      box-shadow: 0 1px 5px rgba(27, 31, 35, .15);
     }
 
     .el-dropdown {
