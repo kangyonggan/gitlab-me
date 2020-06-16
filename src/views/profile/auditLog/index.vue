@@ -1,9 +1,16 @@
 <template>
   <div style="max-width: 1000px;margin: 0 auto;">
-    <base-panel-left title="Authentication log">
+    <div
+      class="panel"
+      style="width: 30%"
+    >
+      <h4>Authentication log</h4>
       <p>This is a security log of important events involving your account.</p>
-    </base-panel-left>
-    <base-panel-right>
+    </div>
+    <div
+      class="panel"
+      style="width: 62%;float: right"
+    >
       <h4>History of authentications</h4>
       <base-table
         url="/profile/signInLog"
@@ -33,7 +40,7 @@
           sortable
         />
       </base-table>
-    </base-panel-right>
+    </div>
   </div>
 </template>
 
@@ -63,5 +70,22 @@
     font-size: 16px;
     font-weight: 600;
     color: #2e2e2e;
+  }
+  
+  .panel {
+    float: left;
+    width: 48.5%;
+
+    h4 {
+      font-weight: 600;
+      line-height: 1.2;
+      color: #2e2e2e;
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+
+    p {
+      line-height: 1.5;
+    }
   }
 </style>

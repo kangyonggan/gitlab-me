@@ -15,16 +15,23 @@
       url="/profile"
     >
       <el-row class="info">
-        <base-panel-left title="Public Avatar">
+        <div
+          class="panel"
+          style="width: 37%"
+        >
+          <h4>Public Avatar</h4>
           <p>
             You can change your avatar here or remove the current avatar to revert to <a
               target="_blank"
               href="https://gravatar.com/"
             >gravatar.com</a>
           </p>
-        </base-panel-left>
+        </div>
 
-        <base-panel-right>
+        <div
+          class="panel"
+          style="width: 62%;"
+        >
           <base-upload-avatar
             v-model="params.avatar"
             :params="params"
@@ -47,17 +54,24 @@
               >Remove avatar</a>
             </div>
           </div>
-        </base-panel-right>
+        </div>
       </el-row>
       <base-hr />
       <el-row class="info">
-        <base-panel-left title="Main settings">
+        <div
+          class="panel"
+          style="width: 37%"
+        >
+          <h4>Main settings</h4>
           <p>
             This information will appear on your profile
           </p>
-        </base-panel-left>
+        </div>
 
-        <base-panel-right>
+        <div
+          class="panel"
+          style="width: 62%;"
+        >
           <base-input
             prop="fullName"
             label="Full name"
@@ -68,7 +82,7 @@
             label="Email"
             v-model="params.email"
           />
-        </base-panel-right>
+        </div>
       </el-row>
     </base-form>
   </div>
@@ -140,6 +154,23 @@
 <style scoped lang="scss">
   .info {
     margin-top: 20px;
+    
+    .panel {
+      float: left;
+      width: 48.5%;
+
+      h4 {
+        font-weight: 600;
+        line-height: 1.2;
+        color: #2e2e2e;
+        margin: 0 0 10px 0;
+        font-size: 20px;
+      }
+
+      p {
+        line-height: 1.5;
+      }
+    }
 
     /deep/ .avatar .el-form-item__content {
       margin-left: 30px !important;

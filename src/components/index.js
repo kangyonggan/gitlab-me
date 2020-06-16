@@ -8,8 +8,7 @@ import BaseFormGroup from './base-form-group';
 import BaseUploadAvatar from './base-upload-avatar';
 import BaseAvatar from './base-avatar';
 import BaseHr from './base-hr';
-import BasePanelLeft from './base-panel-left.vue';
-import BasePanelRight from './base-panel-right.vue';
+import BaseSelect from './base-select';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -20,5 +19,4 @@ Vue.component('BaseFormGroup', BaseFormGroup);
 Vue.component('BaseUploadAvatar', BaseUploadAvatar);
 Vue.component('BaseAvatar', BaseAvatar);
 Vue.component('BaseHr', BaseHr);
-Vue.component('BasePanelLeft', BasePanelLeft);
-Vue.component('BasePanelRight', BasePanelRight);
+Vue.component('BaseSelect', BaseSelect);
