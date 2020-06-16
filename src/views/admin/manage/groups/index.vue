@@ -68,7 +68,26 @@
         prop="visibilityLevel"
         label="Visibility level"
         sortable
-      />
+      >
+        <template slot-scope="scope">
+          <span v-if="scope.row.visibilityLevel === 0">
+            <i class="el-icon-lock" />
+            Private
+          </span>
+          <span v-else-if="scope.row.visibilityLevel === 1">
+            <i class="el-icon-refrigerator" />
+            Internal
+          </span>
+          <span v-else-if="scope.row.visibilityLevel === 2">
+            <i class="el-icon-open" />
+            Public
+          </span>
+          <span v-else>
+            <i class="el-icon-question"></i>
+            {{ scope.row.visibilityLevel }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions">
         <template slot-scope="scope">
           <el-dropdown
@@ -103,7 +122,10 @@
   export default {
     data() {
       return {
-        params: {}
+        params: {
+          groupPath: '',
+          groupName: ''
+        }
       };
     },
     methods: {

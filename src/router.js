@@ -111,6 +111,16 @@ const routers = [
         component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
       },
       {
+        path: 'groups/:id/edit',
+        meta: {
+          title: 'Edit group',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/groups'
+        },
+        component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
+      },
+      {
         path: 'projects',
         meta: {
           permission: true,

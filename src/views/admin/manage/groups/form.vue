@@ -12,6 +12,25 @@
       v-model="params.groupPath"
       prop="groupPath"
     />
+
+    <ul
+      class="group-tips"
+      v-show="isEdit"
+      style="background: #fc9403;border-color: #fc9403"
+    >
+      <li>
+        A group is a collection of several projects
+      </li>
+      <li>
+        Members of a group may only view projects they have permission to access
+      </li>
+      <li>
+        Group project URLs are prefixed with the group namespace
+      </li>
+      <li>
+        Existing projects may be moved into a group
+      </li>
+    </ul>
     <base-input
       label="Group name"
       v-model="params.groupName"
@@ -67,7 +86,10 @@
 
     <base-hr />
 
-    <ul class="group-tips">
+    <ul
+      class="group-tips"
+      v-show="!isEdit"
+    >
       <li>
         A group is a collection of several projects
       </li>
@@ -145,7 +167,7 @@
           this.params.groupPath = group.groupPath;
           this.params.groupName = group.groupName;
           this.params.description = group.description;
-          this.params.visibilityLevel = group.visibilityLevel;
+          this.params.visibilityLevel = group.visibilityLevel + '';
 
           this.oldGroupPath = group.groupPath;
         }).catch(res => {

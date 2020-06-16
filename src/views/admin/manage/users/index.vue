@@ -127,7 +127,11 @@
   export default {
     data() {
       return {
-        params: {}
+        params: {
+          username: '',
+          fullName: '',
+          email: ''
+        }
       };
     },
     methods: {
