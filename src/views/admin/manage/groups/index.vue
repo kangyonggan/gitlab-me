@@ -83,7 +83,7 @@
             Public
           </span>
           <span v-else>
-            <i class="el-icon-question"></i>
+            <i class="el-icon-question" />
             {{ scope.row.visibilityLevel }}
           </span>
         </template>
