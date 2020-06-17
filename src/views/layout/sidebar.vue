@@ -17,8 +17,24 @@
             v-if="menu.icon"
             :class="menu.icon"
           />
+          <base-avatar
+            :size="36"
+            style="margin-right: 10px;"
+            v-if="menu.hasAvatar"
+            :avatar="menu.avatar"
+            :empty-avatar="menu.emptyAvatar"
+            :type="menu.avatarType"
+          />
 
-          <span slot="title">{{ menu.name }}</span>
+          <span
+            slot="title"
+            v-if="menu.hasAvatar"
+            style="font-weight: 600;color: #2e2e2e"
+          >{{ menu.name }}</span>
+          <span
+            slot="title"
+            v-else
+          >{{ menu.name }}</span>
         </el-menu-item>
 
         <menus

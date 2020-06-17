@@ -176,7 +176,7 @@ const routers = [
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
       {
-        path: ':groupPath',
+        path: ':path',
         name: 'groups',
         meta: {
           permission: true,
@@ -185,7 +185,7 @@ const routers = [
         component: (resolve) => require(['./views/groups/index.vue'], resolve)
       },
       {
-        path: ':groupPath/users',
+        path: ':path/users',
         meta: {
           permission: true,
           menuType: 'Groups'
@@ -239,8 +239,7 @@ router.beforeEach(async (to, from, next) => {
   if (!util.reservedWords.includes(code)
     && !dynamicRoutePath.includes(code)
     && /^\/[a-zA-Z0-9]+\/?$/.test(to.path)) {
-    store.commit('setCode', code);
-    await store.dispatch('getCodeType', code).then(type => {
+    await store.dispatch('getCodeType', code).then(data => {
       router.addRoutes([{
         path: to.path,
         component: (resolve) => require(['./views/layout.vue'], resolve),
@@ -249,9 +248,10 @@ router.beforeEach(async (to, from, next) => {
             path: '/',
             meta: {
               permission: true,
-              menuType: type
+              menuType: data.type,
+              item: data.item
             },
-            component: (resolve) => require(['./views/' + type.toLowerCase() + '/index.vue'], resolve)
+            component: (resolve) => require(['./views/' + data.type.toLowerCase() + '/index.vue'], resolve)
           }
         ]
       }]);

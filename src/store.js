@@ -11,7 +11,7 @@ export default new Vuex.Store({
     loading: false,
     user: JSON.parse(localStorage.getItem('user')) || {},
     type: '',
-    code: ''
+    item: {}
   },
   // get变量
   getters: {
@@ -20,12 +20,6 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.user;
-    },
-    getType(state) {
-      return state.type;
-    },
-    getCode(state) {
-      return state.code;
     }
   },
   // set变量
@@ -36,12 +30,6 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user));
-    },
-    setType(state, type) {
-      state.type = type;
-    },
-    setCode(state, code) {
-      state.code = code;
     }
   },
   // 异步操作
@@ -49,11 +37,8 @@ export default new Vuex.Store({
     getCodeType(state, code) {
       return new Promise(function (resolve, reject) {
         axios.get('validate/getCodeType?code=' + code).then(data => {
-          state.type = data.type;
-          resolve(data.type);
+          resolve(data);
         }).catch(() => {
-          state.type = '';
-          state.code = '';
           reject();
         });
       });

@@ -7,7 +7,7 @@
         v-show="menus.length"
       />
       <el-main v-loading="$store.getters.getLoading">
-        <breadcrumb :menus="menus" />
+        <breadcrumb />
         <router-view />
       </el-main>
     </el-container>
@@ -24,6 +24,7 @@
   import profileMenus from '../menus/profile-menus';
   import groupsMenus from '../menus/groups-menus';
   import BackTop from './layout/back-top';
+  import axios from '../libs/http';
 
   export default {
     components: {navbar, sidebar, breadcrumb, BackTop},
@@ -39,7 +40,18 @@
         } else if (route.meta.menuType === 'Profile') {
           this.menus = profileMenus;
         } else if (route.meta.menuType === 'Groups') {
-          this.menus = this.getMenusWithCode(groupsMenus, this.$store.getters.getCode);
+          let code = route.params.path;
+          if (!code) {
+            code = route.meta.item.groupPath;
+          }
+          this.menus = this.getMenusWithCode(groupsMenus, code);
+          axios.get('validate/getCodeType?code=' + code).then(data => {
+            this.menus[0].name = data.item.groupName;
+            this.menus[0].hasAvatar = true;
+            this.menus[0].avatar = data.item.groupAvatar;
+            this.menus[0].emptyAvatar = code;
+            this.menus[0].avatarType = 'retro';
+          });
         } else {
           this.menus = [];
         }

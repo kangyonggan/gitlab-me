@@ -246,14 +246,12 @@
     mounted() {
       let groupPath = this.$route.params.groupPath;
       this.params.groupPath = groupPath;
-
       this.loadUsers();
 
       if (groupPath) {
         this.loading = true;
         this.axios.get('admin/groups/' + groupPath).then(data => {
           this.group = data.group;
-          this.$parent.$children[0].updateTitle(data.group.groupName);
           this.loadGroupUsers(this.group.id);
         }).catch(res => {
           this.error(res.respMsg);
