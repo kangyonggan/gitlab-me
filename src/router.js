@@ -61,7 +61,7 @@ const routers = [
           permission: true,
           menuType: 'Admin'
         },
-        component: (resolve) => require(['./views/admin/manage/users/index.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/users/index.vue'], resolve)
       },
       {
         path: 'users/new',
@@ -71,7 +71,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/users'
         },
-        component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/users/form.vue'], resolve)
       },
       {
         path: 'users/:username/edit',
@@ -81,7 +81,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/users'
         },
-        component: (resolve) => require(['./views/admin/manage/users/form.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/users/form.vue'], resolve)
       },
       {
         path: 'users/:username',
@@ -91,7 +91,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/users'
         },
-        component: (resolve) => require(['./views/admin/manage/users/detail.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/users/detail.vue'], resolve)
       },
       {
         path: 'groups',
@@ -99,7 +99,7 @@ const routers = [
           permission: true,
           menuType: 'Admin'
         },
-        component: (resolve) => require(['./views/admin/manage/groups/index.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/groups/index.vue'], resolve)
       },
       {
         path: 'groups/new',
@@ -109,7 +109,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/groups'
         },
-        component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/groups/form.vue'], resolve)
       },
       {
         path: 'groups/:groupPath/edit',
@@ -119,7 +119,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/groups'
         },
-        component: (resolve) => require(['./views/admin/manage/groups/form.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/groups/form.vue'], resolve)
       },
       {
         path: 'groups/:groupPath',
@@ -129,7 +129,7 @@ const routers = [
           menuType: 'Admin',
           parentPath: '/admin/groups'
         },
-        component: (resolve) => require(['./views/admin/manage/groups/detail.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/groups/detail.vue'], resolve)
       },
       {
         path: 'projects',
@@ -137,7 +137,7 @@ const routers = [
           permission: true,
           menuType: 'Admin'
         },
-        component: (resolve) => require(['./views/admin/manage/projects/index.vue'], resolve)
+        component: (resolve) => require(['./views/admin/overview/projects/index.vue'], resolve)
       },
       {
         path: 'application_settings',

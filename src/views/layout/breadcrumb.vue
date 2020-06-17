@@ -11,6 +11,14 @@
         :to="breadcrumb.url"
         v-if="index !== breadcrumbs.length - 1"
       >
+        <base-avatar
+          :size="15"
+          style="float: left;margin: 9px 5px 0 0;"
+          v-if="breadcrumb.avatarType"
+          :avatar="breadcrumb.avatar"
+          :empty-avatar="breadcrumb.emptyAvatar"
+          :type="breadcrumb.avatarType"
+        />
         {{ breadcrumb.name }}
       </router-link>
 
@@ -23,23 +31,16 @@
 
 <script>
   export default {
-    data() {
-      return {
-        breadcrumbs: []
-      };
-    },
-    methods: {
-      update(breadcrumbs, title) {
-        this.util.title(title);
-        this.breadcrumbs = breadcrumbs;
+    props: {
+      breadcrumbs: {
+        required: true,
+        type: Array
       }
     }
   };
 </script>
 
-<style
-  scoped
-  lang="scss">
+<style scoped lang="scss">
   .el-breadcrumb {
     line-height: 35px;
     border-bottom: 1px solid #eee;

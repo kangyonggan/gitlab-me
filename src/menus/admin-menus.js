@@ -1,12 +1,12 @@
 export default [
   {
-    name: 'Overview',
+    name: 'Admin Area',
     url: '/admin',
     icon: 'el-icon-monitor'
   },
   {
-    name: 'Manage',
-    url: '/admin/manage',
+    name: 'Overview',
+    url: '/admin/overview',
     icon: 'el-icon-menu',
     children: [
       {

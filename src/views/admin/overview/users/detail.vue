@@ -63,7 +63,6 @@
         this.loading = true;
         this.axios.get('admin/users/' + username).then(data => {
           this.user = data.user;
-          this.$parent.$children[0].updateTitle(data.user.fullName);
         }).catch(res => {
           this.error(res.respMsg);
         }).finally(() => {
