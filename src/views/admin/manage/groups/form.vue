@@ -144,11 +144,6 @@
         }
 
         this.util.checkReserved(this, value, callback);
-        this.axios.get('validate/groupPath?groupPath=' + value).then(() => {
-          callback();
-        }).catch(res => {
-          callback(new Error(res.respMsg));
-        });
       },
       handleSuccess(data) {
         this.$router.push({

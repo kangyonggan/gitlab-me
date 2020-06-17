@@ -22,6 +22,7 @@
   import breadcrumb from './layout/breadcrumb';
   import adminMenus from '../menus/admin-menus';
   import profileMenus from '../menus/profile-menus';
+  import groupsMenus from '../menus/groups-menus';
   import BackTop from './layout/back-top';
 
   export default {
@@ -37,9 +38,23 @@
           this.menus = adminMenus;
         } else if (route.meta.menuType === 'Profile') {
           this.menus = profileMenus;
+        } else if (route.meta.menuType === 'Groups') {
+          this.menus = this.getMenusWithCode(groupsMenus, this.$store.getters.getCode);
         } else {
           this.menus = [];
         }
+      },
+      getMenusWithCode(menus, code) {
+        let resultMenus = [];
+        for (let i = 0; i < menus.length; i++) {
+          let menu = Object.assign({}, menus[i]);
+          menu.url = menu.url.replace(/\{code}/, code);
+          if (menu.children && menu.children.length) {
+            menu.children = this.getMenusWithCode(menu.children, code);
+          }
+          resultMenus[i] = menu;
+        }
+        return resultMenus;
       }
     },
     mounted() {

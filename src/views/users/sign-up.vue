@@ -132,11 +132,6 @@
         }
 
         this.util.checkReserved(this, value, callback);
-        this.axios.get('validate/username?username=' + value).then(() => {
-          callback();
-        }).catch(res => {
-          callback(new Error(res.respMsg));
-        });
       },
       validateEmail: function (rule, value, callback) {
         if (!value) {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store';
+import util from './libs/util';
 
 // Avoided redundant navigation to current location
 const VueRouterPush = VueRouter.prototype.push;
@@ -171,6 +172,29 @@ const routers = [
     ]
   },
   {
+    path: '/groups',
+    component: (resolve) => require(['./views/layout.vue'], resolve),
+    children: [
+      {
+        path: ':groupPath',
+        name: 'groups',
+        meta: {
+          permission: true,
+          menuType: 'Groups'
+        },
+        component: (resolve) => require(['./views/groups/index.vue'], resolve)
+      },
+      {
+        path: ':groupPath/users',
+        meta: {
+          permission: true,
+          menuType: 'Groups'
+        },
+        component: (resolve) => require(['./views/groups/users.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/',
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
@@ -182,6 +206,14 @@ const routers = [
         component: (resolve) => require(['./views/index.vue'], resolve)
       }
     ]
+  },
+  {
+    path: '/500',
+    meta: {
+      icon: 'el-icon-warning',
+      title: 'The page could not be found or you don\'t have permission to view it.'
+    },
+    component: (resolve) => require(['./views/500.vue'], resolve)
   },
   {
     path: '*',
@@ -198,9 +230,38 @@ const router = new VueRouter({
   routes: routers
 });
 
+let dynamicRoutePath = [];
 
 router.beforeEach(async (to, from, next) => {
   store.commit('setLoading', true);
+
+  let code = to.path.substring(1).replace('/', '');
+  if (!util.reservedWords.includes(code)
+    && !dynamicRoutePath.includes(code)
+    && /^\/[a-zA-Z0-9]+\/?$/.test(to.path)) {
+    store.commit('setCode', code);
+    await store.dispatch('getCodeType', code).then(type => {
+      router.addRoutes([{
+        path: to.path,
+        component: (resolve) => require(['./views/layout.vue'], resolve),
+        children: [
+          {
+            path: '/',
+            meta: {
+              permission: true,
+              menuType: type
+            },
+            component: (resolve) => require(['./views/' + type.toLowerCase() + '/index.vue'], resolve)
+          }
+        ]
+      }]);
+
+      dynamicRoutePath.push(code);
+      next(to.path);
+    }).catch(() => {
+      next({path: '/500'});
+    });
+  }
 
   // 无需权限的界面
   if (!to.meta.permission) {
@@ -221,7 +282,6 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Tips：只有登录之后才能走到这里
-
   // 登录了，但是没有权限，到403界面
   if (to.meta.menuType === 'Admin' && store.getters.getUser.accessLevel !== 'Admin') {
     next({

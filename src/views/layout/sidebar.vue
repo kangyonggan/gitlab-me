@@ -78,7 +78,6 @@
         isCollapse: false
       };
     },
-    methods: {},
     watch: {
       '$route'(newRoute) {
         if (newRoute.meta.parentPath) {

@@ -133,6 +133,11 @@ util.scrollTop = function (el, from = 0, to, duration = 500) {
 };
 
 /**
+ * 保留字
+ */
+util.reservedWords = ['admin', 'users', 'profile', 'groups', 'projects', '404', '500'];
+
+/**
  * 检测是否是保留字
  *
  * @param that
@@ -140,7 +145,13 @@ util.scrollTop = function (el, from = 0, to, duration = 500) {
  * @param callback
  */
 util.checkReserved = function (that, value, callback) {
-  that.axios.get('validate/reserved?word=' + value).catch(res => {
+  if (util.reservedWords.includes(value)) {
+    callback(new Error(value + ' is a reserved name'));
+    return;
+  }
+  that.axios.get('validate/uniqueCode?code=' + value).then(() => {
+    callback();
+  }).catch(res => {
     callback(new Error(res.respMsg));
   });
 };

@@ -100,7 +100,7 @@
         </span>
 
         <router-link
-          :to="'/admin/groups/' + group.id + '/users'"
+          :to="'/groups/' + group.groupPath + '/users'"
           class="manage-access"
         >
           <i class="el-icon-edit-outline" />
