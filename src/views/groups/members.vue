@@ -44,6 +44,7 @@
 
       <div style="width: 235px;float: left">
         <base-select
+          :clearable="false"
           style="margin-bottom: 0;"
           :items="constants.ACCESS_LIST"
           v-model="params.access"

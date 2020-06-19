@@ -54,7 +54,6 @@
               :label="user.fullName"
               :value="user.id"
               style="height: 48px;"
-              :disabled="groupUserIds.includes(user.id)"
             >
               <div style="height: 48px;margin-top: 7px;">
                 <base-avatar
@@ -73,6 +72,7 @@
         </el-form-item>
 
         <base-select
+          :clearable="false"
           :items="constants.ACCESS_LIST"
           v-model="params.access"
           prop="access"
@@ -169,8 +169,7 @@
           ]
         },
         users: [],
-        groupUsers: [],
-        groupUserIds: []
+        groupUsers: []
       };
     },
     methods: {
@@ -181,8 +180,8 @@
           }
         }
       },
-      loadUsers() {
-        this.axios.get('admin/users/all').then(data => {
+      loadUsers(groupId) {
+        this.axios.get('admin/users/withOutGroup/' + groupId).then(data => {
           this.users = data.users;
         }).catch(res => {
           this.error(res.respMsg);
@@ -191,11 +190,6 @@
       loadGroupUsers(groupId) {
         this.axios.get('admin/groups/' + groupId + '/users').then(data => {
           this.groupUsers = data.groupUsers;
-
-          this.groupUserIds = [];
-          for (let i = 0; i < this.groupUsers.length; i++) {
-            this.groupUserIds[i] = this.groupUsers[i].id;
-          }
         }).catch(res => {
           this.error(res.respMsg);
         });
@@ -213,6 +207,7 @@
             this.params.access = 0;
             this.$refs.form.resetFields();
             this.loadGroupUsers(this.group.id);
+            this.loadUsers(this.group.id);
           }).catch(res => {
             this.error(res.respMsg);
           }).finally(() => {
@@ -224,13 +219,13 @@
     mounted() {
       let groupPath = this.$route.params.groupPath;
       this.params.groupPath = groupPath;
-      this.loadUsers();
 
       if (groupPath) {
         this.loading = true;
         this.axios.get('admin/groups/' + groupPath).then(data => {
           this.group = data.group;
           this.loadGroupUsers(this.group.id);
+          this.loadUsers(this.group.id);
         }).catch(res => {
           this.error(res.respMsg);
         }).finally(() => {
