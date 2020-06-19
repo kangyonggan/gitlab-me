@@ -4,9 +4,10 @@
     :prop="prop"
   >
     <el-select
+      :size="size"
       :value="value"
-      clearable
-      @change="$emit('input', $event)"
+      :clearable="clearable"
+      @change="onChange"
       :readonly="readonly"
       :placeholder="placeholder ? placeholder : label"
     >
@@ -38,6 +39,16 @@
         type: [String, Number],
         default: ''
       },
+      size: {
+        required: false,
+        type: String,
+        default: 'large'
+      },
+      clearable: {
+        required: false,
+        type: Boolean,
+        default: true
+      },
       items: {
         required: false,
         type: Array,
@@ -64,6 +75,12 @@
         required: false,
         type: Boolean,
         default: false
+      }
+    },
+    methods: {
+      onChange(val) {
+        this.$emit('input',val);
+        this.$emit('change', val);
       }
     }
   };

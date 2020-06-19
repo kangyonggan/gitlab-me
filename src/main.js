@@ -10,6 +10,7 @@ import '@/libs/env';
 import '@/libs/util';
 import '@/libs/http';
 import '@/libs/common';
+import '@/libs/constants';
 import './components/index';
 
 Vue.use(ElementUI, {locale});

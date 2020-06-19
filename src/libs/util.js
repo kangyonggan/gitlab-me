@@ -19,6 +19,9 @@ util.title = function (title) {
  * @param format
  */
 util.formatTimestamp = function (timestamp, format) {
+  if (!timestamp) {
+    return '';
+  }
   let date = new Date(timestamp);
   let o = {
     'M+': date.getMonth() + 1,                 //月份

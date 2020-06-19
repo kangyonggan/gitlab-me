@@ -73,7 +73,7 @@
         </el-form-item>
 
         <base-select
-          :items="accessList"
+          :items="constants.ACCESS_LIST"
           v-model="params.access"
           prop="access"
         />
@@ -100,7 +100,7 @@
         </span>
 
         <router-link
-          :to="'/groups/' + group.groupPath + '/users'"
+          :to="'/groups/' + group.groupPath + '/members'"
           class="manage-access"
         >
           <i class="el-icon-edit-outline" />
@@ -121,8 +121,14 @@
               :empty-avatar="groupUser.email"
             />
             <div style="float: left;line-height: 20px;margin-left: 8px;font-size: 13px;margin-top: 5px;">
-              <div><strong>{{ groupUser.fullName }}</strong> @{{ groupUser.username }}</div>
-              <div>{{ util.formatTimestamp(groupUser.createdTime) }}</div>
+              <div>
+                <strong>{{ groupUser.fullName }}</strong> @{{ groupUser.username }}
+                <span
+                  v-if="$store.getters.getUser.id === groupUser.userId"
+                  style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
+                >It's you</span>
+              </div>
+              <div>Joined at {{ util.formatTimestamp(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
             </div>
             <div style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;">
               {{ formatAccess(groupUser.access) }}
@@ -164,43 +170,15 @@
         },
         users: [],
         groupUsers: [],
-        groupUserIds: [],
-        accessList: [
-          {
-            code: 0,
-            name: 'Guest'
-          },
-          {
-            code: 1,
-            name: 'Reporter'
-          },
-          {
-            code: 2,
-            name: 'Developer'
-          },
-          {
-            code: 3,
-            name: 'Master'
-          },
-          {
-            code: 4,
-            name: 'Owner'
-          }
-        ]
+        groupUserIds: []
       };
     },
     methods: {
       formatAccess(access) {
-        if (access === 0) {
-          return 'Guest';
-        } else if (access === 1) {
-          return 'Reporter';
-        } else if (access === 2) {
-          return 'Developer';
-        } else if (access === 3) {
-          return 'Master';
-        } else if (access === 4) {
-          return 'Owner';
+        for (let i = 0; i < this.constants.ACCESS_LIST.length; i++) {
+          if (access === this.constants.ACCESS_LIST[i].code) {
+            return this.constants.ACCESS_LIST[i].name;
+          }
         }
       },
       loadUsers() {

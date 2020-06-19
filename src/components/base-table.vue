@@ -4,7 +4,6 @@
       :data="list"
       :stripe="stripe"
       :border="border"
-      :empty-text="emptyText"
       @sort-change="sortChange"
     >
       <slot />
@@ -68,31 +67,22 @@
     data() {
       return {
         total: 0,
-        list: [],
-        emptyText: 'No data'
+        list: []
       };
     },
     methods: {
       reload: function () {
         this.$store.commit('setLoading', true);
-        this.emptyText = 'Loading';
         this.axios.get(this.url + '?' + qs.stringify(this.params)).then(data => {
           if (this.pagination) {
             this.list = data.pageInfo.list;
             this.total = data.pageInfo.total;
-            if (!this.total) {
-              this.emptyText = 'No data';
-            }
           } else {
             this.list = data.list;
-            if (!this.list || !this.list.length) {
-              this.emptyText = 'No data';
-            }
           }
-        }).catch(res => {
+        }).catch(() => {
           this.total = 0;
           this.list = [];
-          this.emptyText = res.respMsg;
         }).finally(() => {
           this.$store.commit('setLoading', false);
         });

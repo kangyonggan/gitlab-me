@@ -43,8 +43,8 @@ export default [
     icon: 'el-icon-s-operation'
   },
   {
-    name: 'Users',
-    url: '/groups/{code}/users',
+    name: 'Members',
+    url: '/groups/{code}/members',
     icon: 'el-icon-s-custom'
   },
   {

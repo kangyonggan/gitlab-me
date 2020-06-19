@@ -185,12 +185,12 @@ const routers = [
         component: (resolve) => require(['./views/groups/index.vue'], resolve)
       },
       {
-        path: ':path/users',
+        path: ':path/members',
         meta: {
           permission: true,
           menuType: 'Groups'
         },
-        component: (resolve) => require(['./views/groups/users.vue'], resolve)
+        component: (resolve) => require(['./views/groups/members.vue'], resolve)
       }
     ]
   },
@@ -206,14 +206,6 @@ const routers = [
         component: (resolve) => require(['./views/index.vue'], resolve)
       }
     ]
-  },
-  {
-    path: '/500',
-    meta: {
-      icon: 'el-icon-warning',
-      title: 'The page could not be found or you don\'t have permission to view it.'
-    },
-    component: (resolve) => require(['./views/500.vue'], resolve)
   },
   {
     path: '*',
@@ -259,7 +251,7 @@ router.beforeEach(async (to, from, next) => {
       dynamicRoutePath.push(code);
       next(to.path);
     }).catch(() => {
-      next({path: '/500'});
+      next({path: '/404'});
     });
   }
 
