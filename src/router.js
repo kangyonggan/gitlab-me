@@ -20,21 +20,21 @@ const routers = [
       {
         path: 'sign_in',
         meta: {
-          title: 'Sign in'
+          title: 'Sign In'
         },
         component: (resolve) => require(['./views/users/sign-in.vue'], resolve)
       },
       {
         path: 'sign_up',
         meta: {
-          title: 'Sign up'
+          title: 'Sign Up'
         },
         component: (resolve) => require(['./views/users/sign-up.vue'], resolve)
       },
       {
         path: 'reset_password',
         meta: {
-          title: 'Reset password'
+          title: 'Reset Password'
         },
         component: (resolve) => require(['./views/users/reset-password.vue'], resolve)
       }
@@ -67,7 +67,7 @@ const routers = [
       {
         path: 'users/new',
         meta: {
-          title: 'New user',
+          title: 'New User',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
@@ -77,7 +77,7 @@ const routers = [
       {
         path: 'users/:username/edit',
         meta: {
-          title: 'Edit user',
+          title: 'Edit User',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
@@ -87,7 +87,7 @@ const routers = [
       {
         path: 'users/:username',
         meta: {
-          title: 'User detail',
+          title: 'User Detail',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/users'
@@ -105,7 +105,7 @@ const routers = [
       {
         path: 'groups/new',
         meta: {
-          title: 'New group',
+          title: 'New Group',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/groups'
@@ -115,7 +115,7 @@ const routers = [
       {
         path: 'groups/:groupPath/edit',
         meta: {
-          title: 'Edit group',
+          title: 'Edit Group',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/groups'
@@ -125,7 +125,7 @@ const routers = [
       {
         path: 'groups/:groupPath',
         meta: {
-          title: 'Groups detail',
+          title: 'Groups Detail',
           permission: true,
           menuType: 'Admin',
           parentPath: '/admin/groups'

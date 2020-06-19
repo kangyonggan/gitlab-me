@@ -1,6 +1,6 @@
 export default [
   {
-    name: 'Profile',
+    name: 'User Settings',
     url: '/profile',
     icon: 'el-icon-s-custom'
   },

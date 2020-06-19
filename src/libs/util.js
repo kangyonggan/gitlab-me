@@ -176,7 +176,16 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       });
     }
   } else if (route.meta.menuType === 'Profile') {
-    console.log('Profile');
+    if (breadcrumbs[0].url === '/profile') {
+      breadcrumbs.push({
+        name: 'Edit Profile'
+      });
+    } else {
+      breadcrumbs.unshift({
+        url: '/profile',
+        name: 'User Settings'
+      });
+    }
   } else if (route.meta.menuType === 'Groups') {
     if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
       breadcrumbs.unshift({
@@ -194,6 +203,14 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
   }
 
   store.commit('setBreadcrumbs', breadcrumbs);
+
+  // title
+  let title = '';
+  for (let i = breadcrumbs.length - 1; i >= 0; i--) {
+    title += breadcrumbs[i].name + ' · ';
+  }
+  title += 'GitLab';
+  window.document.title = title;
 };
 
 util.getBreadcrumbs = function (route, menus) {
