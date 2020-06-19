@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store';
 import util from './libs/util';
+import constants from './libs/constants';
 
 // Avoided redundant navigation to current location
 const VueRouterPush = VueRouter.prototype.push;
@@ -52,7 +53,7 @@ const routers = [
         component: (resolve) => require(['./views/admin/index.vue'], resolve)
       },
       {
-        path: 'manage',
+        path: 'overview',
         redirect: '/admin/users'
       },
       {
@@ -185,6 +186,34 @@ const routers = [
         component: (resolve) => require(['./views/groups/index.vue'], resolve)
       },
       {
+        path: ':path/activity',
+        meta: {
+          permission: true,
+          menuType: 'Groups'
+        },
+        component: (resolve) => require(['./views/groups/activity.vue'], resolve)
+      },
+      {
+        path: ':path/issues-parent',
+        redirect: ':path/issues'
+      },
+      {
+        path: ':path/issues',
+        meta: {
+          permission: true,
+          menuType: 'Groups'
+        },
+        component: (resolve) => require(['./views/groups/issues.vue'], resolve)
+      },
+      {
+        path: ':path/labels',
+        meta: {
+          permission: true,
+          menuType: 'Groups'
+        },
+        component: (resolve) => require(['./views/groups/labels.vue'], resolve)
+      },
+      {
         path: ':path/members',
         meta: {
           permission: true,
@@ -262,7 +291,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 如果没有token，重定向到登录界面
-  let token = localStorage.getItem('token');
+  let token = localStorage.getItem(constants.LOCAL_TOKEN_NAME);
   if (!token) {
     next({
       path: '/users/sign_in',
@@ -281,6 +310,8 @@ router.beforeEach(async (to, from, next) => {
     });
     return;
   }
+
+  await util.getMenusWithNewRoute(to);
 
   // 鉴权成功，放行
   next();

@@ -49,7 +49,7 @@
     methods: {
       handleClick(tab) {
         this.$router.push({
-          path: '/admin/users/' + this.user.id,
+          path: '/admin/users/' + this.user.username,
           query: {
             tab: tab.name
           }

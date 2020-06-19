@@ -1,4 +1,8 @@
 import Vue from 'vue';
+import adminMenus from '../menus/admin-menus';
+import profileMenus from '../menus/profile-menus';
+import groupsMenus from '../menus/groups-menus';
+import store from '../store';
 
 let util = {};
 
@@ -157,6 +161,117 @@ util.checkReserved = function (that, value, callback) {
   }).catch(res => {
     callback(new Error(res.respMsg));
   });
+};
+
+util.adjustBreadcrumds = function (route, breadcrumbs, data) {
+  if (route.meta.menuType === 'Admin') {
+    if (breadcrumbs.length && breadcrumbs[0].url === '/admin') {
+      breadcrumbs.push({
+        name: 'Dashboard'
+      });
+    } else {
+      breadcrumbs.unshift({
+        url: '/admin',
+        name: 'Admin Area'
+      });
+    }
+  } else if (route.meta.menuType === 'Profile') {
+    console.log('Profile');
+  } else if (route.meta.menuType === 'Groups') {
+    if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
+      breadcrumbs.unshift({
+        url: '/' + data.item.groupPath,
+        avatarType: 'retro',
+        avatar: data.item.groupAvatar,
+        emptyAvatar: data.item.groupPath,
+        name: data.item.groupName
+      });
+    } else if (breadcrumbs.length === 1 && breadcrumbs[0].avatarType) {
+      breadcrumbs.push({
+        name: 'Detail'
+      });
+    }
+  }
+
+  store.commit('setBreadcrumbs', breadcrumbs);
+};
+
+util.getBreadcrumbs = function (route, menus) {
+  let breadcrumbs = [];
+  for (let i in menus) {
+    let menu = menus[i];
+    if (menu.url === route.path) {
+      breadcrumbs.push(menu);
+      return breadcrumbs;
+    }
+    if (menu.children) {
+      const subBreadcrumbs = util.getBreadcrumbs(route, menu.children);
+      if (subBreadcrumbs.length) {
+        breadcrumbs.push(menu);
+        breadcrumbs = breadcrumbs.concat(subBreadcrumbs);
+        return breadcrumbs;
+      }
+    }
+  }
+
+  return breadcrumbs;
+};
+
+/**
+ * 当路由改变，获取新菜单
+ *
+ * @param route
+ */
+util.getMenusWithNewRoute = async function (route) {
+  let menus = [];
+  if (route.meta.menuType === 'Admin') {
+    menus = adminMenus;
+  } else if (route.meta.menuType === 'Profile') {
+    menus = profileMenus;
+  } else if (route.meta.menuType === 'Groups') {
+    let code = route.params.path;
+    if (!code) {
+      code = route.meta.item.groupPath;
+    }
+    menus = util.replaceMenusCode(groupsMenus, code);
+    await store.dispatch('getCodeType', code).then(data => {
+      menus[0].name = data.item.groupName;
+      menus[0].avatar = data.item.groupAvatar;
+      menus[0].emptyAvatar = code;
+      menus[0].avatarType = 'retro';
+
+      let breadcrumbs = util.getBreadcrumbs(route, menus);
+      util.adjustBreadcrumds(route, breadcrumbs, data);
+    });
+
+    store.commit('setMenus', menus);
+    return;
+  }
+
+  let breadcrumbs = util.getBreadcrumbs(route, menus);
+  util.adjustBreadcrumds(route, breadcrumbs);
+
+  store.commit('setMenus', menus);
+};
+
+/**
+ * 替换菜单中的{code}
+ *
+ * @param menus
+ * @param code
+ * @returns {[]}
+ */
+util.replaceMenusCode = function (menus, code) {
+  let resultMenus = [];
+  for (let i = 0; i < menus.length; i++) {
+    let menu = Object.assign({}, menus[i]);
+    menu.url = menu.url.replace(/\{code}/, code);
+    if (menu.children && menu.children.length) {
+      menu.children = util.replaceMenusCode(menu.children, code);
+    }
+    resultMenus[i] = menu;
+  }
+  return resultMenus;
 };
 
 export default util;

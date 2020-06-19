@@ -31,10 +31,9 @@
 
 <script>
   export default {
-    props: {
-      breadcrumbs: {
-        required: true,
-        type: Array
+    computed: {
+      breadcrumbs() {
+        return this.$store.getters.getBreadcrumbs;
       }
     }
   };

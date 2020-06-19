@@ -4,23 +4,13 @@ export default [
     url: '/{code}',
   },
   {
-    name: 'Overview',
-    url: '/groups/{code}',
-    icon: 'el-icon-s-home',
-    children: [
-      {
-        name: 'Details',
-        url: '/groups/{code}'
-      },
-      {
-        name: 'Activity',
-        url: '/groups/{code}/activity'
-      }
-    ]
+    name: 'Activity',
+    url: '/groups/{code}/activity',
+    icon: 'el-icon-data-line'
   },
   {
     name: 'Issues',
-    url: '/groups/{code}/issues',
+    url: '/groups/{code}/issues-parent',
     icon: 'el-icon-copy-document',
     children: [
       {

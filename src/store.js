@@ -10,8 +10,9 @@ export default new Vuex.Store({
     // <el-main>是否处于加载中
     loading: false,
     user: JSON.parse(localStorage.getItem('user')) || {},
-    type: '',
-    item: {}
+    menus: [],
+    breadcrumbs: [],
+    codeData: {}
   },
   // get变量
   getters: {
@@ -20,6 +21,15 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.user;
+    },
+    getMenus(state) {
+      return state.menus;
+    },
+    getBreadcrumbs(state) {
+      return state.breadcrumbs;
+    },
+    getCodeData(state) {
+      return state.codeData;
     }
   },
   // set变量
@@ -30,6 +40,12 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user));
+    },
+    setMenus(state, menus) {
+      state.menus = menus;
+    },
+    setBreadcrumbs(state, breadcrumbs) {
+      state.breadcrumbs = breadcrumbs;
     }
   },
   // 异步操作
@@ -37,6 +53,7 @@ export default new Vuex.Store({
     getCodeType(state, code) {
       return new Promise(function (resolve, reject) {
         axios.get('validate/getCodeType?code=' + code).then(data => {
+          state.codeData = data;
           resolve(data);
         }).catch(() => {
           reject();
