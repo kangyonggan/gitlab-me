@@ -241,6 +241,10 @@ util.getMenusWithNewRoute = async function (route) {
       menus[0].avatarType = 'retro';
 
       let breadcrumbs = util.getBreadcrumbs(route, menus);
+      if (!breadcrumbs.length) {
+        breadcrumbs = util.getBreadcrumbs({path: route.meta.parentPath}, menus);
+        breadcrumbs.push({name: route.meta.title});
+      }
       util.adjustBreadcrumds(route, breadcrumbs, data);
     });
 
@@ -249,6 +253,10 @@ util.getMenusWithNewRoute = async function (route) {
   }
 
   let breadcrumbs = util.getBreadcrumbs(route, menus);
+  if (!breadcrumbs.length) {
+    breadcrumbs = util.getBreadcrumbs({path: route.meta.parentPath}, menus);
+    breadcrumbs.push({name: route.meta.title});
+  }
   util.adjustBreadcrumds(route, breadcrumbs);
 
   store.commit('setMenus', menus);
