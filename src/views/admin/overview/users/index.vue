@@ -63,8 +63,18 @@
       <el-table-column
         prop="email"
         label="Email"
+        width="230"
         sortable
       />
+      <el-table-column
+        prop="accessLevel"
+        label="Access Level"
+        sortable
+      >
+        <template slot-scope="scope">
+          {{ scope.row.accessLevel }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="isDeleted"
         label="Status"
