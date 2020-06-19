@@ -10,14 +10,19 @@
           Add new member to <strong>{{ group.groupName }}</strong>
         </div>
         <el-select
+          ref="userFilter"
+          filterable
+          :filter-method="filterUsers"
+          @visible-change="resetFilterUsers"
           clearable
           style="width: 100%"
           v-model="params.userIds"
           placeholder="Search for a user"
           multiple
+          default-first-option
         >
           <el-option
-            v-for="user in users"
+            v-for="user in usersFiltered"
             :key="user.id"
             :label="user.fullName"
             :value="user.id"
@@ -123,6 +128,7 @@
                 style="float: right;margin-left: 15px;margin-top: 6px;"
                 size="medium"
                 type="danger"
+                :disabled="hasOneOwner && groupUser.access === 4"
                 @click="removeGroupUser(groupUser)"
               >
                 <i class="el-icon-delete-solid" />
@@ -134,9 +140,11 @@
                 v-model="groupUser.expirationDate"
                 type="date"
                 placeholder="Expiration date"
+                :disabled="hasOneOwner && groupUser.access === 4"
                 @change="onChangeGroupUser(groupUser)"
               />
               <base-select
+                :disabled="hasOneOwner && groupUser.access === 4"
                 @change="onChangeGroupUser(groupUser)"
                 size="small"
                 style="width: 160px;float: right;margin-top: 3px;"
@@ -148,7 +156,7 @@
             </div>
             <div v-else>
               <el-button
-                v-if="!hasOneOwner"
+                v-if="!hasOneOwner || groupUser.access !== 4"
                 style="float: right;margin-left: 15px;margin-top: 6px;"
                 size="medium"
                 type="danger"
@@ -177,6 +185,7 @@
         loading: false,
         group: {},
         users: [],
+        usersFiltered: [],
         groupUsers: [],
         params: {
           userIds: [],
@@ -192,14 +201,38 @@
       };
     },
     methods: {
+      resetFilterUsers(isVisible) {
+        if (!isVisible) {
+          this.usersFiltered = this.users;
+        }
+      },
+      filterUsers(key) {
+        if (!key) {
+          this.usersFiltered = this.users;
+          return;
+        }
+        let res = [];
+        key = key.toUpperCase();
+        for (let i = 0; i < this.users.length; i++) {
+          let user = this.users[i];
+          if (user.username.toUpperCase().indexOf(key) !== -1
+            || user.fullName.toUpperCase().indexOf(key) !== -1
+            || user.email.toUpperCase().indexOf(key) !== -1) {
+            res.push(user);
+          }
+        }
+        this.usersFiltered = res;
+      },
       onChangeGroupUser(groupUser) {
-        console.log(groupUser);
         if (groupUser.isOwner && groupUser.access !== 4 && this.hasOneOwner) {
           groupUser.access = 4;
+          this.init(this.group.groupPath);
           return;
         }
         this.axios.put('groups/' + this.group.id + '/members/' + groupUser.id,
-          {access: groupUser.access, expirationDate: groupUser.expirationDate}).catch(res => {
+          {access: groupUser.access, expirationDate: groupUser.expirationDate}).then(() => {
+          this.init(this.group.groupPath);
+        }).catch(res => {
           this.error(res.respMsg);
         });
       },
@@ -227,6 +260,7 @@
         this.axios.get('groups/' + groupPath + '/members').then(data => {
           this.group = data.group;
           this.users = data.users;
+          this.usersFiltered = data.users.concat();
 
           let ownerCount = 0;
           for (let i = 0; i < data.groupUsers.length; i++) {

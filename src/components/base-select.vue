@@ -4,6 +4,7 @@
     :prop="prop"
   >
     <el-select
+      :disabled="disabled"
       :size="size"
       :value="value"
       :clearable="clearable"
@@ -48,6 +49,11 @@
         required: false,
         type: Boolean,
         default: true
+      },
+      disabled: {
+        required: false,
+        type: Boolean,
+        default: false
       },
       items: {
         required: false,

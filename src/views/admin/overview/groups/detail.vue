@@ -42,14 +42,19 @@
 
         <el-form-item prop="userIds">
           <el-select
+            ref="userFilter"
+            filterable
+            :filter-method="filterUsers"
+            @visible-change="resetFilterUsers"
             clearable
             style="width: 100%"
             v-model="params.userIds"
             placeholder="Search for a user"
             multiple
+            default-first-option
           >
             <el-option
-              v-for="user in users"
+              v-for="user in usersFiltered"
               :key="user.id"
               :label="user.fullName"
               :value="user.id"
@@ -169,10 +174,33 @@
           ]
         },
         users: [],
+        usersFiltered: [],
         groupUsers: []
       };
     },
     methods: {
+      resetFilterUsers(isVisible) {
+        if (!isVisible) {
+          this.usersFiltered = this.users;
+        }
+      },
+      filterUsers(key) {
+        if (!key) {
+          this.usersFiltered = this.users;
+          return;
+        }
+        let res = [];
+        key = key.toUpperCase();
+        for (let i = 0; i < this.users.length; i++) {
+          let user = this.users[i];
+          if (user.username.toUpperCase().indexOf(key) !== -1
+            || user.fullName.toUpperCase().indexOf(key) !== -1
+            || user.email.toUpperCase().indexOf(key) !== -1) {
+            res.push(user);
+          }
+        }
+        this.usersFiltered = res;
+      },
       formatAccess(access) {
         for (let i = 0; i < this.constants.ACCESS_LIST.length; i++) {
           if (access === this.constants.ACCESS_LIST[i].code) {
@@ -183,6 +211,7 @@
       loadUsers(groupId) {
         this.axios.get('admin/users/withOutGroup/' + groupId).then(data => {
           this.users = data.users;
+          this.usersFiltered = data.users.concat();
         }).catch(res => {
           this.error(res.respMsg);
         });
