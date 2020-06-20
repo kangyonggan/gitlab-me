@@ -178,9 +178,9 @@
           callback(new Error(res.respMsg));
         });
       },
-      handleSuccess(data) {
+      handleSuccess() {
         this.$router.push({
-          path: '/admin/users/' + data.user.username
+          path: '/admin/users/' + this.params.username
         });
       }
     },

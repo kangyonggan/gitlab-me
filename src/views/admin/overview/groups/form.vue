@@ -145,9 +145,9 @@
 
         this.util.checkReserved(this, value, callback);
       },
-      handleSuccess(data) {
+      handleSuccess() {
         this.$router.push({
-          path: '/admin/groups/' + data.group.groupPath
+          path: '/admin/groups/' + this.params.groupPath
         });
       }
     },
