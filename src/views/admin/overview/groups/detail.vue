@@ -253,6 +253,7 @@
         this.loading = true;
         this.axios.get('admin/groups/' + groupPath).then(data => {
           this.group = data.group;
+          this.util.updateBreadcrumbsAndTitle(data.group.groupName);
           this.loadGroupUsers(this.group.id);
           this.loadUsers(this.group.id);
         }).catch(res => {

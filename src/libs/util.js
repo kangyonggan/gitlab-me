@@ -203,7 +203,16 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
   }
 
   store.commit('setBreadcrumbs', breadcrumbs);
+  util.updateTitleWithBreadcrumbs(breadcrumbs);
+};
 
+util.updateBreadcrumbsAndTitle = function (name) {
+  let breadcrumbs = store.getters.getBreadcrumbs;
+  breadcrumbs[breadcrumbs.length - 1].name = name;
+  util.updateTitleWithBreadcrumbs(breadcrumbs);
+};
+
+util.updateTitleWithBreadcrumbs = function (breadcrumbs) {
   // title
   let title = '';
   for (let i = breadcrumbs.length - 1; i >= 0; i--) {

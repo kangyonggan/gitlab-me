@@ -63,6 +63,7 @@
         this.loading = true;
         this.axios.get('admin/users/' + username).then(data => {
           this.user = data.user;
+          this.util.updateBreadcrumbsAndTitle(data.user.fullName);
         }).catch(res => {
           this.error(res.respMsg);
         }).finally(() => {
