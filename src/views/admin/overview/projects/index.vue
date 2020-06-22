@@ -16,6 +16,7 @@
         <el-option-group
           v-for="group in namespaces"
           :key="group.prefix"
+          :label="group.label"
         >
           <el-option
             v-for="item in group.options"
@@ -51,7 +52,20 @@
         prop="projectName"
         label="Project name"
         sortable
-      />
+      >
+        <template slot-scope="scope">
+          <router-link :to="'/admin/projects/' + scope.row.projectPath">
+            <base-char-avatar
+              :char="scope.row.projectName.substring(0, 1)"
+              :size="30"
+              style="float: left"
+            />
+            <span style="float: left;margin-top: 5px;margin-left: 5px;">
+              {{ scope.row.projectName }}
+            </span>
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="namespace"
         label="Namespace"
@@ -67,24 +81,7 @@
         label="Project path"
         prop="projectPath"
         sortable
-      >
-        <template slot-scope="scope">
-          <router-link
-            :to="'/admin/projects/' + scope.row.projectPath"
-            style="font-weight: 500;"
-          >
-            <base-avatar
-              style="float: left"
-              :size="30"
-              type="robohash"
-              :avatar="scope.row.projectPath"
-            />
-            <span style="float: left;margin-top: 5px;margin-left: 5px;">
-              {{ scope.row.projectPath }}
-            </span>
-          </router-link>
-        </template>
-      </el-table-column>
+      />
       <el-table-column
         prop="description"
         label="Description"
@@ -186,10 +183,12 @@
 
       this.axios.get('admin/projects/allNamespaces').then(data => {
         this.namespaces = [{
+          label: 'Groups',
           prefix: 'group',
           key: 'groupPath',
           options: data.groups
         }, {
+          label: 'Users',
           prefix: 'user',
           key: 'username',
           options: data.users

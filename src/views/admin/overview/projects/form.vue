@@ -29,6 +29,7 @@
         <el-option-group
           v-for="group in namespaces"
           :key="group.prefix"
+          :label="group.label"
         >
           <el-option
             v-for="item in group.options"
@@ -138,10 +139,12 @@
     mounted() {
       this.axios.get('admin/projects/namespaces').then(data => {
         this.namespaces = [{
+          label: 'Groups',
           prefix: 'group',
           key: 'groupPath',
           options: data.groups
         }, {
+          label: 'Users',
           prefix: 'user',
           key: 'username',
           options: [this.$store.getters.getUser]

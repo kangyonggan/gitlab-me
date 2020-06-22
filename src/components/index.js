@@ -8,6 +8,7 @@ import BaseUploadAvatar from './base-upload-avatar';
 import BaseAvatar from './base-avatar';
 import BaseHr from './base-hr';
 import BaseSelect from './base-select';
+import BaseCharAvatar from './base-char-avatar.vue';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -18,3 +19,4 @@ Vue.component('BaseUploadAvatar', BaseUploadAvatar);
 Vue.component('BaseAvatar', BaseAvatar);
 Vue.component('BaseHr', BaseHr);
 Vue.component('BaseSelect', BaseSelect);
+Vue.component('BaseCharAvatar', BaseCharAvatar);
