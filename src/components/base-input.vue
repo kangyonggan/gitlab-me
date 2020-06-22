@@ -26,8 +26,9 @@
         type: String
       },
       label: {
-        required: true,
-        type: String
+        required: false,
+        type: String,
+        default: undefined
       },
       value: {
         required: false,
