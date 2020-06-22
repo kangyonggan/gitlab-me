@@ -3,15 +3,11 @@
     <!--搜索表单-->
     <base-search-form :model="params">
       <base-input
-        label="Project path"
-        v-model="params.projectPath"
-        prop="projectPath"
-      />
-      <base-input
         label="Project name"
         v-model="params.projectName"
         prop="projectName"
       />
+
       <base-select
         label="Namespace"
         prop="namespace"
@@ -29,6 +25,12 @@
           />
         </el-option-group>
       </base-select>
+
+      <base-input
+        label="Project path"
+        v-model="params.projectPath"
+        prop="projectPath"
+      />
       <template #actions>
         <el-button
           type="success"
@@ -45,6 +47,22 @@
       :params="params"
       ref="table"
     >
+      <el-table-column
+        prop="projectName"
+        label="Project name"
+        sortable
+      />
+      <el-table-column
+        prop="namespace"
+        label="Namespace"
+        sortable
+      >
+        <template slot-scope="scope">
+          <router-link :to="'/' + scope.row.namespace">
+            {{ scope.row.namespace }}
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column
         label="Project path"
         prop="projectPath"
@@ -64,22 +82,6 @@
             <span style="float: left;margin-top: 5px;margin-left: 5px;">
               {{ scope.row.projectPath }}
             </span>
-          </router-link>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="projectName"
-        label="Project name"
-        sortable
-      />
-      <el-table-column
-        prop="namespace"
-        label="Namespace"
-        sortable
-      >
-        <template slot-scope="scope">
-          <router-link :to="'/' + scope.row.namespace">
-            {{ scope.row.namespace }}
           </router-link>
         </template>
       </el-table-column>
@@ -145,9 +147,9 @@
     data() {
       return {
         params: {
-          projectPath: '',
           projectName: '',
-          namespace: ''
+          namespace: '',
+          projectPath: ''
         },
         namespaces: []
       };
@@ -182,7 +184,7 @@
       });
       this.$refs.table.reload();
 
-      this.axios.get('admin/projects/namespaces').then(data => {
+      this.axios.get('admin/projects/allNamespaces').then(data => {
         this.namespaces = [{
           prefix: 'group',
           key: 'groupPath',

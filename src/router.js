@@ -141,6 +141,26 @@ const routers = [
         component: (resolve) => require(['./views/admin/overview/projects/index.vue'], resolve)
       },
       {
+        path: 'projects/new',
+        meta: {
+          title: 'New Project',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/projects'
+        },
+        component: (resolve) => require(['./views/admin/overview/projects/form.vue'], resolve)
+      },
+      {
+        path: 'projects/:projectPath/edit',
+        meta: {
+          title: 'Edit Project',
+          permission: true,
+          menuType: 'Admin',
+          parentPath: '/admin/projects'
+        },
+        component: (resolve) => require(['./views/admin/overview/projects/form.vue'], resolve)
+      },
+      {
         path: 'application_settings',
         meta: {
           permission: true,
