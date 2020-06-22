@@ -248,7 +248,7 @@
           : 'Are you sure you want to remove ' + groupUser.fullName + ' from the ' + this.group.groupName + ' group and any subresources?';
         this.$confirm(title, 'Confirmation',
           {type: 'warning'}).then(() => {
-          this.axios.delete('groups/' + this.group.id + '/members/' + groupUser.id).then(() => {
+          this.axios.delete('groups/' + this.group.id + '/users/' + groupUser.id).then(() => {
             this.init(this.group.groupPath);
           }).catch(res => {
             this.error(res.respMsg);
@@ -257,7 +257,7 @@
       },
       init(groupPath) {
         this.loading = true;
-        this.axios.get('groups/' + groupPath + '/members').then(data => {
+        this.axios.get('groups/' + groupPath + '/users').then(data => {
           this.group = data.group;
           this.users = data.users;
           this.usersFiltered = data.users.concat();

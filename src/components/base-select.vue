@@ -4,6 +4,7 @@
     :prop="prop"
   >
     <el-select
+      filterable
       :disabled="disabled"
       :size="size"
       :value="value"
