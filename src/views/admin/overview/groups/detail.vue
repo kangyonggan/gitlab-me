@@ -250,7 +250,6 @@
       this.params.groupPath = groupPath;
 
       if (groupPath) {
-        this.loading = true;
         this.axios.get('admin/groups/' + groupPath).then(data => {
           this.group = data.group;
           this.util.updateBreadcrumbsAndTitle(data.group.groupName);
@@ -258,8 +257,6 @@
           this.loadUsers(this.group.id);
         }).catch(res => {
           this.error(res.respMsg);
-        }).finally(() => {
-          this.loading = false;
         });
       }
     }

@@ -54,7 +54,7 @@
         sortable
       >
         <template slot-scope="scope">
-          <router-link :to="'/admin/projects/' + scope.row.projectPath">
+          <router-link :to="'/admin/projects/' + scope.row.namespace + '/' + scope.row.projectPath">
             <base-char-avatar
               :char="scope.row.projectName.substring(0, 1)"
               :size="30"
