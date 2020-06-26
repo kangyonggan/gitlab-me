@@ -53,15 +53,6 @@ util.formatTimestamp = function (timestamp, format) {
 };
 
 /**
- * 格式化状态
- *
- * @param isDeleted
- */
-util.formatStatus = function (isDeleted) {
-  return isDeleted ? 'Removed' : 'Normal';
-};
-
-/**
  * 格式化是否
  *
  * @param val

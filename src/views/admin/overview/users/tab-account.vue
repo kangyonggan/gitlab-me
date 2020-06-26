@@ -108,12 +108,6 @@
               {{ util.formatTimestamp(user.lastSignInTime) }}
             </span>
           </div>
-          <div class="item">
-            Status:
-            <span class="value">
-              {{ util.formatStatus(user.isDeleted) }}
-            </span>
-          </div>
         </div>
         <div style="clear: both" />
       </div>

@@ -75,15 +75,6 @@
           {{ scope.row.accessLevel }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="isDeleted"
-        label="Status"
-        sortable
-      >
-        <template slot-scope="scope">
-          {{ util.formatStatus(scope.row.isDeleted) }}
-        </template>
-      </el-table-column>
       <el-table-column label="Actions">
         <template slot-scope="scope">
           <el-dropdown
@@ -96,24 +87,7 @@
             <i class="el-icon-edit-outline" />
             Edit
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                command="0"
-                :disabled="scope.row.isDeleted ? true : false"
-              >
-                <i class="el-icon-circle-close" />
-                Remove by logic
-              </el-dropdown-item>
-              <el-dropdown-item
-                command="1"
-                :disabled="scope.row.isDeleted ? false : true"
-              >
-                <i class="el-icon-refresh-left" />
-                Recovery of logic
-              </el-dropdown-item>
-              <el-dropdown-item
-                command="2"
-                divided
-              >
+              <el-dropdown-item command="0">
                 <span style="color: #f56c6c">
                   <i class="el-icon-delete" />
                   Remove by physics
@@ -150,13 +124,7 @@
         });
       },
       handleCommand: function (command, row) {
-        if (command === '0' || command === '1') {
-          this.axios.put('admin/users/' + row.id + '/delete/' + !row.isDeleted * 1).then(() => {
-            this.$refs.table.reload();
-          }).catch(res => {
-            this.error(res.respMsg);
-          });
-        } else if (command === '2') {
+        if (command === '0') {
           this.$confirm('Physics remove ' + row.fullName + ', are you sure?', 'Confirmation',
             {type: 'warning'}).then(() => {
             this.axios.delete('admin/users/' + row.id).then(() => {
