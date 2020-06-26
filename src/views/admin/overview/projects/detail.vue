@@ -159,9 +159,47 @@
           <strong>Transfer project</strong>
         </span>
       </div>
-      <ul>
-        <li />
-      </ul>
+      <el-form
+        ref="form"
+        class="namespace-form"
+        :rules="rules"
+        :model="params"
+      >
+        <el-form-item
+          label="Namespace"
+          prop="namespace"
+        >
+          <el-select
+            v-model="params.namespace"
+            placeholder="Search for Namespace"
+          >
+            <el-option-group
+              v-for="ns in namespaces"
+              :key="ns.prefix"
+              :label="ns.label"
+            >
+              <el-option
+                v-for="item in ns.options"
+                :key="item[ns.key]"
+                :label="ns.prefix + ':' + item[ns.key]"
+                :value="item[ns.key]"
+              />
+            </el-option-group>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button
+            v-loading="loading"
+            type="primary"
+            size="medium"
+            style="margin-left: 104px;"
+            @click="transfer"
+          >
+            Transfer
+          </el-button>
+        </el-form-item>
+      </el-form>
     </el-card>
   </div>
 </template>
@@ -173,10 +211,43 @@
         project: {},
         projectUsers: [],
         group: {},
-        groupUsers: []
+        groupUsers: [],
+        params: {
+          id: 0,
+          namespace: ''
+        },
+        rules: {
+          namespace: [
+            {required: true}
+          ]
+        },
+        namespaces: [],
+        loading: false
       };
     },
     methods: {
+      transfer() {
+        this.$refs.form.validate((valid) => {
+          if (!valid) {
+            return;
+          }
+
+          this.loading = true;
+          this.axios.put('admin/projects', this.params).then(() => {
+            const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+            this.util.scrollTop(window, sTop, 0, 1000);
+            this.$router.push({
+              path: '/admin/projects/' + this.params.namespace + '/' + this.project.projectPath
+            });
+            this.init(this.params.namespace, this.project.projectPath);
+            this.$refs.form.resetFields();
+          }).catch(res => {
+            this.error(res.respMsg);
+          }).finally(() => {
+            this.loading = false;
+          });
+        });
+      },
       formatAccess(access) {
         for (let i = 0; i < this.constants.ACCESS_LIST.length; i++) {
           if (access === this.constants.ACCESS_LIST[i].code) {
@@ -184,9 +255,14 @@
           }
         }
       },
-      loadGroupUsers(groupId) {
-        this.axios.get('admin/groups/' + groupId + '/users').then(data => {
+      init(namespace, projectPath) {
+        this.axios.get('admin/projects/' + namespace + '/' + projectPath).then(data => {
+          this.params.id = data.project.id;
+          this.project = data.project;
+          this.projectUsers = data.projectUsers;
+          this.group = data.group;
           this.groupUsers = data.groupUsers;
+          this.util.updateBreadcrumbsAndTitle(data.project.projectName);
         }).catch(res => {
           this.error(res.respMsg);
         });
@@ -195,13 +271,20 @@
     mounted() {
       let projectPath = this.$route.params.projectPath;
       let namespace = this.$route.params.namespace;
+      this.init(namespace, projectPath);
 
-      this.axios.get('admin/projects/' + namespace + '/' + projectPath).then(data => {
-        this.project = data.project;
-        this.projectUsers = data.projectUsers;
-        this.group = data.group;
-        this.groupUsers = data.groupUsers;
-        this.util.updateBreadcrumbsAndTitle(data.project.projectName);
+      this.axios.get('admin/projects/namespaces').then(data => {
+        this.namespaces = [{
+          label: 'Groups',
+          prefix: 'group',
+          key: 'groupPath',
+          options: data.groups
+        }, {
+          label: 'Users',
+          prefix: 'user',
+          key: 'username',
+          options: [this.$store.getters.getUser]
+        }];
       }).catch(res => {
         this.error(res.respMsg);
       });
@@ -283,6 +366,18 @@
       padding: 3px;
       font-size: 12px;
       margin-left: 10px;
+    }
+  }
+
+  .namespace-form {
+    margin-left: 50px;
+
+    /deep/ .el-form-item__label {
+      font-weight: bold;
+    }
+
+    /deep/ .el-form-item__error {
+      left: 104px;
     }
   }
 </style>
