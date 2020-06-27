@@ -59,6 +59,15 @@ export default new Vuex.Store({
           reject();
         });
       });
+    },
+    getProject(state, item) {
+      return new Promise(function (resolve, reject) {
+        axios.get('admin/projects/' + item.namespace + '/' + item.projectPath).then(data => {
+          resolve(data);
+        }).catch(() => {
+          reject();
+        });
+      });
     }
   }
 });

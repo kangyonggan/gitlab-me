@@ -114,7 +114,7 @@
         </span>
 
         <router-link
-          :to="'/projects/' + project.namespace + '/' + project.projectPath + '/members'"
+          :to="'/' + project.namespace + '/' + project.projectPath + '/members'"
           class="manage-access"
         >
           <i class="el-icon-edit-outline" />
@@ -256,7 +256,7 @@
         }
       },
       init(namespace, projectPath) {
-        this.axios.get('admin/projects/' + namespace + '/' + projectPath).then(data => {
+        this.axios.get('admin/projects/' + namespace + '/' + projectPath + '/users').then(data => {
           this.params.id = data.project.id;
           this.project = data.project;
           this.projectUsers = data.projectUsers;

@@ -7,7 +7,7 @@
     >
       <el-form-item prop="userIds">
         <div>
-          Add new member to <strong>{{ group.groupName }}</strong>
+          Add new member to <strong>{{ project.projectName }}</strong>
         </div>
         <el-select
           ref="userFilter"
@@ -72,7 +72,7 @@
             placeholder="Expiration date"
           />
           <div class="desc">
-            On this date, the member(s) will automatically lose access to this group and all of its projects.
+            On this date, the member(s) will automatically lose access to this project.
           </div>
         </el-form-item>
       </div>
@@ -80,9 +80,9 @@
       <el-form-item style="margin-left: 30px;float: left">
         <el-button
           type="success"
-          @click="addToGroup"
+          @click="addToProject"
         >
-          Add to group
+          Add to project
         </el-button>
       </el-form-item>
     </el-form>
@@ -95,41 +95,41 @@
 
     <el-form class="members">
       <div class="header">
-        Members with access to {{ group.groupName }}
+        Members with access to {{ project.projectName }}
         <a class="badge">
-          {{ groupUsers.length }}
+          {{ projectUsers.length }}
         </a>
       </div>
       <ul>
         <li
-          v-for="groupUser in groupUsers"
-          :key="groupUser.id"
+          v-for="projectUser in projectUsers"
+          :key="projectUser.id"
           style="padding: 8px 15px;"
         >
           <div style="height: 48px;">
             <base-avatar
               style="float: left;margin-top: 8px;"
               :size="32"
-              :avatar="groupUser.avatar"
-              :empty-avatar="groupUser.email"
+              :avatar="projectUser.avatar"
+              :empty-avatar="projectUser.projectPath"
             />
             <div style="float: left;line-height: 20px;margin-left: 8px;font-size: 13px;margin-top: 5px;">
               <div>
-                <strong>{{ groupUser.fullName }}</strong> @{{ groupUser.username }}
+                <strong>{{ projectUser.fullName }}</strong> @{{ projectUser.username }}
                 <span
-                  v-if="$store.getters.getUser.id === groupUser.userId"
+                  v-if="$store.getters.getUser.id === projectUser.userId"
                   style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
                 >It's you</span>
               </div>
-              <div>Joined at {{ util.formatTimestamp(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
+              <div>Joined at {{ util.formatTimestamp(projectUser.createdTime, 'yyyy-MM-dd') }}</div>
             </div>
-            <div v-if="$store.getters.getUser.id !== groupUser.userId">
+            <div v-if="$store.getters.getUser.id !== projectUser.userId">
               <el-button
                 style="float: right;margin-left: 15px;margin-top: 6px;"
                 size="medium"
                 type="danger"
-                :disabled="hasOneOwner && groupUser.access === 4"
-                @click="removeGroupUser(groupUser)"
+                :disabled="hasOneOwner && projectUser.access === 4"
+                @click="removeProjectUser(projectUser)"
               >
                 <i class="el-icon-delete-solid" />
               </el-button>
@@ -137,30 +137,30 @@
                 size="medium"
                 value-format="yyyy-MM-dd"
                 style="float: right;margin-top: 6px;margin-left: 10px;width: 160px;"
-                v-model="groupUser.expirationDate"
+                v-model="projectUser.expirationDate"
                 type="date"
                 placeholder="Expiration date"
-                :disabled="hasOneOwner && groupUser.access === 4"
-                @change="onChangeGroupUser(groupUser)"
+                :disabled="hasOneOwner && projectUser.access === 4"
+                @change="onChangeProjectUser(projectUser)"
               />
               <base-select
-                :disabled="hasOneOwner && groupUser.access === 4"
-                @change="onChangeGroupUser(groupUser)"
+                :disabled="hasOneOwner && projectUser.access === 4"
+                @change="onChangeProjectUser(projectUser)"
                 size="small"
                 style="width: 160px;float: right;margin-top: 3px;"
                 :items="constants.ACCESS_LIST"
-                v-model="groupUser.access"
+                v-model="projectUser.access"
                 :clearable="false"
                 prop="access"
               />
             </div>
             <div v-else>
               <el-button
-                v-if="!hasOneOwner || groupUser.access !== 4"
+                v-if="!hasOneOwner || projectUser.access !== 4"
                 style="float: right;margin-left: 15px;margin-top: 6px;"
                 size="medium"
                 type="danger"
-                @click="removeGroupUser(groupUser, true)"
+                @click="removeProjectUser(projectUser, true)"
               >
                 Leave
                 <i class="el-icon-caret-right" />
@@ -168,7 +168,7 @@
               <div
                 style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;"
               >
-                {{ formatAccess(groupUser.access) }}
+                {{ formatAccess(projectUser.access) }}
               </div>
             </div>
           </div>
@@ -183,10 +183,10 @@
     data() {
       return {
         loading: false,
-        group: {},
+        project: {},
         users: [],
         usersFiltered: [],
-        groupUsers: [],
+        projectUsers: [],
         params: {
           userIds: [],
           access: 0,
@@ -223,15 +223,15 @@
         }
         this.usersFiltered = res;
       },
-      onChangeGroupUser(groupUser) {
-        if (groupUser.isOwner && groupUser.access !== 4 && this.hasOneOwner) {
-          groupUser.access = 4;
-          this.init(this.group.groupPath);
+      onChangeProjectUser(projectUser) {
+        if (projectUser.isOwner && projectUser.access !== 4 && this.hasOneOwner) {
+          projectUser.access = 4;
+          this.init(this.project.groupPath);
           return;
         }
-        this.axios.put('groups/' + this.group.id + '/users/' + groupUser.id,
-          {access: groupUser.access, expirationDate: groupUser.expirationDate}).then(() => {
-          this.init(this.group.groupPath);
+        this.axios.put('projects/' + this.project.id + '/users/' + projectUser.id,
+          {access: projectUser.access, expirationDate: projectUser.expirationDate}).then(() => {
+          this.init(this.project.namespace, this.project.projectPath);
         }).catch(res => {
           this.error(res.respMsg);
         });
@@ -243,35 +243,35 @@
           }
         }
       },
-      removeGroupUser(groupUser, isLeave) {
-        let title = isLeave ? 'Are you sure you want to leave the "' + this.group.groupName + '" group?'
-          : 'Are you sure you want to remove ' + groupUser.fullName + ' from the ' + this.group.groupName + ' group and any subresources?';
+      removeProjectUser(projectUser, isLeave) {
+        let title = isLeave ? 'Are you sure you want to leave the "' + this.project.projectName + '" project?'
+          : 'Are you sure you want to remove ' + projectUser.fullName + ' from the ' + this.project.projectName + ' project and any subresources?';
         this.$confirm(title, 'Confirmation',
           {type: 'warning'}).then(() => {
-          this.axios.delete('groups/' + this.group.id + '/users/' + groupUser.id).then(() => {
-            this.init(this.group.groupPath);
+          this.axios.delete('projects/' + this.project.id + '/users/' + projectUser.id).then(() => {
+            this.init(this.project.namespace, this.project.projectPath);
           }).catch(res => {
             this.error(res.respMsg);
           });
         });
       },
-      init(groupPath) {
+      init(namespace, projectPath) {
         this.loading = true;
-        this.axios.get('groups/' + groupPath + '/users').then(data => {
-          this.group = data.group;
+        this.axios.get('projects/' + namespace + '/' + projectPath + '/users').then(data => {
+          this.project = data.project;
           this.users = data.users;
           this.usersFiltered = data.users.concat();
 
           let ownerCount = 0;
-          for (let i = 0; i < data.groupUsers.length; i++) {
-            let groupUser = data.groupUsers[i];
-            groupUser.expirationDate = this.util.formatTimestamp(groupUser.expirationDate, 'yyyy-MM-dd');
-            if (groupUser.access === 4) {
+          for (let i = 0; i < data.projectUsers.length; i++) {
+            let projectUser = data.projectUsers[i];
+            projectUser.expirationDate = this.util.formatTimestamp(projectUser.expirationDate, 'yyyy-MM-dd');
+            if (projectUser.access === 4) {
               ownerCount++;
-              groupUser.isOwner = 1;
+              projectUser.isOwner = 1;
             }
           }
-          this.groupUsers = data.groupUsers;
+          this.projectUsers = data.projectUsers;
           this.hasOneOwner = ownerCount === 1;
         }).catch(res => {
           if (res.respCo === this.constants.INVALID_DATA) {
@@ -283,16 +283,16 @@
           this.loading = false;
         });
       },
-      addToGroup() {
+      addToProject() {
         this.$refs.form.validate((valid) => {
           if (!valid) {
             return;
           }
 
           this.loading = true;
-          this.axios.post('admin/groups/' + this.group.id + '/users', this.params).then(() => {
+          this.axios.post('projects/' + this.project.id + '/users', this.params).then(() => {
             this.success('Users were successfully added.');
-            this.init(this.group.groupPath);
+            this.init(this.project.namespace, this.project.projectPath);
             this.$refs.form.resetFields();
           }).catch(res => {
             this.error(res.respMsg);
@@ -303,7 +303,7 @@
       }
     },
     mounted() {
-      this.init(this.$route.params.path);
+      this.init(this.$route.params.namespace, this.$route.params.projectPath);
     }
   };
 </script>

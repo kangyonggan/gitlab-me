@@ -2,6 +2,7 @@ import Vue from 'vue';
 import adminMenus from '../menus/admin-menus';
 import profileMenus from '../menus/profile-menus';
 import groupsMenus from '../menus/groups-menus';
+import projectMenu from '../menus/projects-menus';
 import store from '../store';
 
 let util = {};
@@ -191,6 +192,52 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
         name: 'Detail'
       });
     }
+  } else if (route.meta.menuType === 'Projects') {
+    if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
+      breadcrumbs.unshift({
+        url: '/' + data.project.namespace + '/' + data.project.projectPath,
+        avatarType: 'retro',
+        avatar: '',
+        emptyAvatar: data.project.projectPath,
+        name: data.project.projectName
+      });
+      if (data.user) {
+        breadcrumbs.unshift({
+          url: '/' + data.user.username,
+          avatarType: 'retro',
+          avatar: data.user.email,
+          name: data.project.fullName
+        });
+      } else {
+        breadcrumbs.unshift({
+          url: '/' + data.group.groupPath,
+          avatarType: 'retro',
+          avatar: data.group.groupAvatar,
+          emptyAvatar: data.group.groupPath,
+          name: data.group.groupName
+        });
+      }
+    } else if (breadcrumbs.length === 1 && breadcrumbs[0].avatarType) {
+      if (data.user) {
+        breadcrumbs.unshift({
+          url: '/' + data.user.username,
+          avatarType: 'retro',
+          avatar: data.user.email,
+          name: data.project.fullName
+        });
+      } else {
+        breadcrumbs.unshift({
+          url: '/' + data.group.groupPath,
+          avatarType: 'retro',
+          avatar: data.group.groupAvatar,
+          emptyAvatar: data.group.groupPath,
+          name: data.group.groupName
+        });
+      }
+      breadcrumbs.push({
+        name: 'Detail'
+      });
+    }
   }
 
   store.commit('setBreadcrumbs', breadcrumbs);
@@ -267,6 +314,26 @@ util.getMenusWithNewRoute = async function (route) {
 
     store.commit('setMenus', menus);
     return;
+  } else if (route.meta.menuType === 'Projects') {
+    let namespace = route.params.namespace;
+    let projectPath = route.params.projectPath;
+    menus = util.replaceProjectMenus(projectMenu, namespace, projectPath);
+    await store.dispatch('getProject', {namespace: namespace, projectPath: projectPath}).then(data => {
+      menus[0].name = data.project.projectName;
+      menus[0].avatar = undefined;
+      menus[0].emptyAvatar = data.project.projectPath;
+      menus[0].avatarType = 'retro';
+
+      let breadcrumbs = util.getBreadcrumbs(route, menus);
+      if (!breadcrumbs.length) {
+        breadcrumbs = util.getBreadcrumbs({path: route.meta.parentPath}, menus);
+        breadcrumbs.push({name: route.meta.title});
+      }
+      util.adjustBreadcrumds(route, breadcrumbs, data);
+    });
+
+    store.commit('setMenus', menus);
+    return;
   }
 
   let breadcrumbs = util.getBreadcrumbs(route, menus);
@@ -293,6 +360,28 @@ util.replaceMenusCode = function (menus, code) {
     menu.url = menu.url.replace(/\{code}/, code);
     if (menu.children && menu.children.length) {
       menu.children = util.replaceMenusCode(menu.children, code);
+    }
+    resultMenus[i] = menu;
+  }
+  return resultMenus;
+};
+
+/**
+ * 替换项目菜单中的变量
+ *
+ * @param menus
+ * @param namespace
+ * @param projectPath
+ * @returns {[]}
+ */
+util.replaceProjectMenus = function (menus, namespace, projectPath) {
+  let resultMenus = [];
+  for (let i = 0; i < menus.length; i++) {
+    let menu = Object.assign({}, menus[i]);
+    menu.url = menu.url.replace(/\{namespace}/, namespace);
+    menu.url = menu.url.replace(/\{projectPath}/, projectPath);
+    if (menu.children && menu.children.length) {
+      menu.children = util.replaceProjectMenus(menu.children, namespace, projectPath);
     }
     resultMenus[i] = menu;
   }

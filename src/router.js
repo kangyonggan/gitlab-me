@@ -244,6 +244,32 @@ const routers = [
     ]
   },
   {
+    path: '/:namespace/:projectPath',
+    component: (resolve) => require(['./views/layout.vue'], resolve),
+    children: [
+      {
+        path: '/',
+        meta: {
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/index.vue'], resolve)
+      },
+      {
+        path: 'settings',
+        redirect: 'members'
+      },
+      {
+        path: 'members',
+        meta: {
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/members.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/',
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
