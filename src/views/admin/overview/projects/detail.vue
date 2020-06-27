@@ -273,7 +273,7 @@
       let namespace = this.$route.params.namespace;
       this.init(namespace, projectPath);
 
-      this.axios.get('admin/projects/namespaces').then(data => {
+      this.axios.get('admin/projects/allNamespaces').then(data => {
         this.namespaces = [{
           label: 'Groups',
           prefix: 'group',
@@ -283,7 +283,7 @@
           label: 'Users',
           prefix: 'user',
           key: 'username',
-          options: [this.$store.getters.getUser]
+          options: data.users
         }];
       }).catch(res => {
         this.error(res.respMsg);

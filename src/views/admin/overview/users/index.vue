@@ -90,7 +90,7 @@
               <el-dropdown-item command="0">
                 <span style="color: #f56c6c">
                   <i class="el-icon-delete" />
-                  Remove by physics
+                  Remove
                 </span>
               </el-dropdown-item>
             </el-dropdown-menu>

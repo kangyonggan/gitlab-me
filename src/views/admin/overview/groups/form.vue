@@ -13,24 +13,6 @@
       prop="groupPath"
     />
 
-    <ul
-      class="group-tips"
-      v-show="isEdit"
-      style="background: #fc9403;border-color: #fc9403"
-    >
-      <li>
-        A group is a collection of several projects
-      </li>
-      <li>
-        Members of a group may only view projects they have permission to access
-      </li>
-      <li>
-        Group project URLs are prefixed with the group namespace
-      </li>
-      <li>
-        Existing projects may be moved into a group
-      </li>
-    </ul>
     <base-input
       label="Group name"
       v-model="params.groupName"
@@ -83,26 +65,6 @@
       avatar-type="retro"
       prop="groupAvatar"
     />
-
-    <base-hr />
-
-    <ul
-      class="group-tips"
-      v-show="!isEdit"
-    >
-      <li>
-        A group is a collection of several projects
-      </li>
-      <li>
-        Members of a group may only view projects they have permission to access
-      </li>
-      <li>
-        Group project URLs are prefixed with the group namespace
-      </li>
-      <li>
-        Existing projects may be moved into a group
-      </li>
-    </ul>
   </base-form>
 </template>
 
@@ -180,15 +142,5 @@
     line-height: normal;
     color: #777;
     margin-left: 30px;
-  }
-
-  .group-tips {
-    margin-left: 220px;
-    padding: 10px 70px;
-    background-color: #1f78d1;
-    border: 1px solid #1f78d1;
-    color: #fff;
-    font-size: 14px;
-    line-height: 2;
   }
 </style>

@@ -229,7 +229,7 @@
           this.init(this.group.groupPath);
           return;
         }
-        this.axios.put('groups/' + this.group.id + '/members/' + groupUser.id,
+        this.axios.put('groups/' + this.group.id + '/users/' + groupUser.id,
           {access: groupUser.access, expirationDate: groupUser.expirationDate}).then(() => {
           this.init(this.group.groupPath);
         }).catch(res => {
