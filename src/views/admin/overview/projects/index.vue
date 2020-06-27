@@ -83,11 +83,6 @@
         sortable
       />
       <el-table-column
-        prop="description"
-        label="Description"
-        sortable
-      />
-      <el-table-column
         prop="visibilityLevel"
         label="Visibility level"
         sortable
