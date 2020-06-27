@@ -1,5 +1,5 @@
 <template>
-  <div :style="{width: size + 'px', height: size + 'px', lineHeight: size + 'px', fontSize: (size-14) + 'px', background: getRandomColor()}">
+  <div :style="{width: size + 'px', height: size + 'px', lineHeight: size + 'px', fontSize: (Math.max(size-14, 12)) + 'px', background: getRandomColor()}">
     {{ char }}
   </div>
 </template>

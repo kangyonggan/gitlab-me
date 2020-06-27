@@ -17,6 +17,7 @@
             v-if="menu.icon"
             :class="menu.icon"
           />
+
           <base-avatar
             :size="36"
             style="margin-right: 10px;"
@@ -26,12 +27,19 @@
             :type="menu.avatarType"
           />
 
+          <base-char-avatar
+            style="margin-right: 10px;"
+            v-if="menu.char"
+            :char="menu.char"
+            :size="36"
+          />
+
           <span
             slot="title"
             v-if="menu.avatarType"
             style="font-weight: 600;color: #2e2e2e"
-          >{{ menu.name }}
-          </span>
+          >{{ menu.name }}</span>
+
           <span
             slot="title"
             v-else

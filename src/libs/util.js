@@ -193,12 +193,10 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       });
     }
   } else if (route.meta.menuType === 'Projects') {
-    if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
+    if (breadcrumbs.length > 1 || !breadcrumbs[0].char) {
       breadcrumbs.unshift({
         url: '/' + data.project.namespace + '/' + data.project.projectPath,
-        avatarType: 'retro',
-        avatar: '',
-        emptyAvatar: data.project.projectPath,
+        char: data.project.projectPath.substring(0, 1),
         name: data.project.projectName
       });
       if (data.user) {
@@ -217,7 +215,7 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
           name: data.group.groupName
         });
       }
-    } else if (breadcrumbs.length === 1 && breadcrumbs[0].avatarType) {
+    } else if (breadcrumbs.length === 1 && breadcrumbs[0].char) {
       if (data.user) {
         breadcrumbs.unshift({
           url: '/' + data.user.username,
@@ -320,9 +318,7 @@ util.getMenusWithNewRoute = async function (route) {
     menus = util.replaceProjectMenus(projectMenu, namespace, projectPath);
     await store.dispatch('getProject', {namespace: namespace, projectPath: projectPath}).then(data => {
       menus[0].name = data.project.projectName;
-      menus[0].avatar = undefined;
-      menus[0].emptyAvatar = data.project.projectPath;
-      menus[0].avatarType = 'retro';
+      menus[0].char = data.project.projectPath.substring(0, 1);
 
       let breadcrumbs = util.getBreadcrumbs(route, menus);
       if (!breadcrumbs.length) {

@@ -19,6 +19,12 @@
           :empty-avatar="breadcrumb.emptyAvatar"
           :type="breadcrumb.avatarType"
         />
+        <base-char-avatar
+          style="float: left;margin: 10px 5px 0 0;"
+          v-if="breadcrumb.char"
+          :char="breadcrumb.char"
+          :size="15"
+        />
         {{ breadcrumb.name }}
       </router-link>
 
