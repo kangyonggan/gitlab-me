@@ -1,5 +1,9 @@
 <template>
-  <div :style="{width: size + 'px', height: size + 'px', lineHeight: size + 'px', fontSize: (Math.max(size-14, 12)) + 'px', background: getRandomColor()}">
+  <div
+    :style="{width: size + 'px', height: size + 'px', 
+             lineHeight: size + 'px', fontSize: (Math.max(size-14, 12)) + 'px',
+             background: getRandomColor(), borderRadius: shape === 'circle' ? '100%' : '20%'}"
+  >
     {{ char }}
   </div>
 </template>
@@ -15,6 +19,11 @@
         required: false,
         type: Number,
         default: 70
+      },
+      shape: {
+        required: false,
+        type: String,
+        default: 'circle'
       }
     },
     methods: {
@@ -39,7 +48,6 @@
 <style scoped lang="scss">
   div {
     text-align: center;
-    border-radius: 100%;
     display: inline-block;
     color: #555;
   }

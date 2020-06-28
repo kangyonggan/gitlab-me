@@ -29,8 +29,14 @@
             </router-link>
           </strong>
         </li>
-        <li>Storage: <strong>0 Bytes</strong></li>
-        <li>last commit: <strong>Never</strong></li>
+        <li>Storage: <strong>{{ project.size }}</strong></li>
+        <li>
+          last commit: 
+          <strong v-if="project.lastCommitTime">
+            {{ util.formatTimestamp(project.lastCommitTime) }}
+          </strong>
+          <strong v-else>Never</strong>
+        </li>
         <li>
           access:
           <strong style="color: #1aaa55">

@@ -32,6 +32,7 @@
             v-if="menu.char"
             :char="menu.char"
             :size="36"
+            shape="square"
           />
 
           <span
