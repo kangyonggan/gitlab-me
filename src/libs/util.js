@@ -384,6 +384,16 @@ util.replaceProjectMenus = function (menus, namespace, projectPath) {
   return resultMenus;
 };
 
+util.formatSize = function (size) {
+  if (size >= 1048576) {
+    return (size / 1048576).toFixed(2) + ' GB';
+  } else if (size > 1024) {
+    return (size / 1024).toFixed(2) + ' MB';
+  } else {
+    return size + ' KB';
+  }
+};
+
 export default util;
 
 Vue.prototype.util = util;

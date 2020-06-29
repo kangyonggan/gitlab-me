@@ -1,63 +1,6 @@
 <template>
   <div style="width: 1000px;margin: 0 auto">
-    <div class="header">
-      <base-char-avatar
-        :char="project.projectName.substring(0, 1)"
-        :size="68"
-        shape="square"
-        style="float: left"
-      />
-      <div style="float: left;margin-left: 20px;">
-        <div style="font-size: 20px;font-weight: bold;color: #2e2e2e;margin-top: 7px;">
-          {{ project.projectName }}
-          <i
-            v-if="project.visibilityLevel === 0"
-            class="el-icon-lock"
-            style="font-size: 16px;"
-          />
-          <i
-            v-if="project.visibilityLevel === 1"
-            class="el-icon-refrigerator"
-            style="font-size: 16px;"
-          />
-          <i
-            v-if="project.visibilityLevel === 2"
-            class="el-icon-open"
-            style="font-size: 16px;"
-          />
-        </div>
-        <div style="font-size: 14px;line-height: 16px;color: #707070;margin-top: 8px;">
-          Project ID: {{ project.id }}
-        </div>
-      </div>
-      <div style="float: right;margin-top: 20px;position: relative">
-        <router-link
-          to="/"
-          class="star-num"
-        >
-          0
-        </router-link>
-        <el-button
-          size="mini"
-          plain
-          class="star-btn"
-          @click="star"
-        >
-          <span v-if="isStar">
-            <i class="el-icon-star-on" />
-            Unstar
-          </span>
-          <span v-else>
-            <i class="el-icon-star-off" />
-            Star
-          </span>
-        </el-button>
-      </div>
-      <div class="empty" />
-      <div class="description">
-        {{ project.description }}
-      </div>
-    </div>
+    <header-index :project="project" />
 
     <div class="empty" />
 
@@ -69,57 +12,61 @@
         You can get started by cloning the repository or start adding files to it with one of the following options.
       </p>
       <div class="actions">
-        <el-button
-          type="primary"
-          size="medium"
-          @click="showCloneAddress = !showCloneAddress"
+        <el-dropdown
+          trigger="click"
+          ref="clone-dropdown"
+          placement="bottom-start"
         >
-          Clone
-          <i class="el-icon-arrow-down" />
-        </el-button>
-        <ul
-          class="clone-address"
-          v-show="showCloneAddress"
-        >
-          <li>
-            <label>Clone with HTTP</label>
-            <el-input
-              value="http://127.0.0.1/fes/be.git"
-              size="medium"
-              readonly
-            >
-              <el-tooltip
-                slot="append"
-                effect="dark"
-                content="Copy URL"
-              >
-                <el-button
-                  @click="copyURL('http://127.0.0.1/fes/be.git')"
-                  icon="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </el-input>
-          </li>
-          <li>
-            <label>Clone with SSH</label>
-            <el-input
-              value="git@127.0.0.1/fes/be.git"
-              size="medium"
-              readonly
-            >
-              <el-tooltip
-                slot="append"
-                effect="dark"
-                content="Copy URL"
-              >
-                <el-button
-                  @click="copyURL('git@127.0.0.1/fes/be.git')"
-                  icon="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </el-input>
-          </li>
-        </ul>
+          <el-button
+            type="primary"
+            size="medium"
+          >
+            Clone
+            <i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <ul class="clone-address-list">
+              <li>
+                <label>Clone with HTTP</label>
+                <el-input
+                  value="http://127.0.0.1/fes/be.git"
+                  size="medium"
+                  readonly
+                >
+                  <el-tooltip
+                    slot="append"
+                    effect="dark"
+                    content="Copy URL"
+                  >
+                    <el-button
+                      @click="copyURL('http://127.0.0.1/fes/be.git')"
+                      icon="el-icon-document-copy"
+                    />
+                  </el-tooltip>
+                </el-input>
+              </li>
+              <li style="margin-top: 20px;">
+                <label>Clone with SSH</label>
+                <el-input
+                  value="git@127.0.0.1/fes/be.git"
+                  size="medium"
+                  readonly
+                >
+                  <el-tooltip
+                    slot="append"
+                    effect="dark"
+                    content="Copy URL"
+                  >
+                    <el-button
+                      @click="copyURL('git@127.0.0.1/fes/be.git')"
+                      icon="el-icon-document-copy"
+                    />
+                  </el-tooltip>
+                </el-input>
+              </li>
+            </ul>
+          </el-dropdown-menu>
+        </el-dropdown>
 
         <span>
           <el-button
@@ -218,27 +165,20 @@ git push -u origin --tags</pre>
 </template>
 
 <script>
+  import HeaderIndex from './header-index';
   export default {
+    components: {HeaderIndex},
     props: {
       project: {
         required: true,
         type: Object
       }
     },
-    data() {
-      return {
-        showCloneAddress: false,
-        isStar: false
-      };
-    },
     methods: {
       copyURL(url) {
         console.log(url);
         this.success('URL Copied');
-        this.showCloneAddress = false;
-      },
-      star() {
-        this.isStar = !this.isStar;
+        this.$refs['clone-dropdown'].visible = false;
       }
     }
   };
@@ -250,30 +190,18 @@ git push -u origin --tags</pre>
     height: 10px;
   }
 
-  .header {
-    .star-btn {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      float: right;
-    }
+  .clone-address-list {
+    list-style: none;
+    padding: 8px 12px;
 
-    .star-num {
-      float: right;
-      display: inline-block;
-      height: 26px;
-      color: #333;
-      line-height: 26px;
-      padding: 0 12px;
-      border: 1px solid #DCDFE6;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-      border-left: 0;
-    }
+    li {
+      label {
+        font-weight: 600;
+      }
 
-    .description {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #2e2e2e;
+      .el-input {
+        margin-top: 8px;
+      }
     }
   }
 
@@ -299,33 +227,6 @@ git push -u origin --tags</pre>
         .el-button:hover {
           color: #606266;
           background: #fafafa;
-        }
-      }
-
-      .clone-address {
-        position: absolute;
-        background: #fff;
-        left: 0;
-        top: 27px;
-        z-index: 99;
-        width: 360px;
-        height: 168px;
-        border: 1px solid #e5e5e5;
-        border-radius: 3px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        list-style: none;
-        padding: 0 20px 15px 20px;
-
-        li {
-          margin-top: 20px;
-
-          label {
-            font-weight: 600;
-          }
-
-          .el-input {
-            margin-top: 8px;
-          }
         }
       }
     }

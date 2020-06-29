@@ -29,7 +29,7 @@
             </router-link>
           </strong>
         </li>
-        <li>Storage: <strong>{{ project.size }}</strong></li>
+        <li>Storage: <strong>{{ util.formatSize(project.size) }}</strong></li>
         <li>
           last commit: 
           <strong v-if="project.lastCommitTime">
