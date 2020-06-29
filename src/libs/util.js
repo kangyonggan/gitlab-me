@@ -387,16 +387,42 @@ util.replaceProjectMenus = function (menus, namespace, projectPath) {
 /**
  * 格式化大小，如：2 KB
  *
- * @param size
+ * @param size KB
  * @returns {string}
  */
 util.formatSize = function (size) {
+  if (!size) {
+    return '-';
+  }
+  size = size * 1;
   if (size >= 1048576) {
     return (size / 1048576).toFixed(2) + ' GB';
   } else if (size > 1024) {
     return (size / 1024).toFixed(2) + ' MB';
   } else {
     return size + ' KB';
+  }
+};
+
+/**
+ * 格式化大小，如：2 Byte
+ *
+ * @param size byte
+ * @returns {string}
+ */
+util.formatSizeOfByte = function (size) {
+  if (!size) {
+    return '-';
+  }
+  size = size * 1;
+  if (size / 1024 >= 1048576) {
+    return (size / 1024 / 1048576).toFixed(2) + ' GB';
+  } else if (size / 1024 > 1024) {
+    return (size / 1024 / 1024).toFixed(2) + ' MB';
+  } else if (size > 1024) {
+    return (size / 1024).toFixed(2) + ' KB';
+  } else {
+    return size + ' B';
   }
 };
 

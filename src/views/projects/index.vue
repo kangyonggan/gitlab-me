@@ -165,7 +165,7 @@
             {{ project.lastCommit.msg }}
           </router-link>
           <div style="margin-top: 3px;">
-            <strong>{{ project.lastCommit.username }}</strong>
+            <span>{{ project.lastCommit.username }}</span>
             <div style="color: #919191;display: inline-block;margin-left: 8px;">
               authored
               <base-relative-time :timestamp="project.lastCommit.date" />
@@ -196,6 +196,56 @@
         </div>
         <div style="clear: both" />
       </div>
+
+      <el-table
+        :data="list"
+        style="width: 100%;margin-top: 20px;border: 1px solid #e5e5e5"
+      >
+        <el-table-column
+          prop="fullName"
+          label="Name"
+        >
+          <template slot-scope="scope">
+            <i
+              v-if="scope.row.type === 'tree'"
+              class="el-icon-folder"
+            />
+            <i
+              v-else-if="scope.row.size > 0"
+              class="el-icon-document"
+            />
+            <i
+              v-else
+              class="el-icon-document-remove"
+            />
+            {{ scope.row.fullName.substring(fullPath.length) }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="size"
+          label="Size"
+        >
+          <template slot-scope="scope">
+            {{ util.formatSizeOfByte(scope.row.size) }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="lastCommit"
+          label="Last commit"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.lastCommit.msg }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="lastUpdate"
+          label="Last update"
+        >
+          <template slot-scope="scope">
+            <base-relative-time :timestamp="scope.row.lastCommit.date" />
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
     <div
       v-else-if="project.branches && !project.branches.length"
@@ -215,13 +265,23 @@
     data() {
       return {
         project: {},
-        currentBranch: 'master'
+        currentBranch: 'master',
+        fullPath: '',
+        list: []
       };
     },
     methods: {
-      init(namespace, projectPath) {
+      getProjectDetail(namespace, projectPath) {
         this.axios.get('projects/' + namespace + '/' + projectPath).then(data => {
           this.project = data.project;
+        }).catch(res => {
+          this.error(res.respMsg);
+        });
+      },
+      loadTree(namespace, projectPath) {
+        this.axios.get('projects/' + namespace + '/' + projectPath + '/tree?branch=' + this.currentBranch + '&fullPath=' + this.fullPath).then(data => {
+          console.log(data);
+          this.list = data.treeInfos;
         }).catch(res => {
           this.error(res.respMsg);
         });
@@ -244,7 +304,8 @@
       }
     },
     mounted() {
-      this.init(this.$route.params.namespace, this.$route.params.projectPath);
+      this.getProjectDetail(this.$route.params.namespace, this.$route.params.projectPath);
+      this.loadTree(this.$route.params.namespace, this.$route.params.projectPath);
     }
   };
 </script>
@@ -298,5 +359,13 @@
     border: 1px solid #e5e5e5;
     border-radius: 4px;
     padding: 14px;
+  }
+
+  .el-table {
+    /deep/ th {
+      background: #fafafa;
+      color: #2e2e2e;
+      font-weight: normal;
+    }
   }
 </style>
