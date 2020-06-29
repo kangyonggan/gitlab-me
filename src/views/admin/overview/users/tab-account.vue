@@ -93,7 +93,7 @@
           <div class="item">
             Sign up time:
             <span class="value">
-              {{ util.formatTimestamp(user.signUpTime) }}
+              {{ util.relativeTime(user.signUpTime) }}
             </span>
           </div>
           <div class="item">
@@ -105,7 +105,7 @@
           <div class="item">
             Last sign in time:
             <span class="value">
-              {{ util.formatTimestamp(user.lastSignInTime) }}
+              {{ util.relativeTime(user.lastSignInTime) }}
             </span>
           </div>
         </div>

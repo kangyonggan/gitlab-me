@@ -27,7 +27,7 @@ util.formatTimestamp = function (timestamp, format) {
   if (!timestamp) {
     return '';
   }
-  let date = new Date(timestamp);
+  let date = new Date(timestamp * 1);
   let o = {
     'M+': date.getMonth() + 1,                 //月份
     'd+': date.getDate(),                    //日
@@ -384,6 +384,12 @@ util.replaceProjectMenus = function (menus, namespace, projectPath) {
   return resultMenus;
 };
 
+/**
+ * 格式化大小，如：2 KB
+ *
+ * @param size
+ * @returns {string}
+ */
 util.formatSize = function (size) {
   if (size >= 1048576) {
     return (size / 1048576).toFixed(2) + ' GB';
@@ -392,6 +398,41 @@ util.formatSize = function (size) {
   } else {
     return size + ' KB';
   }
+};
+
+/**
+ * 计算相对时间，如：2 minutes ago.
+ *
+ * 1天86400000毫秒
+ *
+ * @param timestamp
+ * @returns {string}
+ */
+util.relativeTime = function (timestamp) {
+  let offset = new Date().getTime() - timestamp * 1;
+  let day = 86400000;
+
+  let num;
+  if (offset > 365 * day) {
+    num = Math.floor(offset / (365 * day));
+    return num + (num > 1 ? ' years ago' : ' year ago');
+  } else if (offset > 30 * day) {
+    num = Math.floor(offset / (30 * day));
+    return num + (num > 1 ? ' months ago' : ' month ago');
+  } else if (offset > day) {
+    num = Math.floor(offset / day);
+    return num + (num > 1 ? ' days ago' : ' day ago');
+  } else if (offset > 604800000) {
+    num = Math.floor(offset / 604800000);
+  } else if (offset > 3600000) {
+    num = Math.floor(offset / 3600000);
+    return num + (num > 1 ? ' hours ago' : ' hour ago');
+  } else if (offset > 60000) {
+    num = Math.floor(offset / 60000);
+    return num + (num > 1 ? ' minutes ago' : ' minute ago');
+  }
+
+  return 'just now';
 };
 
 export default util;

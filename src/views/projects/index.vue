@@ -76,18 +76,38 @@
         </el-dropdown>
 
         <div class="actions">
+          <el-button
+            plain
+            size="medium"
+          >
+            History
+          </el-button>
+          <el-button
+            plain
+            size="medium"
+            style="margin-right: 10px;"
+          >
+            <i class="el-icon-search" />
+            Find file
+          </el-button>
           <el-dropdown
             style="margin-right: 10px;"
             trigger="click"
             ref="download-dropdown"
           >
-            <el-button
-              plain
-              size="medium"
+            <el-tooltip
+              effect="dark"
+              content="Download"
+              placement="top"
             >
-              <i class="el-icon-download" />
-              <i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
+              <el-button
+                plain
+                size="medium"
+              >
+                <i class="el-icon-download" />
+                <i class="el-icon-arrow-down el-icon--right" />
+              </el-button>
+            </el-tooltip>
             <el-dropdown-menu
               slot="dropdown"
               style="width: 240px"
@@ -182,6 +202,59 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
+      </div>
+
+      <div class="last-commit">
+        <base-avatar
+          style="float: left"
+          :size="38"
+          :empty-avatar="project.lastCommit.email"
+        />
+        <div style="float: left;margin-left: 15px;">
+          <router-link
+            :to="'/' + project.namespace + '/' + project.projectPath + '/commit/' + project.lastCommit.commitId"
+            style="color: #2e2e2e;font-weight: 600;max-width: 500px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"
+          >
+            {{ project.lastCommit.msg }}
+          </router-link>
+          <div style="margin-top: 3px;">
+            <strong>{{ project.lastCommit.username }}</strong>
+            <div style="color: #919191;display: inline-block;margin-left: 8px;">
+              authored
+              <el-tooltip
+                slot="append"
+                effect="dark"
+                placement="top"
+                :content="util.formatTimestamp(project.lastCommit.date)"
+              >
+                <span>
+                  {{ util.relativeTime(project.lastCommit.date) }}
+                </span>
+              </el-tooltip>
+            </div>
+          </div>
+        </div>
+        <div style="float: right;margin-top: 3px;">
+          <el-input
+            :value="project.lastCommit.commitId.substring(0, 8)"
+            size="medium"
+            style="width: 150px;"
+            readonly
+          >
+            <el-tooltip
+              slot="append"
+              effect="dark"
+              placement="top"
+              content="Copy commit SHA"
+            >
+              <el-button
+                @click="copyURL(project.lastCommit.commitId)"
+                icon="el-icon-document-copy"
+              />
+            </el-tooltip>
+          </el-input>
+        </div>
+        <div style="clear: both" />
       </div>
     </div>
     <div
@@ -289,5 +362,14 @@
         margin-top: 8px;
       }
     }
+  }
+
+  .last-commit {
+    margin-top: 20px;
+    background: #fafafa;
+    color: #2e2e2e;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 14px;
   }
 </style>

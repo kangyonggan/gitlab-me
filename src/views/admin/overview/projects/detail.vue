@@ -21,7 +21,7 @@
         </li>
         <li>Description: <strong>{{ project.description }}</strong></li>
         <li>Owned by: <strong>11</strong></li>
-        <li>Created on: <strong>{{ util.formatTimestamp(project.createdTime) }}</strong></li>
+        <li>Created on: <strong>{{ util.relativeTime(project.createdTime) }}</strong></li>
         <li>
           Http: <strong>
             <router-link :to="'/' + project.namespace + '/' + project.projectPath + '.git'">
@@ -32,8 +32,8 @@
         <li>Storage: <strong>{{ util.formatSize(project.size) }}</strong></li>
         <li>
           last commit: 
-          <strong v-if="project.lastCommitTime">
-            {{ util.formatTimestamp(project.lastCommitTime) }}
+          <strong v-if="project.lastCommit">
+            {{ util.relativeTime(project.lastCommit.date) }}
           </strong>
           <strong v-else>Never</strong>
         </li>
@@ -98,7 +98,7 @@
                   style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
                 >It's you</span>
               </div>
-              <div>Joined at {{ util.formatTimestamp(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
+              <div>Joined at {{ util.relativeTime(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
             </div>
             <div
               style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;"
@@ -148,7 +148,7 @@
                   style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
                 >It's you</span>
               </div>
-              <div>Joined at {{ util.formatTimestamp(projectUser.createdTime, 'yyyy-MM-dd') }}</div>
+              <div>Joined at {{ util.relativeTime(projectUser.createdTime, 'yyyy-MM-dd') }}</div>
             </div>
             <div
               style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;"
