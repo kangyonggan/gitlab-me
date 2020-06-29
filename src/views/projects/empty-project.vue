@@ -304,6 +304,7 @@ git push -u origin --tags</pre>
 
       .clone-address {
         position: absolute;
+        background: #fff;
         left: 0;
         top: 27px;
         z-index: 99;
