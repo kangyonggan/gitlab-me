@@ -147,60 +147,7 @@
               </div>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-dropdown
-            trigger="click"
-            ref="clone-dropdown"
-          >
-            <el-button
-              type="primary"
-              size="medium"
-            >
-              Clone
-              <i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <ul class="clone-address-list">
-                <li>
-                  <label>Clone with HTTP</label>
-                  <el-input
-                    value="http://127.0.0.1/fes/be.git"
-                    size="medium"
-                    readonly
-                  >
-                    <el-tooltip
-                      slot="append"
-                      effect="dark"
-                      content="Copy URL"
-                    >
-                      <el-button
-                        @click="copyURL('http://127.0.0.1/fes/be.git')"
-                        icon="el-icon-document-copy"
-                      />
-                    </el-tooltip>
-                  </el-input>
-                </li>
-                <li style="margin-top: 20px;">
-                  <label>Clone with SSH</label>
-                  <el-input
-                    value="git@127.0.0.1/fes/be.git"
-                    size="medium"
-                    readonly
-                  >
-                    <el-tooltip
-                      slot="append"
-                      effect="dark"
-                      content="Copy URL"
-                    >
-                      <el-button
-                        @click="copyURL('git@127.0.0.1/fes/be.git')"
-                        icon="el-icon-document-copy"
-                      />
-                    </el-tooltip>
-                  </el-input>
-                </li>
-              </ul>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <clone-dropdown :project="project" />
         </div>
       </div>
 
@@ -239,8 +186,10 @@
               content="Copy commit SHA"
             >
               <el-button
-                @click="copyURL(project.lastCommit.commitId)"
                 icon="el-icon-document-copy"
+                v-clipboard:copy="project.lastCommit.commitId"
+                v-clipboard:success="onCopySuccess"
+                v-clipboard:error="onCopyError"
               />
             </el-tooltip>
           </el-input>
@@ -259,9 +208,10 @@
 <script>
   import EmptyProject from './empty-project';
   import HeaderIndex from './header-index';
+  import CloneDropdown from './clone-dropdown';
 
   export default {
-    components: {HeaderIndex, EmptyProject},
+    components: {CloneDropdown, HeaderIndex, EmptyProject},
     data() {
       return {
         project: {},
@@ -286,10 +236,11 @@
         console.log(type);
         this.$refs['download-dropdown'].visible = false;
       },
-      copyURL(url) {
-        console.log(url);
-        this.success('URL Copied');
-        this.$refs['clone-dropdown'].visible = false;
+      onCopySuccess() {
+        this.success('Copied');
+      },
+      onCopyError() {
+        this.error('Failed copy');
       }
     },
     mounted() {
@@ -336,21 +287,6 @@
 
       a:hover {
         background: #f0f0f0;
-      }
-    }
-  }
-
-  .clone-address-list {
-    list-style: none;
-    padding: 8px 12px;
-
-    li {
-      label {
-        font-weight: 600;
-      }
-
-      .el-input {
-        margin-top: 8px;
       }
     }
   }

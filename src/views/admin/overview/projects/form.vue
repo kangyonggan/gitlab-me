@@ -19,7 +19,7 @@
       <input
         readonly="readonly"
         class="readonly"
-        value="http://127.0.0.1/"
+        :value="constants.EXTERNAL_URL + '/'"
       >
       <el-select
         class="select-namespace"

@@ -29,7 +29,7 @@
         <li>
           Http: <strong>
             <router-link :to="'/' + project.namespace + '/' + project.projectPath + '.git'">
-              http://127.0.0.1/{{ project.namespace }}/{{ project.projectPath }}.git
+              {{ constants.EXTERNAL_URL }}/{{ project.namespace }}/{{ project.projectPath }}.git
             </router-link>
           </strong>
         </li>

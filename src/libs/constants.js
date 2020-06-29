@@ -77,6 +77,13 @@ constants.ACCESS_LIST = [
   }
 ];
 
+/**
+ * gitlab地址
+ *
+ * @type {string}
+ */
+constants.EXTERNAL_URL = 'http://127.0.0.1';
+
 export default constants;
 
 Vue.prototype.constants = constants;

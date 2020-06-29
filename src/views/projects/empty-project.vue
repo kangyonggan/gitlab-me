@@ -12,61 +12,10 @@
         You can get started by cloning the repository or start adding files to it with one of the following options.
       </p>
       <div class="actions">
-        <el-dropdown
-          trigger="click"
-          ref="clone-dropdown"
+        <clone-dropdown
+          :project="project"
           placement="bottom-start"
-        >
-          <el-button
-            type="primary"
-            size="medium"
-          >
-            Clone
-            <i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <ul class="clone-address-list">
-              <li>
-                <label>Clone with HTTP</label>
-                <el-input
-                  value="http://127.0.0.1/fes/be.git"
-                  size="medium"
-                  readonly
-                >
-                  <el-tooltip
-                    slot="append"
-                    effect="dark"
-                    content="Copy URL"
-                  >
-                    <el-button
-                      @click="copyURL('http://127.0.0.1/fes/be.git')"
-                      icon="el-icon-document-copy"
-                    />
-                  </el-tooltip>
-                </el-input>
-              </li>
-              <li style="margin-top: 20px;">
-                <label>Clone with SSH</label>
-                <el-input
-                  value="git@127.0.0.1/fes/be.git"
-                  size="medium"
-                  readonly
-                >
-                  <el-tooltip
-                    slot="append"
-                    effect="dark"
-                    content="Copy URL"
-                  >
-                    <el-button
-                      @click="copyURL('git@127.0.0.1/fes/be.git')"
-                      icon="el-icon-document-copy"
-                    />
-                  </el-tooltip>
-                </el-input>
-              </li>
-            </ul>
-          </el-dropdown-menu>
-        </el-dropdown>
+        />
 
         <span>
           <el-button
@@ -130,7 +79,7 @@ git config --global user.email "admin@example.com"</pre>
         <div class="cmd-name">
           Create a new repository
         </div>
-        <pre class="cmd-content">git remote add origin http://127.0.0.1/fes/be.git
+        <pre class="cmd-content">git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
 cd app-web
 touch README.md
 git add README.md
@@ -144,7 +93,7 @@ git push -u origin master</pre>
         </div>
         <pre class="cmd-content">cd existing_folder
 git init
-git remote add origin http://127.0.0.1/fes/be.git
+git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
 git add .
 git commit -m "Initial commit"
 git push -u origin master</pre>
@@ -156,7 +105,7 @@ git push -u origin master</pre>
         </div>
         <pre class="cmd-content">cd existing_repo
 git remote rename origin old-origin
-git remote add origin http://127.0.0.1/fes/be.git
+git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
 git push -u origin --all
 git push -u origin --tags</pre>
       </div>
@@ -166,19 +115,14 @@ git push -u origin --tags</pre>
 
 <script>
   import HeaderIndex from './header-index';
+  import CloneDropdown from './clone-dropdown';
+
   export default {
-    components: {HeaderIndex},
+    components: {CloneDropdown, HeaderIndex},
     props: {
       project: {
         required: true,
         type: Object
-      }
-    },
-    methods: {
-      copyURL(url) {
-        console.log(url);
-        this.success('URL Copied');
-        this.$refs['clone-dropdown'].visible = false;
       }
     }
   };
@@ -188,21 +132,6 @@ git push -u origin --tags</pre>
   .empty {
     clear: both;
     height: 10px;
-  }
-
-  .clone-address-list {
-    list-style: none;
-    padding: 8px 12px;
-
-    li {
-      label {
-        font-weight: 600;
-      }
-
-      .el-input {
-        margin-top: 8px;
-      }
-    }
   }
 
   .options {

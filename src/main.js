@@ -12,8 +12,12 @@ import '@/libs/http';
 import '@/libs/common';
 import '@/libs/constants';
 import './components/index';
+import VueClipboard from 'vue-clipboard2';
 
 Vue.use(ElementUI, {locale});
+
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 
 new Vue({
   router: Router,
