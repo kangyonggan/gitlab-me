@@ -31,7 +31,7 @@
           sortable
         >
           <template slot-scope="scope">
-            {{ util.relativeTime(scope.row.signInTime) }}
+            <base-relative-time :timestamp="scope.row.signInTime" />
           </template>
         </el-table-column>
         <el-table-column

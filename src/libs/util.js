@@ -409,6 +409,9 @@ util.formatSize = function (size) {
  * @returns {string}
  */
 util.relativeTime = function (timestamp) {
+  if (!timestamp) {
+    return '';
+  }
   let offset = new Date().getTime() - timestamp * 1;
   let day = 86400000;
 

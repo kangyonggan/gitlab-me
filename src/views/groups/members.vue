@@ -121,7 +121,10 @@
                   style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
                 >It's you</span>
               </div>
-              <div>Joined at {{ util.relativeTime(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
+              <div>
+                Joined at
+                <base-relative-time :timestamp="groupUser.createdTime" />
+              </div>
             </div>
             <div v-if="$store.getters.getUser.id !== groupUser.userId">
               <el-button

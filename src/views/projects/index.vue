@@ -221,16 +221,7 @@
             <strong>{{ project.lastCommit.username }}</strong>
             <div style="color: #919191;display: inline-block;margin-left: 8px;">
               authored
-              <el-tooltip
-                slot="append"
-                effect="dark"
-                placement="top"
-                :content="util.formatTimestamp(project.lastCommit.date)"
-              >
-                <span>
-                  {{ util.relativeTime(project.lastCommit.date) }}
-                </span>
-              </el-tooltip>
+              <base-relative-time :timestamp="project.lastCommit.date" />
             </div>
           </div>
         </div>

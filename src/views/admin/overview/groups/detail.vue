@@ -20,7 +20,11 @@
           Visibility level: <strong>{{ group.visibilityLevel === 0 ? 'Private' : group.visibilityLevel === 1 ?
             'Internal' : 'Public' }}</strong>
         </li>
-        <li>Created on: <strong>{{ util.relativeTime(group.createdTime) }}</strong></li>
+        <li>
+          Created on: <strong>
+            <base-relative-time :timestamp="group.createdTime" />
+          </strong>
+        </li>
       </ul>
     </el-card>
     <el-card style="float: right">
@@ -133,9 +137,14 @@
                   style="padding: 1px 5px;font-size: 12px;background: #1aaa55;border-radius: 8px;color: #fff;"
                 >It's you</span>
               </div>
-              <div>Joined at {{ util.relativeTime(groupUser.createdTime, 'yyyy-MM-dd') }}</div>
+              <div>
+                Joined at
+                <base-relative-time :timestamp="groupUser.createdTime" />
+              </div>
             </div>
-            <div style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;">
+            <div
+              style="margin-top: 13px;float: right;margin-right: 10px;color: #707070;border: 1px solid #e5e5e5;border-radius: 10px;padding: 2px 7px;"
+            >
               {{ formatAccess(groupUser.access) }}
             </div>
           </div>

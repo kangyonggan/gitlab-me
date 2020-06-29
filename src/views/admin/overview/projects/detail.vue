@@ -21,7 +21,11 @@
         </li>
         <li>Description: <strong>{{ project.description }}</strong></li>
         <li>Owned by: <strong>11</strong></li>
-        <li>Created on: <strong>{{ util.relativeTime(project.createdTime) }}</strong></li>
+        <li>
+          Created on: <strong>
+            <base-relative-time :timestamp="project.createdTime" />
+          </strong>
+        </li>
         <li>
           Http: <strong>
             <router-link :to="'/' + project.namespace + '/' + project.projectPath + '.git'">
@@ -31,7 +35,7 @@
         </li>
         <li>Storage: <strong>{{ util.formatSize(project.size) }}</strong></li>
         <li>
-          last commit: 
+          last commit:
           <strong v-if="project.lastCommit">
             {{ util.relativeTime(project.lastCommit.date) }}
           </strong>

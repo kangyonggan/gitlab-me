@@ -105,7 +105,7 @@
           <div class="item">
             Last sign in time:
             <span class="value">
-              {{ util.relativeTime(user.lastSignInTime) }}
+              <base-relative-time :timestamp="user.lastSignInTime" />
             </span>
           </div>
         </div>
