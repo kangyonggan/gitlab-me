@@ -259,7 +259,8 @@
       v-if="blobInfo.fullName"
     >
       <div class="header">
-        header
+        {{ blobInfo.fullName }}
+        {{ util.formatSizeOfByte(blobInfo.size) }}
       </div>
       <div v-highlight>
         <pre style="margin: 0"><code>{{ blobInfo.content }}</code></pre>
