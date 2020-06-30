@@ -8,7 +8,6 @@
       <tree
         :project="project"
         :tree-infos="treeInfos"
-        @branch-change="onBranchChange"
       />
     </div>
     <div
@@ -23,7 +22,6 @@
   import EmptyProject from './empty-project';
   import HeaderIndex from './header-index';
   import Tree from './tree';
-  import qs from 'qs';
 
   export default {
     components: {HeaderIndex, EmptyProject, Tree},
@@ -34,16 +32,8 @@
       };
     },
     methods: {
-      onBranchChange(branch) {
-        this.$router.push({
-          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree',
-          query: {branch: branch}
-        }).then(() => {
-          this.init(this.$route);
-        });
-      },
       init(route) {
-        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath + '?' + qs.stringify(route.query)).then(data => {
+        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath).then(data => {
           this.project = data.project;
           this.treeInfos = data.treeInfos;
         }).catch(res => {

@@ -21,7 +21,7 @@ export default [
     children: [
       {
         name: 'Files',
-        url: '/{namespace}/{projectPath}/tree'
+        url: '/{namespace}/{projectPath}/tree/master'
       }
     ]
   },

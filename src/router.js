@@ -256,12 +256,12 @@ const routers = [
         component: (resolve) => require(['./views/projects/index.vue'], resolve)
       },
       {
-        path: 'tree',
+        path: 'tree/*',
         meta: {
           permission: true,
           menuType: 'Projects'
         },
-        component: (resolve) => require(['./views/projects/index.vue'], resolve)
+        component: (resolve) => require(['./views/projects/files.vue'], resolve)
       },
       {
         path: 'settings',

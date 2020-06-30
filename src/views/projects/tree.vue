@@ -216,7 +216,12 @@
             v-else
             class="el-icon-document-remove"
           />
-          {{ scope.row.fullName }}
+          <a
+            @click="showFile(scope.row)"
+            style="color: #2e2e2e;cursor: pointer"
+          >
+            {{ scope.row.fullName }}
+          </a>
         </template>
       </el-table-column>
       <el-table-column
@@ -264,12 +269,20 @@
     },
     data() {
       return {
-        currentBranch: this.$route.query.branch || 'master'
+        currentBranch: this.$route.params.pathMatch || 'master'
       };
     },
     methods: {
       onBranchSelected(branch) {
-        this.$emit('branch-change', branch);
+        this.$router.push({
+          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/' + branch
+        });
+      },
+      showFile(file) {
+        this.$router.push({
+          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/'
+            + this.currentBranch + '?type=' + file.type + '&fullPath=' + file.fullName
+        });
       },
       onNewEvent(cmd) {
         console.log(cmd);
