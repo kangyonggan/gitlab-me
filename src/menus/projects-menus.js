@@ -15,6 +15,17 @@ export default [
     ]
   },
   {
+    name: 'Repository',
+    url: '/{namespace}/{projectPath}/repository',
+    icon: 'el-icon-coin',
+    children: [
+      {
+        name: 'Files',
+        url: '/{namespace}/{projectPath}/tree'
+      }
+    ]
+  },
+  {
     name: 'Settings',
     url: '/{namespace}/{projectPath}/settings',
     icon: 'el-icon-s-tools',

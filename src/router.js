@@ -256,6 +256,14 @@ const routers = [
         component: (resolve) => require(['./views/projects/index.vue'], resolve)
       },
       {
+        path: 'tree',
+        meta: {
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/index.vue'], resolve)
+      },
+      {
         path: 'settings',
         redirect: 'members'
       },
