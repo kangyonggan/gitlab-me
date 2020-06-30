@@ -1,10 +1,8 @@
 <template>
-  <div style="width: 1000px;margin: 0 auto">
-    <project-content
-      :project="project"
-      :tree-infos="treeInfos"
-    />
-  </div>
+  <project-content
+    :project="project"
+    :blob-info="blobInfo"
+  />
 </template>
 
 <script>
@@ -15,15 +13,15 @@
     data() {
       return {
         project: {},
-        treeInfos: []
+        blobInfo: {}
       };
     },
     methods: {
       init(route) {
         this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath
-          + '/tree?branch=' + route.params.pathMatch + '&fullPath=' + (route.query.fullPath || '')).then(data => {
+          + '/blob?branch=' + route.params.pathMatch + '&fullPath=' + (route.query.fullPath || '')).then(data => {
           this.project = data.project;
-          this.treeInfos = data.treeInfos;
+          this.blobInfo = data.blobInfo;
         }).catch(res => {
           this.error(res.respMsg);
         });
@@ -31,10 +29,6 @@
     },
     mounted() {
       this.init(this.$route);
-    },
-    beforeRouteUpdate(to, from, next) {
-      this.init(to);
-      next();
     }
   };
 </script>

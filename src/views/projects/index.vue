@@ -5,7 +5,7 @@
       style="width: 1000px;margin: 0 auto"
     >
       <header-index :project="project" />
-      <tree
+      <project-content
         :project="project"
         :tree-infos="treeInfos"
       />
@@ -21,10 +21,10 @@
 <script>
   import EmptyProject from './empty-project';
   import HeaderIndex from './header-index';
-  import Tree from './tree';
+  import ProjectContent from './project-content';
 
   export default {
-    components: {HeaderIndex, EmptyProject, Tree},
+    components: {HeaderIndex, EmptyProject, ProjectContent},
     data() {
       return {
         project: {},
@@ -33,7 +33,7 @@
     },
     methods: {
       init(route) {
-        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath).then(data => {
+        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath + '/tree').then(data => {
           this.project = data.project;
           this.treeInfos = data.treeInfos;
         }).catch(res => {

@@ -286,6 +286,15 @@ const routers = [
         component: (resolve) => require(['./views/projects/files.vue'], resolve)
       },
       {
+        path: 'blob/*',
+        meta: {
+          code: 'PROJECT_REPOSITORY_FILES',
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/blobs.vue'], resolve)
+      },
+      {
         path: 'settings',
         redirect: 'members'
       },

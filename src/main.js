@@ -13,6 +13,15 @@ import '@/libs/common';
 import '@/libs/constants';
 import './components/index';
 import VueClipboard from 'vue-clipboard2';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
+
+Vue.directive('highlight', function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+});
 
 Vue.use(ElementUI, {locale});
 

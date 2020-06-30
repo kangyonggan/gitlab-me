@@ -195,7 +195,9 @@
       <div style="clear: both" />
     </div>
 
+    <!--tree-->
     <el-table
+      v-if="treeInfos.length"
       :data="treeInfos"
       style="width: 100%;margin-top: 20px;border: 1px solid #e5e5e5"
     >
@@ -250,6 +252,19 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!--blob-->
+    <div
+      class="content"
+      v-if="blobInfo.fullName"
+    >
+      <div class="header">
+        header
+      </div>
+      <div v-highlight>
+        <pre style="margin: 0"><code>{{ blobInfo.content }}</code></pre>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -264,8 +279,18 @@
         type: Object
       },
       treeInfos: {
-        required: true,
-        type: Array
+        required: false,
+        type: Array,
+        default: () => {
+          return [];
+        }
+      },
+      blobInfo: {
+        required: false,
+        type: Object,
+        default: () => {
+          return {};
+        }
       }
     },
     data() {
@@ -280,10 +305,11 @@
         });
       },
       showFile(file) {
-        let path = '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/'
-          + this.currentBranch + '?type=' + file.type + '&fullPath=' + file.fullName;
+        let path = '/' + this.project.namespace + '/' + this.project.projectPath;
         if (file.type === 'tree') {
-          path += '/';
+          path += '/tree/' + this.currentBranch + '?fullPath=' + file.fullName + '/';
+        } else {
+          path += '/blob/' + this.currentBranch + '?fullPath=' + file.fullName;
         }
         this.$router.push({
           path: path
@@ -362,6 +388,20 @@
       background: #fafafa;
       color: #2e2e2e;
       font-weight: normal;
+    }
+  }
+
+  .content {
+    margin-top: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+
+    .header {
+      height: 48px;
+      line-height: 48px;
+      padding: 0 18px;
+      background: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
     }
   }
 </style>
