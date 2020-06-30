@@ -10,6 +10,7 @@ import BaseHr from './base-hr';
 import BaseSelect from './base-select';
 import BaseCharAvatar from './base-char-avatar.vue';
 import BaseRelativeTime from './base-relative-time.vue';
+import BaseCopy from './base-copy';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -22,3 +23,4 @@ Vue.component('BaseHr', BaseHr);
 Vue.component('BaseSelect', BaseSelect);
 Vue.component('BaseCharAvatar', BaseCharAvatar);
 Vue.component('BaseRelativeTime', BaseRelativeTime);
+Vue.component('BaseCopy', BaseCopy);

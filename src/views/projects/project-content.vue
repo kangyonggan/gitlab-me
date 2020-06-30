@@ -177,19 +177,12 @@
           style="width: 150px;"
           readonly
         >
-          <el-tooltip
+          <base-copy
             slot="append"
-            effect="dark"
+            tip="Copy commit SHA"
             placement="top"
-            content="Copy commit SHA"
-          >
-            <el-button
-              icon="el-icon-document-copy"
-              v-clipboard:copy="project.lastCommit.commitId"
-              v-clipboard:success="onCopySuccess"
-              v-clipboard:error="onCopyError"
-            />
-          </el-tooltip>
+            :copy="project.lastCommit.commitId"
+          />
         </el-input>
       </div>
       <div style="clear: both" />
@@ -259,8 +252,27 @@
       v-if="blobInfo.fullName"
     >
       <div class="header">
-        {{ blobInfo.fullName }}
-        {{ util.formatSizeOfByte(blobInfo.size) }}
+        <i
+          v-if="blobInfo.size > 0"
+          class="el-icon-document"
+        />
+        <i
+          v-else
+          class="el-icon-document-remove"
+        />
+        <strong>
+          {{ blobInfo.fullName }}
+        </strong>
+        <span style="margin-left: 8px;font-size: 13px;">
+          {{ util.formatSizeOfByte(blobInfo.size) }}
+        </span>
+        
+        <base-copy
+          style="margin-left: 10px;"
+          tip="Copy file name"
+          placement="top"
+          :copy="blobInfo.fullName"
+        />
       </div>
       <div v-highlight>
         <pre style="margin: 0"><code>{{ blobInfo.content }}</code></pre>
@@ -322,12 +334,6 @@
       download(type) {
         console.log(type);
         this.$refs['download-dropdown'].visible = false;
-      },
-      onCopySuccess() {
-        this.success('Copied');
-      },
-      onCopyError() {
-        this.error('Failed copy');
       }
     }
   };

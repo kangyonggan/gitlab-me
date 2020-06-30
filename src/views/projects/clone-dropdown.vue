@@ -20,18 +20,11 @@
             size="medium"
             readonly
           >
-            <el-tooltip
+            <base-copy
               slot="append"
-              effect="dark"
-              content="Copy URL"
-            >
-              <el-button
-                icon="el-icon-document-copy"
-                v-clipboard:copy="constants.EXTERNAL_URL + '/' + project.namespace + '/' + project.projectPath + '.git'"
-                v-clipboard:success="onCopySuccess"
-                v-clipboard:error="onCopyError"
-              />
-            </el-tooltip>
+              tip="Copy URL"
+              :copy="constants.EXTERNAL_URL + '/' + project.namespace + '/' + project.projectPath + '.git'"
+            />
           </el-input>
         </li>
         <li style="margin-top: 20px;">
@@ -65,15 +58,6 @@
         required: false,
         type: String,
         default: 'bottom-end'
-      }
-    },
-    methods: {
-      onCopySuccess() {
-        this.success('Copied');
-        this.$refs['clone-dropdown'].visible = false;
-      },
-      onCopyError() {
-        this.error('Failed copy');
       }
     }
   };
