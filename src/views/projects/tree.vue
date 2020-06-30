@@ -280,9 +280,13 @@
         });
       },
       showFile(file) {
+        let path = '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/'
+          + this.currentBranch + '?type=' + file.type + '&fullPath=' + file.fullName;
+        if (file.type === 'tree') {
+          path += '/';
+        }
         this.$router.push({
-          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/'
-            + this.currentBranch + '?type=' + file.type + '&fullPath=' + file.fullName
+          path: path
         });
       },
       onNewEvent(cmd) {

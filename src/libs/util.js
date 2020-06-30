@@ -416,18 +416,18 @@ util.formatSize = function (size) {
  * @returns {string}
  */
 util.formatSizeOfByte = function (size) {
-  if (!size) {
+  if (size === null || size === undefined) {
     return '-';
   }
   size = size * 1;
   if (size / 1024 >= 1048576) {
-    return (size / 1024 / 1048576).toFixed(2) + ' GB';
+    return (size / 1024 / 1048576).toFixed(2) + 'GB';
   } else if (size / 1024 > 1024) {
-    return (size / 1024 / 1024).toFixed(2) + ' MB';
+    return (size / 1024 / 1024).toFixed(2) + 'MB';
   } else if (size > 1024) {
-    return (size / 1024).toFixed(2) + ' KB';
+    return (size / 1024).toFixed(2) + 'KB';
   } else {
-    return size + ' B';
+    return size + 'B';
   }
 };
 
