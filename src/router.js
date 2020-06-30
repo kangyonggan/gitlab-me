@@ -47,6 +47,7 @@ const routers = [
       {
         path: '/',
         meta: {
+          code: 'ADMIN_AREA',
           permission: true,
           menuType: 'Admin'
         },
@@ -59,6 +60,7 @@ const routers = [
       {
         path: 'users',
         meta: {
+          code: 'ADMIN_OVERVIEW_USERS',
           permission: true,
           menuType: 'Admin'
         },
@@ -67,6 +69,7 @@ const routers = [
       {
         path: 'users/new',
         meta: {
+          code: 'ADMIN_OVERVIEW_USERS',
           title: 'New User',
           permission: true,
           menuType: 'Admin',
@@ -77,6 +80,7 @@ const routers = [
       {
         path: 'users/:username/edit',
         meta: {
+          code: 'ADMIN_OVERVIEW_USERS',
           title: 'Edit User',
           permission: true,
           menuType: 'Admin',
@@ -87,6 +91,7 @@ const routers = [
       {
         path: 'users/:username',
         meta: {
+          code: 'ADMIN_OVERVIEW_USERS',
           title: 'User Detail',
           permission: true,
           menuType: 'Admin',
@@ -97,6 +102,7 @@ const routers = [
       {
         path: 'groups',
         meta: {
+          code: 'ADMIN_OVERVIEW_GROUPS',
           permission: true,
           menuType: 'Admin'
         },
@@ -105,6 +111,7 @@ const routers = [
       {
         path: 'groups/new',
         meta: {
+          code: 'ADMIN_OVERVIEW_GROUPS',
           title: 'New Group',
           permission: true,
           menuType: 'Admin',
@@ -115,6 +122,7 @@ const routers = [
       {
         path: 'groups/:groupPath/edit',
         meta: {
+          code: 'ADMIN_OVERVIEW_GROUPS',
           title: 'Edit Group',
           permission: true,
           menuType: 'Admin',
@@ -125,6 +133,7 @@ const routers = [
       {
         path: 'groups/:groupPath',
         meta: {
+          code: 'ADMIN_OVERVIEW_GROUPS',
           title: 'Groups Detail',
           permission: true,
           menuType: 'Admin',
@@ -135,6 +144,7 @@ const routers = [
       {
         path: 'projects',
         meta: {
+          code: 'ADMIN_OVERVIEW_PROJECTS',
           permission: true,
           menuType: 'Admin'
         },
@@ -143,6 +153,7 @@ const routers = [
       {
         path: 'projects/new',
         meta: {
+          code: 'ADMIN_OVERVIEW_PROJECTS',
           title: 'New Project',
           permission: true,
           menuType: 'Admin',
@@ -153,6 +164,7 @@ const routers = [
       {
         path: 'projects/:namespace/:projectPath',
         meta: {
+          code: 'ADMIN_OVERVIEW_PROJECTS',
           title: 'Project Detail',
           permission: true,
           menuType: 'Admin',
@@ -163,6 +175,7 @@ const routers = [
       {
         path: 'application_settings',
         meta: {
+          code: 'ADMIN_APPLICATION_SETTINGS',
           permission: true,
           menuType: 'Admin'
         },
@@ -177,6 +190,7 @@ const routers = [
       {
         path: '/',
         meta: {
+          code: 'PROFILE_SETTINGS',
           permission: true,
           menuType: 'Profile'
         },
@@ -185,6 +199,7 @@ const routers = [
       {
         path: 'audit_log',
         meta: {
+          code: 'PROFILE_AUDIT_LOG',
           permission: true,
           menuType: 'Profile'
         },
@@ -200,6 +215,7 @@ const routers = [
         path: ':path',
         name: 'groups',
         meta: {
+          code: 'GROUPS_INDEX',
           permission: true,
           menuType: 'Groups'
         },
@@ -208,6 +224,7 @@ const routers = [
       {
         path: ':path/activity',
         meta: {
+          code: 'GROUP_ACTIVITY',
           permission: true,
           menuType: 'Groups'
         },
@@ -220,6 +237,7 @@ const routers = [
       {
         path: ':path/issues',
         meta: {
+          code: 'GROUP_ISSUES_LIST',
           permission: true,
           menuType: 'Groups'
         },
@@ -228,6 +246,7 @@ const routers = [
       {
         path: ':path/labels',
         meta: {
+          code: 'GROUP_ISSUES_LABELS',
           permission: true,
           menuType: 'Groups'
         },
@@ -236,6 +255,7 @@ const routers = [
       {
         path: ':path/members',
         meta: {
+          code: 'GROUP_MEMBERS',
           permission: true,
           menuType: 'Groups'
         },
@@ -250,6 +270,7 @@ const routers = [
       {
         path: '/',
         meta: {
+          code: 'PROJECT_OVERVIEW_DETAIL',
           permission: true,
           menuType: 'Projects'
         },
@@ -258,6 +279,7 @@ const routers = [
       {
         path: 'tree/*',
         meta: {
+          code: 'PROJECT_REPOSITORY_FILES',
           permission: true,
           menuType: 'Projects'
         },
@@ -270,6 +292,7 @@ const routers = [
       {
         path: 'members',
         meta: {
+          code: 'PROJECT_SETTINGS_MEMBERS',
           permission: true,
           menuType: 'Projects'
         },
@@ -322,6 +345,7 @@ router.beforeEach(async (to, from, next) => {
           {
             path: '/',
             meta: {
+              code: data.type.toUpperCase() + '_INDEX',
               permission: true,
               menuType: data.type,
               item: data.item

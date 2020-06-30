@@ -33,7 +33,6 @@
       this.init(this.$route);
     },
     beforeRouteUpdate(to, from, next) {
-      console.log('beforeRouteUpdate');
       this.init(to);
       next();
     }

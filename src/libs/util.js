@@ -179,6 +179,7 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       });
     }
   } else if (route.meta.menuType === 'Groups') {
+    console.log('adjustBreadcrumds', breadcrumbs);
     if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
       breadcrumbs.unshift({
         url: '/' + data.item.groupPath,
@@ -262,7 +263,7 @@ util.getBreadcrumbs = function (route, menus) {
   let breadcrumbs = [];
   for (let i in menus) {
     let menu = menus[i];
-    if (menu.url === route.path) {
+    if (route.meta && menu.code === route.meta.code) {
       breadcrumbs.push(menu);
       return breadcrumbs;
     }
@@ -305,6 +306,8 @@ util.getMenusWithNewRoute = async function (route) {
       let breadcrumbs = util.getBreadcrumbs(route, menus);
       if (!breadcrumbs.length) {
         breadcrumbs = util.getBreadcrumbs({path: route.meta.parentPath}, menus);
+      }
+      if (route.meta.title) {
         breadcrumbs.push({name: route.meta.title});
       }
       util.adjustBreadcrumds(route, breadcrumbs, data);
@@ -335,6 +338,8 @@ util.getMenusWithNewRoute = async function (route) {
   let breadcrumbs = util.getBreadcrumbs(route, menus);
   if (!breadcrumbs.length) {
     breadcrumbs = util.getBreadcrumbs({path: route.meta.parentPath}, menus);
+  }
+  if (route.meta.title) {
     breadcrumbs.push({name: route.meta.title});
   }
   util.adjustBreadcrumds(route, breadcrumbs);

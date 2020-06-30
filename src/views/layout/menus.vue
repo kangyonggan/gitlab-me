@@ -2,6 +2,7 @@
   <el-submenu
     :popper-append-to-body="false"
     :index="parentMenu.url"
+    :code="parentMenu.code"
   >
     <template slot="title">
       <i
@@ -17,6 +18,7 @@
         v-if="!menu.children || !menu.children.length"
         :index="menu.url"
         :key="index"
+        :code="menu.code"
       >
         <i
           v-if="menu.icon"

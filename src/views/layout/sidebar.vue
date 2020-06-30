@@ -1,9 +1,10 @@
 <template>
   <el-collapse-transition>
     <el-menu
+      ref="menu"
       :unique-opened="true"
+      :default-active="activeIndex"
       :collapse="isCollapse"
-      :default-active="active"
       :style="{width: isCollapse ? '' : '200px'}"
       router
     >
@@ -12,6 +13,7 @@
           v-if="!menu.children || !menu.children.length"
           :index="menu.url"
           :key="index"
+          :code="menu.code"
         >
           <i
             v-if="menu.icon"
@@ -95,7 +97,7 @@
     components: {ElCollapseTransition, Menus},
     data() {
       return {
-        active: '',
+        activeIndex: '',
         isCollapse: false
       };
     },
@@ -104,21 +106,25 @@
         return this.$store.getters.getMenus;
       }
     },
-    watch: {
-      '$route'(newRoute) {
-        if (newRoute.meta.parentPath) {
-          this.active = newRoute.meta.parentPath;
-        } else {
-          this.active = newRoute.path;
+    methods: {
+      open(code) {
+        let menu = this.$refs.menu;
+
+        for (let index in menu.items) {
+          if (code === menu.items[index].$attrs.code) {
+            this.activeIndex = index;
+            break;
+          }
         }
       }
     },
-    mounted() {
-      if (this.$route.meta.parentPath) {
-        this.active = this.$route.meta.parentPath;
-      } else {
-        this.active = this.$route.path;
+    watch: {
+      '$route'(newRoute) {
+        this.open(newRoute.meta.code);
       }
+    },
+    mounted() {
+      this.open(this.$route.meta.code);
     }
   };
 </script>

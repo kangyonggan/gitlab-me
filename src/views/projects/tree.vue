@@ -243,6 +243,7 @@
       <el-table-column
         prop="lastUpdate"
         label="Last update"
+        align="right"
       >
         <template slot-scope="scope">
           <base-relative-time :timestamp="scope.row.lastCommit.date" />
