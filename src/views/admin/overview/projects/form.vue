@@ -100,14 +100,14 @@
         },
         rules: {
           projectName: [
-            {required: true, message: 'Project name is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'}
           ],
           namespace: [
             {required: false}
           ],
           projectPath: [
-            {required: true, message: 'Project path is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'},
             {validator: this.validateProjectPath}
           ],

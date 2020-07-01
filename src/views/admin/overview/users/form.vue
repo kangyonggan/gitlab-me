@@ -113,11 +113,11 @@
         oldEmail: '',
         rules: {
           fullName: [
-            {required: true, message: 'Full name is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'}
           ],
           email: [
-            {required: true, message: 'Email is required'},
+            {required: true, message: 'Required'},
             {max: 128, message: 'Maximum length is 128 characters'},
             {
               pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
@@ -126,7 +126,7 @@
             {validator: this.validateEmail}
           ],
           username: [
-            {required: true, message: 'Username is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'},
             {
               pattern: /^[a-zA-Z][a-zA-Z0-9]*$/,
@@ -135,14 +135,14 @@
             {validator: this.validateUsername}
           ],
           password: [
-            {required: true, message: 'Password is required'},
+            {required: true, message: 'Required'},
             {
               pattern: /^[a-zA-Z0-9]{8,20}$/,
               message: 'Must be composed of 8 to 20 letters and Numbers'
             }
           ],
           rePassword: [
-            {required: true, message: 'Password Confirmation is required'},
+            {required: true, message: 'Required'},
             {validator: this.validateRePassword}
           ],
           projectsLimit: [

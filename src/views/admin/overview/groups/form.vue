@@ -84,12 +84,12 @@
         oldGroupPath: '',
         rules: {
           groupPath: [
-            {required: true, message: 'Group path is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'},
             {validator: this.validateGroupPath}
           ],
           groupName: [
-            {required: true, message: 'Group name is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'}
           ],
           description: [

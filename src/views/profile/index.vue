@@ -97,11 +97,11 @@
         oldEmail: '',
         rules: {
           fullName: [
-            {required: true, message: 'Full name is required'},
+            {required: true, message: 'Required'},
             {max: 20, message: 'Maximum length is 20 characters'}
           ],
           email: [
-            {required: true, message: 'Email is required'},
+            {required: true, message: 'Required'},
             {max: 128, message: 'Maximum length is 128 characters'},
             {
               pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,

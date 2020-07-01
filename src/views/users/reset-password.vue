@@ -98,7 +98,7 @@
         params: {},
         rules: {
           email: [
-            {required: true, message: 'Email is required'},
+            {required: true, message: 'Required'},
             {max: 128, message: 'Maximum length is 128 characters'},
             {
               pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
@@ -107,14 +107,14 @@
             {validator: this.validateEmail}
           ],
           password: [
-            {required: true, message: 'Password is required'},
+            {required: true, message: 'Required'},
             {
               pattern: /^[a-zA-Z0-9]{8,20}$/,
               message: 'Must be composed of 8 to 20 letters and Numbers'
             }
           ],
           verifyCode: [
-            {required: true, message: 'Verification code is required'}
+            {required: true, message: 'Required'}
           ]
         }
       };

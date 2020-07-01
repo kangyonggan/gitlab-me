@@ -93,10 +93,10 @@
         params: {},
         rules: {
           username: [
-            {required: true, message: 'Username or email is required'}
+            {required: true, message: 'Required'}
           ],
           password: [
-            {required: true, message: 'Password is required'}
+            {required: true, message: 'Required'}
           ]
         },
         source: ''

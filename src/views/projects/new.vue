@@ -1,57 +1,68 @@
 <template>
-  <el-dropdown
-    trigger="click"
-    @command="onNewEvent"
-    placement="bottom-start"
-  >
-    <el-button
-      plain
-      size="medium"
+  <div>
+    <el-dropdown
+      trigger="click"
+      @command="onNewEvent"
+      placement="bottom-start"
     >
-      <i class="el-icon-plus" />
-      <i class="el-icon-arrow-down el-icon--right" />
-    </el-button>
-    <el-dropdown-menu
-      slot="dropdown"
-      style="width: 200px"
-    >
-      <el-dropdown-item disabled>
-        This directory
-      </el-dropdown-item>
-      <el-dropdown-item command="0">
-        New file
-      </el-dropdown-item>
-      <el-dropdown-item command="1">
-        Upload file
-      </el-dropdown-item>
-      <el-dropdown-item command="2">
-        New directory
-      </el-dropdown-item>
-      <el-dropdown-item
-        divided
-        disabled
+      <el-button
+        plain
+        size="medium"
       >
-        This repository
-      </el-dropdown-item>
-      <el-dropdown-item command="3">
-        New branch
-      </el-dropdown-item>
-      <el-dropdown-item command="4">
-        New tag
-      </el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
+        <i class="el-icon-plus" />
+        <i class="el-icon-arrow-down el-icon--right" />
+      </el-button>
+      <el-dropdown-menu
+        slot="dropdown"
+        style="width: 200px"
+      >
+        <el-dropdown-item disabled>
+          This directory
+        </el-dropdown-item>
+        <el-dropdown-item command="0">
+          New file
+        </el-dropdown-item>
+        <el-dropdown-item command="1">
+          Upload file
+        </el-dropdown-item>
+        <el-dropdown-item command="2">
+          New directory
+        </el-dropdown-item>
+        <el-dropdown-item
+          divided
+          disabled
+        >
+          This repository
+        </el-dropdown-item>
+        <el-dropdown-item command="3">
+          New branch
+        </el-dropdown-item>
+        <el-dropdown-item command="4">
+          New tag
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
+    <!--新增界面-->
+    <new-dir ref="new-dir" />
+  </div>
 </template>
 
 <script>
+  import NewDir from './new-dir';
+
   export default {
+    components: {NewDir},
+    props: {
+      project: {
+        required: true,
+        type: Object
+      }
+    },
     methods: {
       onNewEvent(cmd) {
-        switch (cmd) {
-          case '2': {
-
-            break;
-          }
+        if (cmd === '2') {
+          this.$refs['new-dir'].show(this.project);
         }
       }
     }
