@@ -2,6 +2,7 @@
   <div>
     <div class="tools">
       <el-select
+        style="float: left"
         v-model="currentBranch"
         filterable
         default-first-option
@@ -16,17 +17,46 @@
           />
         </el-option-group>
       </el-select>
-      <router-link
-        :to="'/' + project.namespace + '/' + project.projectPath + '/tree/master'"
-        style="margin-left: 15px;color: #2e2e2e;font-size: 16px;"
-      >
-        {{ project.projectPath }}
-      </router-link>
-      <span>
-        /
-      </span>
+
+      <ul class="path-breads">
+        <li>
+          <router-link
+            :to="'/' + project.namespace + '/' + project.projectPath + '/tree/' + $route.params.pathMatch"
+          >
+            {{ project.projectPath }}
+          </router-link>
+
+          <span>
+            /
+          </span>
+        </li>
+
+        <li
+          v-for="(file, index) in pathBreads"
+          :key="index"
+        >
+          <router-link
+            v-if="index < pathBreads.length - 1"
+            :to="'/' + project.namespace + '/' + project.projectPath 
+              + '/'+file.type+'/' + $route.params.pathMatch + '?fullPath=' + file.path"
+          >
+            {{ file.name }}
+          </router-link>
+          <a
+            v-else
+            style="text-decoration: none"
+          >
+            {{ file.name }}
+          </a>
+          <span v-if="index < pathBreads.length - 1 || file.type === 'tree'">
+            /
+          </span>
+        </li>
+      </ul>
+
       <el-dropdown
-        style="margin-left: 10px;"
+        v-if="treeInfos"
+        style="float: left"
         trigger="click"
         @command="onNewEvent"
         placement="bottom-start"
@@ -144,6 +174,8 @@
         </el-dropdown>
         <clone-dropdown :project="project" />
       </div>
+
+      <div style="clear: both" />
     </div>
 
     <div
@@ -391,7 +423,8 @@
     data() {
       return {
         currentBranch: this.$route.params.pathMatch || 'master',
-        preview: true
+        preview: true,
+        pathBreads: []
       };
     },
     methods: {
@@ -430,6 +463,39 @@
       download(type) {
         console.log(type);
         this.$refs['download-dropdown'].visible = false;
+      },
+      buildPathBread(route) {
+        this.pathBreads = [];
+        if (!route.query.fullPath) {
+          return;
+        }
+        let arr = route.query.fullPath.split('/');
+        let path = '';
+        for (let i = 0; i < arr.length; i++) {
+          if (!arr[i]) {
+            continue;
+          }
+          path += arr[i] + '/';
+          this.pathBreads.push({
+            path: path,
+            name: arr[i],
+            type: 'tree'
+          });
+        }
+        if (this.blobInfo) {
+          this.pathBreads[this.pathBreads.length - 1] = {
+            name: this.pathBreads[this.pathBreads.length - 1].name,
+            type: 'blob'
+          };
+        }
+      }
+    },
+    mounted() {
+      this.buildPathBread(this.$route);
+    },
+    watch: {
+      '$route'(newRoute) {
+        this.buildPathBread(newRoute);
       }
     }
   };
@@ -450,6 +516,26 @@
 
     .actions {
       float: right;
+    }
+
+    .path-breads {
+      float: left;
+      padding: 0;
+      margin: 7px 20px 0 15px;
+      list-style: none;
+
+      li {
+        float: left;
+
+        a {
+          color: #2e2e2e;
+          margin-left: 10px;
+        }
+
+        span {
+          margin-left: 5px;
+        }
+      }
     }
   }
 
