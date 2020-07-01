@@ -43,16 +43,20 @@
       </el-dropdown-menu>
     </el-dropdown>
 
-    <!--新增界面-->
+    <!--New directory-->
     <new-dir ref="new-dir" />
+
+    <!--New branch-->
+    <new-branch ref="new-branch" />
   </div>
 </template>
 
 <script>
   import NewDir from './new-dir';
+  import NewBranch from './new-branch';
 
   export default {
-    components: {NewDir},
+    components: {NewDir, NewBranch},
     props: {
       project: {
         required: true,
@@ -63,6 +67,8 @@
       onNewEvent(cmd) {
         if (cmd === '2') {
           this.$refs['new-dir'].show(this.project);
+        } else if (cmd === '3') {
+          this.$refs['new-branch'].show(this.project);
         }
       }
     }

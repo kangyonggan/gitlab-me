@@ -355,7 +355,7 @@
 
 <script>
   import CloneDropdown from './clone-dropdown';
-  import New from './new';
+  import New from './repository/new';
 
   export default {
     components: {CloneDropdown, New},
@@ -455,6 +455,7 @@
     },
     watch: {
       '$route'(newRoute) {
+        this.currentBranch = newRoute.params.pathMatch || 'master';
         this.buildPathBread(newRoute);
       }
     }

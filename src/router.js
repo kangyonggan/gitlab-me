@@ -291,7 +291,7 @@ const routers = [
           permission: true,
           menuType: 'Projects'
         },
-        component: (resolve) => require(['./views/projects/files.vue'], resolve)
+        component: (resolve) => require(['./views/projects/repository/files.vue'], resolve)
       },
       {
         path: 'blob/*',
@@ -300,7 +300,7 @@ const routers = [
           permission: true,
           menuType: 'Projects'
         },
-        component: (resolve) => require(['./views/projects/blobs.vue'], resolve)
+        component: (resolve) => require(['./views/projects/repository/blobs.vue'], resolve)
       },
       {
         path: 'settings',

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import ProjectContent from './project-content';
+  import ProjectContent from '../project-content';
 
   export default {
     components: {ProjectContent},
@@ -35,6 +35,11 @@
     },
     mounted() {
       this.init(this.$route);
+    },
+    watch: {
+      '$route'(newRoute) {
+        this.init(newRoute);
+      }
     }
   };
 </script>

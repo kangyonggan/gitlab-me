@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import ProjectContent from './project-content';
+  import ProjectContent from '../project-content';
 
   export default {
     components: {ProjectContent},
