@@ -54,51 +54,11 @@
         </li>
       </ul>
 
-      <el-dropdown
+      <!--new-->
+      <new
         v-if="treeInfos"
         style="float: left"
-        trigger="click"
-        @command="onNewEvent"
-        placement="bottom-start"
-        ref="new-dropdown"
-      >
-        <el-button
-          plain
-          size="medium"
-        >
-          <i class="el-icon-plus" />
-          <i class="el-icon-arrow-down el-icon--right" />
-        </el-button>
-        <el-dropdown-menu
-          slot="dropdown"
-          style="width: 200px"
-        >
-          <el-dropdown-item disabled>
-            This directory
-          </el-dropdown-item>
-          <el-dropdown-item command="0">
-            New file
-          </el-dropdown-item>
-          <el-dropdown-item command="1">
-            Upload file
-          </el-dropdown-item>
-          <el-dropdown-item command="2">
-            New directory
-          </el-dropdown-item>
-          <el-dropdown-item
-            divided
-            disabled
-          >
-            This repository
-          </el-dropdown-item>
-          <el-dropdown-item command="3">
-            New branch
-          </el-dropdown-item>
-          <el-dropdown-item command="4">
-            New tag
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      />
 
       <div class="actions">
         <el-button
@@ -394,9 +354,10 @@
 
 <script>
   import CloneDropdown from './clone-dropdown';
+  import New from './new';
 
   export default {
-    components: {CloneDropdown},
+    components: {CloneDropdown, New},
     props: {
       project: {
         required: true,
@@ -457,9 +418,6 @@
         this.$router.push({
           path: path
         });
-      },
-      onNewEvent(cmd) {
-        console.log(cmd);
       },
       download(type) {
         console.log(type);
