@@ -15,21 +15,12 @@ import './components/index';
 import VueClipboard from 'vue-clipboard2';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
 
 Vue.use(ElementUI, {locale});
 
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
 Vue.use(mavonEditor);
-
-Vue.directive('highlight', function (el) {
-  let blocks = el.querySelectorAll('pre code');
-  blocks.forEach((block) => {
-    hljs.highlightBlock(block);
-  });
-});
 
 new Vue({
   router: Router,

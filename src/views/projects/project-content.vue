@@ -350,15 +350,11 @@
         :value="blobInfo.content"
         @previewToggle="previewToggle"
       />
-      <div
+      <base-hljs
         v-else
-        v-highlight
-      >
-        <pre><code
-          :class="getFileExtension(blobInfo.fullName).toLowerCase()"
-          style="background: #fff;"
-        >{{ blobInfo.content }}</code></pre>
-      </div>
+        :value="blobInfo.content"
+        :lang="getFileExtension(blobInfo.fullName).toLowerCase()"
+      />
     </div>
   </div>
 </template>
@@ -509,6 +505,7 @@
       padding: 0 18px;
       background: #fafafa;
       border-bottom: 1px solid #e5e5e5;
+      border-radius: 4px;
     }
 
     .html {
