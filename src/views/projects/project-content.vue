@@ -273,9 +273,58 @@
           placement="top"
           :copy="blobInfo.fullName"
         />
+
+        <div style="float: right">
+          <a
+            @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + $route.params.pathMatch + '&fullPath=' + ($route.query.fullPath || ''))"
+            style="cursor: pointer;color: #2e2e2e;background: #fafafa;text-decoration: none"
+          >
+
+            <el-tooltip
+              slot="append"
+              effect="dark"
+              content="Download"
+              placement="top"
+            >
+              <i
+                class="el-icon-download"
+                style="font-size: 20px;"
+              />
+            </el-tooltip>
+          </a>
+        </div>
+      </div>
+      <div
+        v-if="!blobInfo.size"
+        style="text-align: center;line-height: 60px;color: #2e2e2e"
+      >
+        Empty file
+      </div>
+      <div
+        v-else-if="!blobInfo.content"
+        style="text-align: center;color: #2e2e2e;"
+      >
+        <a
+          @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + $route.params.pathMatch + '&fullPath=' + ($route.query.fullPath || ''))"
+          style="cursor: pointer;color: #2e2e2e;display: inline-block;
+        width: 100%;height: 100%;background: #fafafa;padding: 100px 0;text-decoration: none"
+        >
+          <i
+            class="el-icon-download"
+            style="font-size: 80px;font-weight: bold;"
+          />
+          <div style="font-weight: bold;font-size: 22px;margin-top: 20px;">
+            Download ({{ util.formatSizeOfByte(blobInfo.size) }})
+          </div>
+        </a>
       </div>
       <mavon-editor
+        v-else-if="getFileExtension(blobInfo.fullName) === 'MD'"
         :value="blobInfo.content"
+      />
+      <div
+        v-else
+        v-html="blobInfo.content"
       />
     </div>
   </div>
@@ -294,17 +343,20 @@
       treeInfos: {
         required: false,
         type: Array,
-        default() {}
+        default() {
+        }
       },
       blobInfo: {
         required: false,
         type: Object,
-        default() {}
+        default() {
+        }
       },
       lastCommit: {
         required: false,
         type: Object,
-        default() {}
+        default() {
+        }
       }
     },
     data() {
@@ -313,6 +365,16 @@
       };
     },
     methods: {
+      getFileExtension(fullName) {
+        if (!fullName) {
+          return '';
+        }
+        let index = fullName.lastIndexOf('.');
+        if (index > -1 && index < fullName.length - 1) {
+          return fullName.substring(index + 1).toUpperCase();
+        }
+        return '';
+      },
       onBranchSelected(branch) {
         this.$router.push({
           path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/' + branch

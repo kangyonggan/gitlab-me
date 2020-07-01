@@ -4,6 +4,8 @@ import profileMenus from '../menus/profile-menus';
 import groupsMenus from '../menus/groups-menus';
 import projectMenu from '../menus/projects-menus';
 import store from '../store';
+import axios from 'axios';
+import constants from './constants';
 
 let util = {};
 
@@ -467,6 +469,21 @@ util.relativeTime = function (timestamp) {
   }
 
   return 'just now';
+};
+
+/**
+ * 下载文件
+ *
+ * @param url
+ */
+util.downloadFile = function (url) {
+  if (url.indexOf('?') > -1) {
+    url += '&';
+  } else {
+    url += '?';
+  }
+  url += 'x-auth-token=' + localStorage.getItem(constants.LOCAL_TOKEN_NAME);
+  window.open(axios.defaults.baseURL + url);
 };
 
 export default util;

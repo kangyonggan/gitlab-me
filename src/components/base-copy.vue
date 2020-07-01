@@ -29,8 +29,9 @@
         default: 'bottom'
       },
       copy: {
-        required: true,
-        type: String
+        required: false,
+        type: String,
+        default: ''
       }
     },
     data() {
