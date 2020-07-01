@@ -277,7 +277,7 @@
         <div style="float: right">
           <a
             @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + $route.params.pathMatch + '&fullPath=' + ($route.query.fullPath || ''))"
-            style="cursor: pointer;color: #2e2e2e;background: #fafafa;text-decoration: none"
+            style="cursor: pointer;color: #2e2e2e;background: #fafafa;text-decoration: none;line-height: normal;margin-top: 15px;float: right"
           >
 
             <el-tooltip
@@ -292,6 +292,30 @@
               />
             </el-tooltip>
           </a>
+
+          <div style="float: right; margin-right: 20px;">
+            <el-button-group>
+              <el-button
+                type="primary"
+                size="mini"
+              >
+                <i class="el-icon-edit-outline" />
+                Edit
+              </el-button>
+              <el-button
+                plain
+                size="mini"
+              >
+                Replace
+              </el-button>
+              <el-button
+                plain
+                size="mini"
+              >
+                Delete
+              </el-button>
+            </el-button-group>
+          </div>
         </div>
       </div>
       <div
@@ -319,13 +343,22 @@
         </a>
       </div>
       <mavon-editor
+        :class="{html:true, 'markdown-editor': true, preview: preview}"
+        :editable="false"
+        :toolbars="{'navigation': true, help: true, htmlcode: true, readmodel: true, preview: true}"
         v-else-if="getFileExtension(blobInfo.fullName) === 'MD'"
         :value="blobInfo.content"
+        @previewToggle="previewToggle"
       />
       <div
         v-else
-        v-html="blobInfo.content"
-      />
+        v-highlight
+      >
+        <pre><code
+          :class="getFileExtension(blobInfo.fullName).toLowerCase()"
+          style="background: #fff;"
+        >{{ blobInfo.content }}</code></pre>
+      </div>
     </div>
   </div>
 </template>
@@ -361,10 +394,14 @@
     },
     data() {
       return {
-        currentBranch: this.$route.params.pathMatch || 'master'
+        currentBranch: this.$route.params.pathMatch || 'master',
+        preview: true
       };
     },
     methods: {
+      previewToggle(status) {
+        this.preview = status;
+      },
       getFileExtension(fullName) {
         if (!fullName) {
           return '';
@@ -472,6 +509,64 @@
       padding: 0 18px;
       background: #fafafa;
       border-bottom: 1px solid #e5e5e5;
+    }
+
+    .html {
+      padding: 20px 32px;
+    }
+
+    /deep/ .preview {
+      .v-note-edit {
+        display: none;
+      }
+
+      .v-note-show {
+        display: block !important;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+      }
+    }
+
+    /deep/ .markdown-editor {
+      .markdown-body {
+        border: 0 !important;
+        box-shadow: none !important;
+        padding-top: 10px;
+      }
+
+      .v-note-edit {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+      }
+
+      .v-note-show {
+        display: none;
+      }
+
+      .v-note-op {
+        position: absolute;
+        right: 400px;
+        width: 400px !important;
+        top: -45px;
+        border: 0 !important;
+        text-align: right !important;
+        background: #fafafa !important;
+
+        .v-left-item {
+          display: none;
+        }
+
+        .v-right-item {
+          max-width: 100% !important;
+          background: #fafafa;
+          border: 0 !important;
+        }
+      }
+
+      .v-show-content {
+        background: #fff !important;
+        padding: 0 !important;
+      }
     }
   }
 </style>

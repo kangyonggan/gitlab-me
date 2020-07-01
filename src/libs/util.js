@@ -482,7 +482,7 @@ util.downloadFile = function (url) {
   } else {
     url += '?';
   }
-  url += 'x-auth-token=' + localStorage.getItem(constants.LOCAL_TOKEN_NAME);
+  url += constants.HEADER_TOKEN_NAME + '=' + localStorage.getItem(constants.LOCAL_TOKEN_NAME);
   window.open(axios.defaults.baseURL + url);
 };
 
