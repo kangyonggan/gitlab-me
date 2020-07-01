@@ -268,6 +268,10 @@ const routers = [
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
       {
+        path: 'overview',
+        redirect: './'
+      },
+      {
         path: '/',
         meta: {
           code: 'PROJECT_OVERVIEW_DETAIL',
@@ -275,6 +279,10 @@ const routers = [
           menuType: 'Projects'
         },
         component: (resolve) => require(['./views/projects/index.vue'], resolve)
+      },
+      {
+        path: 'repository',
+        redirect: 'tree/master'
       },
       {
         path: 'tree/*',

@@ -8,6 +8,7 @@
       <project-content
         :project="project"
         :tree-infos="treeInfos"
+        :last-commit="project.lastCommit"
       />
     </div>
     <div

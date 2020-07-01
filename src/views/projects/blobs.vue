@@ -2,6 +2,7 @@
   <project-content
     :project="project"
     :blob-info="blobInfo"
+    :last-commit="blobInfo.lastCommit"
   />
 </template>
 

@@ -148,31 +148,31 @@
 
     <div
       class="last-commit"
-      v-if="project.lastCommit"
+      v-if="lastCommit"
     >
       <base-avatar
         style="float: left"
         :size="38"
-        :empty-avatar="project.lastCommit.email"
+        :empty-avatar="lastCommit.email"
       />
       <div style="float: left;margin-left: 15px;">
         <router-link
-          :to="'/' + project.namespace + '/' + project.projectPath + '/commit/' + project.lastCommit.commitId"
+          :to="'/' + project.namespace + '/' + project.projectPath + '/commit/' + lastCommit.commitId"
           style="color: #2e2e2e;font-weight: 600;max-width: 500px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"
         >
-          {{ project.lastCommit.msg }}
+          {{ lastCommit.msg }}
         </router-link>
         <div style="margin-top: 3px;">
-          <span>{{ project.lastCommit.username }}</span>
+          <span>{{ lastCommit.username }}</span>
           <div style="color: #919191;display: inline-block;margin-left: 8px;">
             authored
-            <base-relative-time :timestamp="project.lastCommit.date" />
+            <base-relative-time :timestamp="lastCommit.date" />
           </div>
         </div>
       </div>
       <div style="float: right;margin-top: 3px;">
         <el-input
-          :value="project.lastCommit.commitId.substring(0, 8)"
+          :value="lastCommit.commitId.substring(0, 8)"
           size="medium"
           style="width: 150px;"
           readonly
@@ -181,7 +181,7 @@
             slot="append"
             tip="Copy commit SHA"
             placement="top"
-            :copy="project.lastCommit.commitId"
+            :copy="lastCommit.commitId"
           />
         </el-input>
       </div>
@@ -190,7 +190,7 @@
 
     <!--tree-->
     <el-table
-      v-if="treeInfos.length"
+      v-if="treeInfos"
       :data="treeInfos"
       style="width: 100%;margin-top: 20px;border: 1px solid #e5e5e5"
     >
@@ -249,7 +249,7 @@
     <!--blob-->
     <div
       class="content"
-      v-if="blobInfo.fullName"
+      v-if="blobInfo"
     >
       <div class="header">
         <i
@@ -266,7 +266,7 @@
         <span style="margin-left: 8px;font-size: 13px;">
           {{ util.formatSizeOfByte(blobInfo.size) }}
         </span>
-        
+
         <base-copy
           style="margin-left: 10px;"
           tip="Copy file name"
@@ -274,9 +274,9 @@
           :copy="blobInfo.fullName"
         />
       </div>
-      <div v-highlight>
-        <pre style="margin: 0"><code>{{ blobInfo.content }}</code></pre>
-      </div>
+      <mavon-editor
+        :value="blobInfo.content"
+      />
     </div>
   </div>
 </template>
@@ -294,16 +294,17 @@
       treeInfos: {
         required: false,
         type: Array,
-        default: () => {
-          return [];
-        }
+        default() {}
       },
       blobInfo: {
         required: false,
         type: Object,
-        default: () => {
-          return {};
-        }
+        default() {}
+      },
+      lastCommit: {
+        required: false,
+        type: Object,
+        default() {}
       }
     },
     data() {
