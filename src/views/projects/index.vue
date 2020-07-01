@@ -8,7 +8,7 @@
       <project-content
         :project="project"
         :tree-infos="treeInfos"
-        :last-commit="project.lastCommit"
+        :last-commit="lastCommit"
       />
     </div>
     <div
@@ -29,7 +29,8 @@
     data() {
       return {
         project: {},
-        treeInfos: []
+        treeInfos: [],
+        lastCommit: {}
       };
     },
     methods: {
@@ -37,6 +38,7 @@
         this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath + '/tree').then(data => {
           this.project = data.project;
           this.treeInfos = data.treeInfos;
+          this.lastCommit = data.lastCommit;
         }).catch(res => {
           this.error(res.respMsg);
         });

@@ -178,9 +178,10 @@
       <div style="clear: both" />
     </div>
 
+    <!--las commit-->
     <div
       class="last-commit"
-      v-if="lastCommit"
+      v-if="lastCommit && lastCommit.commitId"
     >
       <base-avatar
         style="float: left"

@@ -3,7 +3,7 @@
     <project-content
       :project="project"
       :tree-infos="treeInfos"
-      :last-commit="project.lastCommit"
+      :last-commit="lastCommit"
     />
   </div>
 </template>
@@ -16,7 +16,8 @@
     data() {
       return {
         project: {},
-        treeInfos: []
+        treeInfos: [],
+        lastCommit: {}
       };
     },
     methods: {
@@ -25,6 +26,7 @@
           + '/tree?branch=' + route.params.pathMatch + '&fullPath=' + (route.query.fullPath || '')).then(data => {
           this.project = data.project;
           this.treeInfos = data.treeInfos;
+          this.lastCommit = data.lastCommit;
         }).catch(res => {
           this.error(res.respMsg);
         });
