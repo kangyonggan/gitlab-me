@@ -82,7 +82,7 @@ constants.ACCESS_LIST = [
  *
  * @type {string}
  */
-constants.EXTERNAL_URL = 'http://kangyonggan.com:7777';
+constants.EXTERNAL_URL = 'http://kangyonggan.com:9999';
 
 export default constants;
 

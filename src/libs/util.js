@@ -199,15 +199,16 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
     if (breadcrumbs.length > 1 || !breadcrumbs[0].char) {
       breadcrumbs.unshift({
         url: '/' + data.project.namespace + '/' + data.project.projectPath,
-        char: data.project.projectPath.substring(0, 1),
+        char: data.project.projectName.substring(0, 1),
         name: data.project.projectName
       });
       if (data.user) {
         breadcrumbs.unshift({
           url: '/' + data.user.username,
           avatarType: 'retro',
-          avatar: data.user.email,
-          name: data.project.fullName
+          avatar: data.user.avatar,
+          emptyAvatar: data.user.email,
+          name: data.user.fullName
         });
       } else {
         breadcrumbs.unshift({
@@ -323,7 +324,7 @@ util.getMenusWithNewRoute = async function (route) {
     menus = util.replaceProjectMenus(projectMenu, namespace, projectPath);
     await store.dispatch('getProject', {namespace: namespace, projectPath: projectPath}).then(data => {
       menus[0].name = data.project.projectName;
-      menus[0].char = data.project.projectPath.substring(0, 1);
+      menus[0].char = data.project.projectName.substring(0, 1);
 
       let breadcrumbs = util.getBreadcrumbs(route, menus);
       if (!breadcrumbs.length) {
