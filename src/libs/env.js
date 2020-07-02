@@ -8,6 +8,8 @@ axios.defaults.baseURL = '/api/';
 
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = 'http://127.0.0.1:8080/';
+} else if (process.env.NODE_ENV === 'hd') {
+  axios.defaults.baseURL = 'https://kangyonggan.com/gitlab-api/';
 }
 
 export default env;
