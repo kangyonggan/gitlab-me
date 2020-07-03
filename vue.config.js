@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: '/gitlab/',
   productionSourceMap: false,
   configureWebpack: () => {
     if (process.env.NODE_ENV !== 'production') {

@@ -342,6 +342,7 @@ const routers = [
 
 const router = new VueRouter({
   mode: 'history',
+  base: 'gitlab',
   routes: routers
 });
 
