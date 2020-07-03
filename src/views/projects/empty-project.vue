@@ -79,7 +79,7 @@ git config --global user.email "admin@example.com"</pre>
         <div class="cmd-name">
           Create a new repository
         </div>
-        <pre class="cmd-content">git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
+        <pre class="cmd-content">git remote add origin {{ constants.EXTERNAL_URL }}/{{ project.namespace }}/{{ project.projectPath }}.git
 cd app-web
 touch README.md
 git add README.md
@@ -93,7 +93,7 @@ git push -u origin master</pre>
         </div>
         <pre class="cmd-content">cd existing_folder
 git init
-git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
+git remote add origin {{ constants.EXTERNAL_URL }}/{{ project.namespace }}/{{ project.projectPath }}.git
 git add .
 git commit -m "Initial commit"
 git push -u origin master</pre>
@@ -105,7 +105,7 @@ git push -u origin master</pre>
         </div>
         <pre class="cmd-content">cd existing_repo
 git remote rename origin old-origin
-git remote add origin {{ constants.EXTERNAL_URL }}/fes/be.git
+git remote add origin {{ constants.EXTERNAL_URL }}/{{ project.namespace }}/{{ project.projectPath }}.git
 git push -u origin --all
 git push -u origin --tags</pre>
       </div>
