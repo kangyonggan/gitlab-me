@@ -20,7 +20,7 @@
           :type="breadcrumb.avatarType"
         />
         <base-char-avatar
-          style="float: left;margin: 10px 5px 0 0;"
+          style="float: left;margin: 10px 5px 0 0;border: 1px solid #d5d5d5"
           v-if="breadcrumb.char"
           :char="breadcrumb.char"
           :size="15"
