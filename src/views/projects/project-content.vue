@@ -157,7 +157,7 @@
           {{ lastCommit.msg }}
         </router-link>
         <div style="margin-top: 3px;">
-          <span>{{ lastCommit.username }}</span>
+          <span>{{ lastCommit.author }}</span>
           <div style="color: #919191;display: inline-block;margin-left: 8px;">
             authored
             <base-relative-time :timestamp="lastCommit.date" />
