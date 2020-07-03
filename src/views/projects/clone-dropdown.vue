@@ -31,7 +31,7 @@
           <label style="color: #999">Clone with SSH<span style="color: red">（Do't support）</span></label>
           <el-input
             disabled
-            :value="constants.EXTERNAL_URL.replace('http://', 'git@') + '/' + project.namespace + '/' + project.projectPath + '.git'"
+            :value="constants.EXTERNAL_URL.replace('http://', 'git@').replace('https://', 'git@') + '/' + project.namespace + '/' + project.projectPath + '.git'"
             size="medium"
             readonly
           >
