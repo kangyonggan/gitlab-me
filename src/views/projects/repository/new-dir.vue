@@ -39,8 +39,10 @@
     data() {
       return {
         project: {},
+        treeInfos: [],
         params: {
-          targetBranch: ''
+          branchName: '',
+          parentPath: ''
         },
         rules: {
           directoryName: [
@@ -57,17 +59,39 @@
     },
     methods: {
       validateDirectoryName: function (rule, value, callback) {
+        console.log('validateDirectoryName');
         if (!value) {
           callback();
         }
+        console.log(value);
+        let exists = false;
+        for (let i = 0; i < this.treeInfos.length; i++) {
+          if (this.treeInfos[i].fullName === value) {
+            exists = true;
+            break;
+          }
+        }
+        console.log(exists);
+        if (exists) {
+          callback(new Error(value + ' has already exists.'));
+        } else {
+          callback();
+        }
       },
-      show: function (project) {
+      show: function (project, treeInfos) {
         this.project = Object.assign({}, project);
-        this.params.targetBranch = this.$route.params.pathMatch;
+        this.treeInfos = treeInfos;
+        this.params.targetBranch = this.$route.params.pathMatch || 'master';
+        this.params.parentPath = this.$route.query.fullPath || './';
         this.$refs.modal.show();
       },
-      handleSuccess(data) {
-        this.$emit('success', data);
+      handleSuccess() {
+        this.$router.push({
+          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/' + this.params.branchName,
+          query: {
+            fullPath: this.params.parentPath + this.params.directoryName + '/'
+          }
+        });
       }
     }
   };

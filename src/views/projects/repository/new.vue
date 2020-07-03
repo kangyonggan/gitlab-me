@@ -61,12 +61,16 @@
       project: {
         required: true,
         type: Object
+      },
+      treeInfos: {
+        required: true,
+        type: Array
       }
     },
     methods: {
       onNewEvent(cmd) {
         if (cmd === '2') {
-          this.$refs['new-dir'].show(this.project);
+          this.$refs['new-dir'].show(this.project, this.treeInfos);
         } else if (cmd === '3') {
           this.$refs['new-branch'].show(this.project);
         }
@@ -75,6 +79,3 @@
   };
 </script>
 
-<style scoped>
-
-</style>

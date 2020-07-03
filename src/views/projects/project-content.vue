@@ -57,6 +57,7 @@
       <!--new-->
       <new
         :project="project"
+        :tree-infos="treeInfos"
         v-if="treeInfos"
         style="float: left"
       />
