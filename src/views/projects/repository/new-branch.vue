@@ -60,7 +60,7 @@
       },
       show: function (project) {
         this.project = Object.assign({}, project);
-        this.params.createFrom = this.$route.params.pathMatch;
+        this.params.createFrom = this.$route.params.pathMatch || 'master';
         this.$refs.modal.show();
       },
       handleSuccess() {
