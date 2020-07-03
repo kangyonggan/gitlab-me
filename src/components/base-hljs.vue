@@ -47,7 +47,7 @@
       color: rgba(0,0,0,0.3);
       border-right: 1px solid #e5e5e5;
       vertical-align: top;
-      padding-right: 5px !important;
+      padding: 4px 5px 4px 0 !important;
 
       min-width: 50px;
     }
