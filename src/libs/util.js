@@ -181,7 +181,6 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       });
     }
   } else if (route.meta.menuType === 'Groups') {
-    console.log('adjustBreadcrumds', breadcrumbs);
     if (breadcrumbs.length > 1 || !breadcrumbs[0].avatarType) {
       breadcrumbs.unshift({
         url: '/' + data.item.groupPath,
@@ -205,7 +204,6 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       if (data.user) {
         breadcrumbs.unshift({
           url: '/' + data.user.username,
-          avatarType: 'retro',
           avatar: data.user.avatar,
           emptyAvatar: data.user.email,
           name: data.user.fullName
