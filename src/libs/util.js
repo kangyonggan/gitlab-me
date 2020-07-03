@@ -204,6 +204,7 @@ util.adjustBreadcrumds = function (route, breadcrumbs, data) {
       if (data.user) {
         breadcrumbs.unshift({
           url: '/' + data.user.username,
+          avatarType: 'identicon',
           avatar: data.user.avatar,
           emptyAvatar: data.user.email,
           name: data.user.fullName
