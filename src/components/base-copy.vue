@@ -7,6 +7,7 @@
     @mouseenter.native="mouseenter"
   >
     <span
+      style="cursor: pointer"
       v-clipboard:copy="copy"
       v-clipboard:success="onCopySuccess"
       v-clipboard:error="onCopyError"
@@ -53,6 +54,3 @@
   };
 </script>
 
-<style scoped>
-
-</style>
