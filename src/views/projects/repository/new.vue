@@ -16,19 +16,35 @@
         slot="dropdown"
         style="width: 200px"
       >
+        <el-dropdown-item disabled>
+          This directory
+        </el-dropdown-item>
+        <el-dropdown-item command="0">
+          New file
+        </el-dropdown-item>
+        <el-dropdown-item command="1">
+          Upload file
+        </el-dropdown-item>
+        <el-dropdown-item command="2">
+          New directory
+        </el-dropdown-item>
         <el-dropdown-item
+          divided
           disabled
         >
           This repository
         </el-dropdown-item>
-        <el-dropdown-item command="1">
+        <el-dropdown-item command="3">
           New branch
         </el-dropdown-item>
-        <el-dropdown-item command="2">
+        <el-dropdown-item command="4">
           New tag
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+
+    <!--New directory-->
+    <new-dir ref="new-dir" />
 
     <!--New branch-->
     <new-branch ref="new-branch" />
@@ -36,19 +52,26 @@
 </template>
 
 <script>
+  import NewDir from './new-dir';
   import NewBranch from './new-branch';
 
   export default {
-    components: {NewBranch},
+    components: {NewDir, NewBranch},
     props: {
       project: {
         required: true,
         type: Object
+      },
+      treeInfos: {
+        required: true,
+        type: Array
       }
     },
     methods: {
       onNewEvent(cmd) {
-        if (cmd === '1') {
+        if (cmd === '2') {
+          this.$refs['new-dir'].show(this.project, this.treeInfos);
+        } else if (cmd === '3') {
           this.$refs['new-branch'].show(this.project);
         }
       }

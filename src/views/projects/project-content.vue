@@ -57,6 +57,7 @@
       <!--new-->
       <new
         :project="project"
+        :tree-infos="treeInfos"
         v-if="treeInfos"
         style="float: left"
       />
@@ -145,7 +146,7 @@
             @click="showFile(scope.row)"
             style="color: #2e2e2e;cursor: pointer"
           >
-            {{ scope.row.fullName }}
+            {{ util.getFileSortName(scope.row.fullName) }}
           </a>
         </template>
       </el-table-column>
@@ -421,7 +422,6 @@
     /deep/ th {
       background: #fafafa;
       color: #2e2e2e;
-      font-weight: normal;
     }
   }
 
