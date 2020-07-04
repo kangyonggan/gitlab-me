@@ -12,7 +12,10 @@
       v-clipboard:success="onCopySuccess"
       v-clipboard:error="onCopyError"
     >
-      <i class="el-icon-document-copy" />
+      <i
+        class="el-icon-document-copy"
+        style="font-size: 17px;"
+      />
     </span>
   </el-tooltip>
 </template>

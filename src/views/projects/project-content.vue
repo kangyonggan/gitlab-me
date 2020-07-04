@@ -65,74 +65,10 @@
         <el-button
           plain
           size="medium"
+          style="margin-right: 10px;"
         >
           History
         </el-button>
-        <el-button
-          plain
-          size="medium"
-          style="margin-right: 10px;"
-        >
-          <i class="el-icon-search" />
-          Find file
-        </el-button>
-        <el-dropdown
-          style="margin-right: 10px;"
-          trigger="click"
-          ref="download-dropdown"
-        >
-          <el-tooltip
-            effect="dark"
-            content="Download"
-            placement="top"
-          >
-            <el-button
-              plain
-              size="medium"
-            >
-              <i class="el-icon-download" />
-              <i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-          </el-tooltip>
-          <el-dropdown-menu
-            slot="dropdown"
-            style="width: 240px"
-          >
-            <div style="padding: 8px 12px;">
-              <div style="font-weight: 600;line-height: 16px;">
-                Download source code
-              </div>
-              <ul class="download-list">
-                <li>
-                  <a
-                    style="background: #1f78d1;color: #fff;border-top-left-radius: 6px;border-bottom-left-radius: 6px;"
-                    @click="download('zip')"
-                  >
-                    zip
-                  </a>
-                </li>
-                <li>
-                  <a @click="download('tar.gz')">
-                    tar.gz
-                  </a>
-                </li>
-                <li>
-                  <a @click="download('tar.bz2')">
-                    tar.bz2
-                  </a>
-                </li>
-                <li>
-                  <a
-                    @click="download('tar')"
-                    style="border-right: 1px solid #e5e5e5;border-top-right-radius: 6px;border-bottom-right-radius: 6px;"
-                  >
-                    tar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </el-dropdown-menu>
-        </el-dropdown>
         <clone-dropdown :project="project" />
       </div>
 
@@ -286,30 +222,6 @@
               />
             </el-tooltip>
           </a>
-
-          <div style="float: right; margin-right: 20px;">
-            <el-button-group>
-              <el-button
-                type="primary"
-                size="mini"
-              >
-                <i class="el-icon-edit-outline" />
-                Edit
-              </el-button>
-              <el-button
-                plain
-                size="mini"
-              >
-                Replace
-              </el-button>
-              <el-button
-                plain
-                size="mini"
-              >
-                Delete
-              </el-button>
-            </el-button-group>
-          </div>
         </div>
       </div>
       <div
@@ -420,10 +332,6 @@
           path: path
         });
       },
-      download(type) {
-        console.log(type);
-        this.$refs['download-dropdown'].visible = false;
-      },
       buildPathBread(route) {
         this.pathBreads = [];
         if (!route.query.fullPath) {
@@ -496,30 +404,6 @@
         span {
           margin-left: 5px;
         }
-      }
-    }
-  }
-
-  .download-list {
-    list-style: none;
-    margin-top: 20px;
-    padding-left: 0;
-    height: 20px;
-
-    li {
-      float: left;
-
-      a {
-        color: #2e2e2e;
-        border: 1px solid #e5e5e5;
-        padding: 2px 10px;
-        border-right: 0;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      a:hover {
-        background: #f0f0f0;
       }
     }
   }
