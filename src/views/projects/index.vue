@@ -5,27 +5,25 @@
       style="width: 1000px;margin: 0 auto"
     >
       <header-index :project="project" />
-      <project-content
+      <tree-content
         :project="project"
         :tree-infos="treeInfos"
         :last-commit="lastCommit"
       />
     </div>
-    <div
-      v-else-if="project.branches && !project.branches.length"
-    >
+    <div v-else-if="project.branches && !project.branches.length">
       <empty-project :project="project" />
     </div>
   </div>
 </template>
 
 <script>
-  import EmptyProject from './empty-project';
-  import HeaderIndex from './header-index';
-  import ProjectContent from './project-content';
+  import EmptyProject from './components/empty-project';
+  import HeaderIndex from './components/header-index';
+  import TreeContent from './components/tree-content';
 
   export default {
-    components: {HeaderIndex, EmptyProject, ProjectContent},
+    components: {HeaderIndex, EmptyProject, TreeContent},
     data() {
       return {
         project: {},

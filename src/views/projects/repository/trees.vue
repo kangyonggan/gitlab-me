@@ -1,6 +1,6 @@
 <template>
   <div style="width: 1000px;margin: 0 auto">
-    <project-content
+    <tree-content
       :project="project"
       :tree-infos="treeInfos"
       :last-commit="lastCommit"
@@ -9,10 +9,10 @@
 </template>
 
 <script>
-  import ProjectContent from '../project-content';
+  import TreeContent from '../components/tree-content';
 
   export default {
-    components: {ProjectContent},
+    components: {TreeContent},
     data() {
       return {
         project: {},
