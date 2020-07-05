@@ -56,7 +56,7 @@
       </ul>
 
       <!--new-->
-      <new
+      <new-dropdown
         :project="project"
         :tree-infos="treeInfos"
         v-if="treeInfos"
@@ -123,11 +123,11 @@
 </template>
 
 <script>
-  import New from '../repository/new';
+  import NewDropdown from '../repository/new-dropdown';
   import CloneDropdown from './clone-dropdown';
 
   export default {
-    components: {New, CloneDropdown},
+    components: {NewDropdown, CloneDropdown},
     props: {
       project: {
         required: true,

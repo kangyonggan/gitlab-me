@@ -303,6 +303,15 @@ const routers = [
         component: (resolve) => require(['./views/projects/repository/blobs.vue'], resolve)
       },
       {
+        path: 'new/*',
+        meta: {
+          code: 'PROJECT_REPOSITORY_FILES',
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/repository/new.vue'], resolve)
+      },
+      {
         path: 'settings',
         redirect: 'members'
       },
