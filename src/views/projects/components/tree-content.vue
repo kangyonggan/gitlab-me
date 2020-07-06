@@ -15,6 +15,7 @@
       <el-table-column
         prop="fullName"
         label="Name"
+        width="350"
       >
         <template slot-scope="scope">
           <base-svg
@@ -45,6 +46,7 @@
       <el-table-column
         prop="size"
         label="Size"
+        width="100"
       >
         <template slot-scope="scope">
           {{ util.formatSizeOfByte(scope.row.size) }}
@@ -55,13 +57,25 @@
         label="Last commit"
       >
         <template slot-scope="scope">
-          {{ scope.row.lastCommit.msg }}
+          <span v-if="scope.row.lastCommit.msg.length < 40">
+            {{ scope.row.lastCommit.msg }}
+          </span>
+          <el-tooltip
+            v-else
+            effect="dark"
+            :content="scope.row.lastCommit.msg"
+          >
+            <span>
+              {{ scope.row.lastCommit.msg.substring(0, 40) }}...
+            </span>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column
         prop="lastUpdate"
         label="Last update"
         align="right"
+        width="180"
       >
         <template slot-scope="scope">
           <base-relative-time :timestamp="scope.row.lastCommit.date" />

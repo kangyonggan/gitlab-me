@@ -19,6 +19,7 @@
         v-loading="loading"
         type="primary"
         @click="submit"
+        :disabled="submitDisabled"
       >
         Summit
       </el-button>
@@ -50,6 +51,11 @@
         validator(value) {
           return 'POST,PUT'.indexOf(value.toUpperCase()) !== -1;
         }
+      },
+      submitDisabled: {
+        required: false,
+        type: Boolean,
+        default: false
       },
       params: {
         required: true,

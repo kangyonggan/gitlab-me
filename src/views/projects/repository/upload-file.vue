@@ -4,6 +4,7 @@
     title="Upload New File"
     :params="params"
     :rules="rules"
+    :submit-disabled="status !== 'success'"
     :url="'/projects/' + project.namespace + '/' + project.projectPath + '/upload'"
     @success="handleSuccess"
   >
@@ -80,10 +81,6 @@
           commitMessage: ''
         },
         rules: {
-          fileName: [
-            {required: true, message: 'Required'},
-            {validator: this.validateFileName}
-          ],
           commitMessage: [
             {required: true, message: 'Required'}
           ]
@@ -91,27 +88,6 @@
       };
     },
     methods: {
-      validateFileName: function (rule, value, callback) {
-        if (!value) {
-          callback();
-        }
-        let fullPath = this.$route.query.fullPath || '';
-        let fileName = this.params.fileName;
-        if (fileName.startsWith('/')) {
-          fileName = fileName.substring(1);
-        }
-        if (fileName.endsWith('/')) {
-          fileName = fileName.substring(0, fileName.lastIndexOf('/'));
-        }
-        fullPath += fileName;
-
-        this.axios.get('validate/fileName?namespace=' + this.project.namespace + '&projectPath='
-          + this.project.projectPath + '&branch=' + this.$route.params.pathMatch + '&fullPath=' + fullPath).then(() => {
-          callback();
-        }).catch(res => {
-          callback(new Error(res.respMsg));
-        });
-      },
       show: function (project) {
         this.project = Object.assign({}, project);
         this.params.branchName = this.$route.params.pathMatch || 'master';
