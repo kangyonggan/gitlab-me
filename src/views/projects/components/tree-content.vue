@@ -17,8 +17,13 @@
         label="Name"
       >
         <template slot-scope="scope">
+          <base-svg
+            v-if="util.getFileSortName(scope.row.fullName) === '.gitkeep'"
+            type="gitkeep"
+            style="float: left;margin-top: 4px;margin-right: 3px;"
+          />
           <i
-            v-if="scope.row.type === 'tree'"
+            v-else-if="scope.row.type === 'tree'"
             class="el-icon-folder"
           />
           <i
@@ -68,9 +73,10 @@
 
 <script>
   import ToolsCommit from './tools-commit.vue';
+  import BaseSvg from '../../../components/base-svg';
 
   export default {
-    components: {ToolsCommit},
+    components: {BaseSvg, ToolsCommit},
     props: {
       project: {
         required: true,

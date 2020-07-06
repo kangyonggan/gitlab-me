@@ -61,34 +61,46 @@
       v-if="project.branches && project.branches.length"
       class="links"
     >
-      <i class="el-icon-check" />
-      <router-link to="/">
-        <strong>
-          {{ project.commitNums }}
-        </strong>
-        Commit
-      </router-link>
-      <i class="el-icon-share" />
-      <router-link to="/">
-        <strong>
-          {{ project.branches.length }}
-        </strong>
-        Branch
-      </router-link>
-      <i class="el-icon-price-tag" />
-      <router-link to="/">
-        <strong>
-          {{ project.tags.length }}
-        </strong>
-        Tags
-      </router-link>
-      <i class="el-icon-coin" />
-      <router-link to="/">
-        <strong>
-          {{ util.formatSize(project.size) }}
-        </strong>
-        Storage
-      </router-link>
+      <div class="link">
+        <base-svg type="commit" />
+        <router-link to="/">
+          <strong>
+            {{ project.commitNums }}
+          </strong>
+          Commit
+        </router-link>
+      </div>
+
+      <div class="link">
+        <base-svg type="branch" />
+        <router-link to="/">
+          <strong>
+            {{ project.branches.length }}
+          </strong>
+          Branch
+        </router-link>
+      </div>
+
+
+      <div class="link">
+        <i class="el-icon-price-tag" />
+        <router-link to="/">
+          <strong>
+            {{ project.tags.length }}
+          </strong>
+          Tags
+        </router-link>
+      </div>
+
+      <div class="link">
+        <i class="el-icon-coin" />
+        <router-link to="/">
+          <strong>
+            {{ util.formatSize(project.size) }}
+          </strong>
+          Storage
+        </router-link>
+      </div>
     </div>
     <div class="empty" />
     <div class="description">
@@ -135,9 +147,19 @@
     }
 
     .links {
-      a {
-        color: #000;
-        margin-right: 20px;
+
+      .link {
+        float: left;
+
+        svg {
+          float: left;
+          margin-top: 4px;
+        }
+
+        a {
+          color: #000;
+          margin-right: 20px;
+        }
       }
     }
 
