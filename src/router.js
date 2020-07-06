@@ -291,7 +291,7 @@ const routers = [
           permission: true,
           menuType: 'Projects'
         },
-        component: (resolve) => require(['./views/projects/repository/files.vue'], resolve)
+        component: (resolve) => require(['./views/projects/repository/trees.vue'], resolve)
       },
       {
         path: 'blob/*',
@@ -301,6 +301,15 @@ const routers = [
           menuType: 'Projects'
         },
         component: (resolve) => require(['./views/projects/repository/blobs.vue'], resolve)
+      },
+      {
+        path: 'new/*',
+        meta: {
+          code: 'PROJECT_REPOSITORY_FILES',
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/repository/new.vue'], resolve)
       },
       {
         path: 'settings',

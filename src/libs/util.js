@@ -486,6 +486,22 @@ util.downloadFile = function (url) {
   window.open(axios.defaults.baseURL + url);
 };
 
+/**
+ * 根据文件全路径获取文件短名
+ *
+ * @param fileName
+ */
+util.getFileSortName = function (fileName) {
+  if (!fileName) {
+    return '';
+  }
+  let index = fileName.lastIndexOf('/');
+  if (index > -1 && index < fileName.length - 1) {
+    return fileName.substring(index + 1);
+  }
+  return fileName;
+};
+
 export default util;
 
 Vue.prototype.util = util;
