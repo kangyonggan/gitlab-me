@@ -44,6 +44,9 @@
     </el-dropdown>
 
     <!--New directory-->
+    <upload-file ref="upload-file" />
+
+    <!--New directory-->
     <new-dir ref="new-dir" />
 
     <!--New branch-->
@@ -53,10 +56,11 @@
 
 <script>
   import NewDir from './new-dir';
+  import UploadFile from './upload-file';
   import NewBranch from './new-branch';
 
   export default {
-    components: {NewDir, NewBranch},
+    components: {NewDir, NewBranch, UploadFile},
     props: {
       project: {
         required: true,
@@ -77,6 +81,8 @@
               fullPath: this.$route.query.fullPath
             }
           });
+        } else if (cmd === '1') {
+          this.$refs['upload-file'].show(this.project);
         } else if (cmd === '2') {
           this.$refs['new-dir'].show(this.project, this.treeInfos);
         } else if (cmd === '3') {

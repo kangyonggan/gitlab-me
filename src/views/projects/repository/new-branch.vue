@@ -39,7 +39,6 @@
         rules: {
           branchName: [
             {required: true, message: 'Required'},
-            {max: 64, message: 'Maximum length is 64 characters'},
             {validator: this.validateBranchName}
           ]
         }

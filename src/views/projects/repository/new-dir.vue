@@ -49,12 +49,10 @@
         rules: {
           directoryName: [
             {required: true, message: 'Required'},
-            {max: 64, message: 'Maximum length is 64 characters'},
             {validator: this.validateDirectoryName}
           ],
           commitMessage: [
-            {required: true, message: 'Required'},
-            {max: 64, message: 'Maximum length is 64 characters'}
+            {required: true, message: 'Required'}
           ]
         }
       };
@@ -83,9 +81,16 @@
         this.$refs.modal.show();
       },
       handleSuccess() {
+        let dir = this.params.directoryName;
+        if (dir.startsWith('/')) {
+          dir = dir.substring(1);
+        }
+        if (dir.endsWith('/')) {
+          dir = dir.substring(0, dir.lastIndexOf('/'));
+        }
         this.$router.push({
           path: '/' + this.project.namespace + '/' + this.project.projectPath + '/tree/'
-            + this.params.branchName + '?fullPath=' + (this.$route.query.fullPath ? this.$route.query.fullPath + '/' : '') + this.params.directoryName + '/'
+            + this.params.branchName + '?fullPath=' + (this.$route.query.fullPath ? this.$route.query.fullPath : '') + dir + '/'
         });
       }
     }

@@ -52,6 +52,13 @@ constants.HEADER_TOKEN_NAME = 'x-auth-token';
 constants.LOCAL_TOKEN_NAME = 'token';
 
 /**
+ * 文件上传最大大小(MB)
+ *
+ * @type {string}
+ */
+constants.MAX_UPLOAD_SIZE = 100;
+
+/**
  * 访问权限
  */
 constants.ACCESS_LIST = [
