@@ -502,6 +502,22 @@ util.getFileSortName = function (fileName) {
   return fileName;
 };
 
+/**
+ * 根据文件全路径获取文件扩展名
+ *
+ * @param fileName
+ */
+util.getFileExtension = function (fileName) {
+  if (!fileName) {
+    return '';
+  }
+  let index = fileName.lastIndexOf('.');
+  if (index > -1 && index < fileName.length - 1) {
+    return fileName.substring(index + 1);
+  }
+  return fileName;
+};
+
 export default util;
 
 Vue.prototype.util = util;

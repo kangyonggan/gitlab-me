@@ -79,14 +79,14 @@
         :class="{html:true, 'markdown-editor': true, preview: preview}"
         :editable="false"
         :toolbars="{'navigation': true, help: true, htmlcode: true, readmodel: true, preview: true}"
-        v-else-if="getFileExtension(blobInfo.fullName) === 'MD'"
+        v-else-if="util.getFileExtension(blobInfo.fullName) === 'MD'"
         :value="blobInfo.content"
         @previewToggle="previewToggle"
       />
       <base-hljs
         v-else
         :value="blobInfo.content"
-        :lang="getFileExtension(blobInfo.fullName).toLowerCase()"
+        :lang="util.getFileExtension(blobInfo.fullName).toLowerCase()"
       />
     </div>
   </div>

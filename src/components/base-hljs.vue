@@ -1,5 +1,5 @@
 <template>
-  <pre style="background: #fff;padding: 0 10px;"><code :class="lang">{{ value }}</code></pre>
+  <pre style="background: #fff;padding: 0;margin: 0"><code :class="lang">{{ value }}</code></pre>
 </template>
 
 <script>
