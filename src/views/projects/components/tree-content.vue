@@ -15,7 +15,6 @@
       <el-table-column
         prop="fullName"
         label="Name"
-        width="350"
       >
         <template slot-scope="scope">
           <base-svg
@@ -44,31 +43,16 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="size"
-        label="Size"
-        width="100"
-      >
-        <template slot-scope="scope">
-          {{ util.formatSizeOfByte(scope.row.size) }}
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="lastCommit"
         label="Last commit"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.lastCommit.msg.length < 40">
-            {{ scope.row.lastCommit.msg }}
-          </span>
-          <el-tooltip
-            v-else
-            effect="dark"
-            :content="scope.row.lastCommit.msg"
+          <router-link
+            :to="'/' + project.namespace + '/' + project.projectPath + '/commit/' + scope.row.lastCommit.commitId"
+            style="color: #2e2e2e;"
           >
-            <span>
-              {{ scope.row.lastCommit.msg.substring(0, 40) }}...
-            </span>
-          </el-tooltip>
+            {{ scope.row.lastCommit.msg }}
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column
@@ -118,9 +102,9 @@
       showFile(file) {
         let path = '/' + this.project.namespace + '/' + this.project.projectPath;
         if (file.type === 'tree') {
-          path += '/tree/' + this.currentBranch + '?fullPath=' + file.fullName + '/';
+          path += '/tree/' + this.currentBranch + '?fullPath=' + encodeURIComponent(file.fullName + '/');
         } else {
-          path += '/blob/' + this.currentBranch + '?fullPath=' + file.fullName;
+          path += '/blob/' + this.currentBranch + '?fullPath=' + encodeURIComponent(file.fullName);
         }
         this.$router.push({
           path: path
