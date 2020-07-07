@@ -9,6 +9,7 @@
         :project="project"
         :tree-infos="treeInfos"
         :last-commit="lastCommit"
+        :readme="readme"
       />
     </div>
     <div v-else-if="project.branches && !project.branches.length">
@@ -28,13 +29,15 @@
       return {
         project: {},
         treeInfos: [],
-        lastCommit: {}
+        lastCommit: {},
+        readme: {}
       };
     },
     methods: {
       init(route) {
-        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath + '/tree?branch=master&fullPath=./').then(data => {
+        this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath + '/tree?branch=master').then(data => {
           this.project = data.project;
+          this.readme = data.readme;
           this.treeInfos = data.treeInfos;
           this.lastCommit = data.lastCommit;
         }).catch(res => {

@@ -128,6 +128,12 @@
           return;
         }
 
+        // git ignorecase
+        if (value !== this.params.oldFileName && value.toUpperCase() === this.params.oldFileName.toUpperCase()) {
+          callback(new Error('Can\'t change case'));
+          return;
+        }
+
         let fullPath = this.$route.query.fullPath || '';
         let fileName = this.params.fileName;
         if (fileName.startsWith('/')) {

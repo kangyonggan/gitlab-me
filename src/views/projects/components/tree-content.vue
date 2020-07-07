@@ -66,6 +66,33 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!--README.md-->
+    <div
+      class="readme"
+      v-if="readme"
+    >
+      <div class="header">
+        <i class="el-icon-document" />
+        <strong>
+          <router-link 
+            style="color: #2e2e2e;font-size: 15px;"
+            :to="'/' + project.namespace + '/' + project.projectPath + '/blob/master?fullPath=' + readme.fullName"
+          >
+            {{ readme.fullName }}
+          </router-link>
+        </strong>
+        <span style="margin-left: 8px;font-size: 13px;">
+          {{ util.formatSizeOfByte(readme.size) }}
+        </span>
+      </div>
+      <mavon-editor
+        class="markdown-editor"
+        :editable="false"
+        :toolbars="{}"
+        :value="readme.content"
+      />
+    </div>
   </div>
 </template>
 
@@ -87,6 +114,12 @@
         }
       },
       lastCommit: {
+        required: false,
+        type: Object,
+        default() {
+        }
+      },
+      readme: {
         required: false,
         type: Object,
         default() {
@@ -165,6 +198,40 @@
     /deep/ th {
       background: #fafafa;
       color: #2e2e2e;
+    }
+  }
+
+  /deep/ .markdown-editor {
+    .v-note-edit {
+      display: none;
+    }
+
+    .v-note-show {
+      display: block !important;
+      flex: 0 0 100% !important;
+      width: 100% !important;
+    }
+
+    .v-note-op {
+      display: none;
+    }
+
+    .v-show-content {
+      background: #fff !important;
+    }
+  }
+
+  .readme {
+    margin-top: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+
+    .header {
+      height: 48px;
+      line-height: 48px;
+      padding: 0 18px;
+      background: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
     }
   }
 </style>

@@ -86,7 +86,7 @@
         style="text-align: center;color: #2e2e2e;"
       >
         <a
-          @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + ($route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent($route.query.fullPath))"
+          @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + ($route.params.pathMatch || 'master') + '&fullPath=' + $route.query.fullPath)"
           style="cursor: pointer;color: #2e2e2e;display: inline-block;
         width: 100%;height: 100%;background: #fafafa;padding: 100px 0;text-decoration: none"
         >

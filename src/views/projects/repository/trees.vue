@@ -4,6 +4,7 @@
       :project="project"
       :tree-infos="treeInfos"
       :last-commit="lastCommit"
+      :readme="readme"
     />
   </div>
 </template>
@@ -17,14 +18,16 @@
       return {
         project: {},
         treeInfos: [],
-        lastCommit: {}
+        lastCommit: {},
+        readme: {}
       };
     },
     methods: {
       init(route) {
         this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath
-          + '/tree?branch=' + (route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(route.query.fullPath || './')).then(data => {
+          + '/tree?branch=' + (route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(route.query.fullPath || '')).then(data => {
           this.project = data.project;
+          this.readme = data.readme;
           this.treeInfos = data.treeInfos;
           this.lastCommit = data.lastCommit;
         }).catch(res => {
