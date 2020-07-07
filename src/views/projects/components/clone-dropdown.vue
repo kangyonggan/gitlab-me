@@ -28,6 +28,15 @@
           </el-input>
         </li>
       </ul>
+
+      <el-dropdown-item
+        divided
+        command="0"
+        @click.native="downloadZIP"
+      >
+        <i class="el-icon-download" />
+        Download ZIP
+      </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -43,6 +52,12 @@
         required: false,
         type: String,
         default: 'bottom-end'
+      }
+    },
+    methods: {
+      downloadZIP() {
+        this.util.downloadFile('projects/' + this.project.namespace + '/' + this.project.projectPath + '/'
+          + (this.$route.params.pathMatch || 'master') + '.zip');
       }
     }
   };
