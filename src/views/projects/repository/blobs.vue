@@ -50,7 +50,7 @@
             </el-tooltip>
           </a>
 
-          <el-button-group style="margin-right: 20px;">
+          <el-button-group style="float: right;margin: 11px 20px 0 0;">
             <el-button
               size="mini"
               @click="replaceFile"
@@ -64,6 +64,15 @@
               Delete
             </el-button>
           </el-button-group>
+          
+          <el-button
+            style="float: right;margin: 11px 20px 0 0;"
+            size="mini"
+            type="primary"
+            @click="editFile"
+          >
+            Edit
+          </el-button>
         </div>
       </div>
       <div
@@ -77,7 +86,7 @@
         style="text-align: center;color: #2e2e2e;"
       >
         <a
-          @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + $route.params.pathMatch + '&fullPath=' + ($route.query.fullPath || ''))"
+          @click="util.downloadFile('projects/' + project.namespace + '/' + project.projectPath + '/raw?branch=' + ($route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent($route.query.fullPath))"
           style="cursor: pointer;color: #2e2e2e;display: inline-block;
         width: 100%;height: 100%;background: #fafafa;padding: 100px 0;text-decoration: none"
         >
@@ -94,7 +103,7 @@
         :class="{html:true, 'markdown-editor': true, preview: preview}"
         :editable="false"
         :toolbars="{'navigation': true, help: true, htmlcode: true, readmodel: true, preview: true}"
-        v-else-if="util.getFileExtension(blobInfo.fullName) === 'MD'"
+        v-else-if="util.getFileExtension(blobInfo.fullName).toUpperCase() === 'MD'"
         :value="blobInfo.content"
         @previewToggle="previewToggle"
       />
@@ -120,15 +129,19 @@
     data() {
       return {
         loading: false,
+        preview: true,
         project: {},
         blobInfo: {}
       };
     },
     methods: {
+      previewToggle() {
+        this.preview = !this.preview;
+      },
       init(route) {
         this.loading = true;
         this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath
-          + '/blob?branch=' + route.params.pathMatch + '&fullPath=' + encodeURIComponent(route.query.fullPath || '')).then(data => {
+          + '/blob?branch=' + (route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(route.query.fullPath || '')).then(data => {
           this.project = data.project;
           this.blobInfo = data.blobInfo;
         }).catch(res => {
@@ -142,6 +155,14 @@
       },
       replaceFile() {
         this.$refs['replace-file'].show(this.project, this.blobInfo);
+      },
+      editFile() {
+        this.$router.push({
+          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/edit/' + (this.$route.params.pathMatch || 'master'),
+          query: {
+            fullPath: this.$route.query.fullPath
+          }
+        });
       }
     },
     mounted() {
@@ -204,7 +225,7 @@
 
       .v-note-op {
         position: absolute;
-        right: 400px;
+        right: 300px;
         width: 400px !important;
         top: -45px;
         border: 0 !important;

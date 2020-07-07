@@ -6,7 +6,7 @@
     :rules="rules"
     :submit-disabled="status !== 'success'"
     method="PUT"
-    :url="'/projects/' + project.namespace + '/' + project.projectPath + '/file'"
+    :url="'/projects/' + project.namespace + '/' + project.projectPath + '/replace'"
     @success="handleSuccess"
   >
     <el-upload

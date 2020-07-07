@@ -1,13 +1,15 @@
 <template>
   <base-form
+    v-loading="loading"
     style="max-width: 100%"
     :params="params"
     :rules="rules"
-    :url="'/projects/' + this.$route.params.namespace + '/' + this.$route.params.projectPath + '/new'"
+    method="PUT"
+    :url="'/projects/' + this.$route.params.namespace + '/' + this.$route.params.projectPath + '/file'"
     @success="success"
   >
     <h3 style="font-weight: 600;color: #2e2e2e">
-      New file
+      Edit file
     </h3>
     <editor
       height="470px"
@@ -18,6 +20,7 @@
         enableLiveAutocompletion: false,
         tabSize:2
       }"
+      :content="initContent"
       :font-size="14"
       :lang="'java'"
       :theme="'github'"
@@ -34,7 +37,7 @@
             {{ $route.params.pathMatch || 'master' }}
           </span>
           <span style="float: left;margin-right: 15px;">
-            /{{ $route.query.fullPath }}
+            /{{ util.getFileDir($route.query.fullPath) }}
           </span>
           <el-form-item
             prop="fileName"
@@ -77,11 +80,11 @@
       prop="commitMessage"
       type="textarea"
     />
-    <base-select
+    <base-input
+      readonly
       v-model="params.branchName"
       label="Target branch"
       prop="branchName"
-      :clearable="false"
     />
   </base-form>
 </template>
@@ -95,12 +98,16 @@
     },
     data() {
       return {
+        loading: false,
+        project: {},
+        initContent: '',
         params: {
-          parentPath: this.$route.query.fullPath || './',
-          fileName: '',
+          parentPath: this.util.getFileDir(this.$route.query.fullPath, './'),
+          fileName: this.util.getFileSortName(this.$route.query.fullPath),
+          oldFileName: this.util.getFileSortName(this.$route.query.fullPath),
           content: '',
           contentType: 'text',
-          commitMessage: 'Add new file',
+          commitMessage: 'Update ' + this.util.getFileSortName(this.$route.query.fullPath),
           branchName: this.$route.params.pathMatch || 'master'
         },
         rules: {
@@ -116,7 +123,7 @@
     },
     methods: {
       validateFileName(rule, value, callback) {
-        if (!value) {
+        if (!value || value === this.params.oldFileName) {
           callback();
           return;
         }
@@ -148,7 +155,7 @@
         this.params.content = editor.getValue();
       },
       success() {
-        let fullPath = this.$route.query.fullPath || '';
+        let fullPath = this.util.getFileDir(this.$route.query.fullPath);
         let fileName = this.params.fileName;
         if (fileName.startsWith('/')) {
           fileName = fileName.substring(1);
@@ -165,6 +172,20 @@
           }
         });
       }
+    },
+    mounted() {
+      this.loading = true;
+      this.axios.get('projects/' + this.$route.params.namespace + '/' + this.$route.params.projectPath
+        + '/blob?branch=' + (this.$route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(this.$route.query.fullPath || '')).then(data => {
+        this.project = data.project;
+        console.log(data);
+        this.params.content = data.blobInfo.content;
+        this.initContent = data.blobInfo.content;
+      }).catch(res => {
+        this.error(res.respMsg);
+      }).finally(() => {
+        this.loading = false;
+      });
     }
   };
 </script>

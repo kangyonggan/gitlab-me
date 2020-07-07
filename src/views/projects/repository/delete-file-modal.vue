@@ -9,16 +9,16 @@
     @success="handleSuccess"
   >
     <base-input
-      label="Target branch"
-      v-model="params.branchName"
-      prop="branchName"
-      readonly
-    />
-    <base-input
       label="Commit message"
       v-model="params.commitMessage"
       prop="commitMessage"
       type="textarea"
+    />
+    <base-input
+      label="Target branch"
+      v-model="params.branchName"
+      prop="branchName"
+      readonly
     />
   </base-modal>
 </template>

@@ -23,7 +23,7 @@
     methods: {
       init(route) {
         this.axios.get('projects/' + route.params.namespace + '/' + route.params.projectPath
-          + '/tree?branch=' + route.params.pathMatch + '&fullPath=' + encodeURIComponent(route.query.fullPath || '')).then(data => {
+          + '/tree?branch=' + (route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(route.query.fullPath || './')).then(data => {
           this.project = data.project;
           this.treeInfos = data.treeInfos;
           this.lastCommit = data.lastCommit;

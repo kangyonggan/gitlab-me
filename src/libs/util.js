@@ -522,16 +522,17 @@ util.getFileExtension = function (fileName) {
  * 根据文件全路径获取文件父目录
  *
  * @param fileName
+ * @param defaultVal
  */
-util.getFileDir = function (fileName) {
+util.getFileDir = function (fileName, defaultVal) {
   if (!fileName) {
-    return '';
+    return defaultVal || '';
   }
   let index = fileName.lastIndexOf('/');
   if (index > -1 && index < fileName.length - 1) {
     return fileName.substring(0, index + 1);
   }
-  return '';
+  return defaultVal || '';
 };
 
 export default util;
