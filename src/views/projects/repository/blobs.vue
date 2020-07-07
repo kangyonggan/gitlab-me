@@ -49,6 +49,18 @@
               />
             </el-tooltip>
           </a>
+
+          <el-button-group style="margin-right: 20px;">
+            <el-button size="mini">
+              Replace
+            </el-button>
+            <el-button
+              size="mini"
+              @click="deleteFile"
+            >
+              Delete
+            </el-button>
+          </el-button-group>
         </div>
       </div>
       <div
@@ -89,14 +101,17 @@
         :lang="util.getFileExtension(blobInfo.fullName).toLowerCase()"
       />
     </div>
+
+    <delete-file-modal ref="delete-file" />
   </div>
 </template>
 
 <script>
   import ToolsCommit from '../components/tools-commit.vue';
+  import DeleteFileModal from './delete-file-modal';
 
   export default {
-    components: {ToolsCommit},
+    components: {ToolsCommit, DeleteFileModal},
     data() {
       return {
         loading: false,
@@ -116,6 +131,9 @@
         }).finally(() => {
           this.loading = false;
         });
+      },
+      deleteFile() {
+        this.$refs['delete-file'].show(this.project, this.blobInfo);
       }
     },
     mounted() {

@@ -34,6 +34,8 @@
 </template>
 
 <script>
+  import qs from 'qs';
+
   export default {
     props: {
       title: {
@@ -49,7 +51,7 @@
         type: String,
         default: 'POST',
         validator(value) {
-          return 'POST,PUT'.indexOf(value.toUpperCase()) !== -1;
+          return 'POST,PUT,DELETE'.indexOf(value.toUpperCase()) !== -1;
         }
       },
       submitDisabled: {
@@ -89,19 +91,31 @@
           }
 
           this.loading = true;
-          this.axios.request({
-            url: this.url,
-            method: this.method,
-            data: this.params
-          }).then(data => {
-            this.dialogVisible = false;
-            this.$emit('success', data);
-          }).catch(res => {
-            this.error(res.respMsg);
-            this.$emit('failure', res);
-          }).finally(() => {
-            this.loading = false;
-          });
+          if (this.method === 'DELETE') {
+            this.axios.delete(this.url + '?' + qs.stringify(this.params)).then(data => {
+              this.dialogVisible = false;
+              this.$emit('success', data);
+            }).catch(res => {
+              this.error(res.respMsg);
+              this.$emit('failure', res);
+            }).finally(() => {
+              this.loading = false;
+            });
+          } else {
+            this.axios.request({
+              url: this.url,
+              method: this.method,
+              data: this.params
+            }).then(data => {
+              this.dialogVisible = false;
+              this.$emit('success', data);
+            }).catch(res => {
+              this.error(res.respMsg);
+              this.$emit('failure', res);
+            }).finally(() => {
+              this.loading = false;
+            });
+          }
         });
       }
     }

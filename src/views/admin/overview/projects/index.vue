@@ -123,7 +123,7 @@
               >
                 <span style="color: #f56c6c">
                   <i class="el-icon-delete" />
-                  Remove
+                  Delete
                 </span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -159,7 +159,7 @@
       },
       handleCommand: function (command, row) {
         if (command === '0') {
-          this.$confirm('Are you sure you want to remove ' + row.projectName + '?', 'Confirmation',
+          this.$confirm('Are you sure you want to delete ' + row.projectName + '?', 'Confirmation',
             {type: 'warning'}).then(() => {
             this.axios.delete('admin/projects/' + row.id).then(() => {
               this.$refs.table.reload();

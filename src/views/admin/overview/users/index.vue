@@ -90,7 +90,7 @@
               <el-dropdown-item command="0">
                 <span style="color: #f56c6c">
                   <i class="el-icon-delete" />
-                  Remove
+                  Delete
                 </span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -125,7 +125,7 @@
       },
       handleCommand: function (command, row) {
         if (command === '0') {
-          this.$confirm('Physics remove ' + row.fullName + ', are you sure?', 'Confirmation',
+          this.$confirm('Are you sure you want to delete ' + row.fullName + ', are you sure?', 'Confirmation',
             {type: 'warning'}).then(() => {
             this.axios.delete('admin/users/' + row.id).then(() => {
               this.$refs.table.reload();
