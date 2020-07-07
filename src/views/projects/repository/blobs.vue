@@ -208,6 +208,8 @@
     }
 
     /deep/ .markdown-editor {
+      min-height: auto;
+
       .markdown-body {
         border: 0 !important;
         box-shadow: none !important;

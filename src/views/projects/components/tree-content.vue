@@ -75,7 +75,7 @@
       <div class="header">
         <i class="el-icon-document" />
         <strong>
-          <router-link 
+          <router-link
             style="color: #2e2e2e;font-size: 15px;"
             :to="'/' + project.namespace + '/' + project.projectPath + '/blob/master?fullPath=' + readme.fullName"
           >
@@ -202,6 +202,8 @@
   }
 
   /deep/ .markdown-editor {
+    min-height: auto;
+
     .v-note-edit {
       display: none;
     }
