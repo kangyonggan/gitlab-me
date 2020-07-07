@@ -1,11 +1,12 @@
 <template>
   <base-modal
     ref="modal"
-    title="Upload New File"
+    :title="'Replace ' + util.getFileSortName(blobFile.fullName)"
     :params="params"
     :rules="rules"
     :submit-disabled="status !== 'success'"
-    :url="'/projects/' + project.namespace + '/' + project.projectPath + '/upload'"
+    method="PUT"
+    :url="'/projects/' + project.namespace + '/' + project.projectPath + '/file'"
     @success="handleSuccess"
   >
     <el-upload
@@ -17,7 +18,7 @@
       :on-progress="onProgress"
       :data="uploadData"
     >
-      <div v-if="!params.fileName">
+      <div v-if="!size">
         <i class="el-icon-upload" />
         <div>
           Attach a file by drag & drop or <em>click to upload</em>
@@ -29,7 +30,7 @@
       >
         <div><strong>0.4</strong> KB</div>
         <div style="margin-top: 10px;">
-          {{ $route.query.fullPath || '/' }}{{ params.fileName }}
+          {{ blobFile.fullName }}
         </div>
         <el-progress
           style="width: 80%;margin: 15px auto;"
@@ -46,38 +47,29 @@
       prop="commitMessage"
       type="textarea"
     />
-    <base-select
+    <base-input
+      readonly
       label="Target Branch"
       v-model="params.branchName"
-      prop="targetBranch"
-      :clearable="false"
-    >
-      <el-option
-        v-for="branch in project.branches"
-        :key="branch"
-        :value="branch"
-        :label="branch"
-      />
-    </base-select>
+      prop="branchName"
+    />
   </base-modal>
 </template>
 
 <script>
-  import constants from '../../../libs/constants';
-
   export default {
     data() {
       return {
         project: {},
+        blobFile: {},
         size: 0,
         percent: 0,
         status: undefined,
-        uploadData: {'x-auth-token': localStorage.getItem(constants.LOCAL_TOKEN_NAME)},
+        uploadData: {'x-auth-token': localStorage.getItem(this.constants.LOCAL_TOKEN_NAME)},
         params: {
           url: '',
-          fileName: '',
+          fullPath: '',
           branchName: '',
-          parentPath: '',
           commitMessage: ''
         },
         rules: {
@@ -88,29 +80,28 @@
       };
     },
     methods: {
-      show: function (project) {
-        this.project = Object.assign({}, project);
+      show: function (project, blobFile) {
+        this.blobFile = blobFile;
+        this.project = project;
         this.params.branchName = this.$route.params.pathMatch || 'master';
-        this.params.commitMessage = 'Upload New File';
-        this.params.fileName = '';
+        this.params.commitMessage = 'Replace ' + this.util.getFileSortName(blobFile.fullName);
+        this.params.fullPath = blobFile.fullName;
         this.params.url = '';
-        this.params.size = 0;
+        this.size = 0;
         this.percent = 0;
         this.status = undefined;
-        this.params.parentPath = this.$route.query.fullPath || './';
         this.$refs.modal.show();
       },
       beforeUpload(file) {
-        if (file.size / 1024 / 1024 > constants.MAX_UPLOAD_SIZE) {
-          this.error('File can\'t over then ' + constants.MAX_UPLOAD_SIZE + 'MB!');
+        if (file.size / 1024 / 1024 > this.constants.MAX_UPLOAD_SIZE) {
+          this.error('File can\'t over then ' + this.constants.MAX_UPLOAD_SIZE + 'MB!');
           return false;
         }
 
         this.params.url = '';
         this.percent = 0;
         this.status = undefined;
-        this.params.fileName = file.name;
-        this.params.size = file.size;
+        this.size = file.size;
         return true;
       },
       onProgress(event) {
@@ -126,22 +117,7 @@
         this.params.url = res.data.url;
       },
       handleSuccess() {
-        let fullPath = this.$route.query.fullPath || '';
-        let fileName = this.params.fileName;
-        if (fileName.startsWith('/')) {
-          fileName = fileName.substring(1);
-        }
-        if (fileName.endsWith('/')) {
-          fileName = fileName.substring(0, fileName.lastIndexOf('/'));
-        }
-        fullPath += fileName;
-        this.$router.push({
-          path: '/' + this.project.namespace + '/' + this.project.projectPath + '/blob/' +
-            this.params.branchName,
-          query: {
-            fullPath: fullPath
-          }
-        });
+        window.location.reload();
       }
     }
   };

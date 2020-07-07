@@ -43,24 +43,24 @@
       </el-dropdown-menu>
     </el-dropdown>
 
-    <!--New directory-->
-    <upload-file ref="upload-file" />
+    <!--Upload file-->
+    <upload-file-modal ref="upload-file" />
 
     <!--New directory-->
-    <new-dir ref="new-dir" />
+    <new-dir-modal ref="new-dir" />
 
     <!--New branch-->
-    <new-branch ref="new-branch" />
+    <new-branch-modal ref="new-branch" />
   </div>
 </template>
 
 <script>
-  import NewDir from './new-dir';
-  import UploadFile from './upload-file';
-  import NewBranch from './new-branch';
+  import NewDirModal from './new-dir-modal';
+  import UploadFileModal from './upload-file-modal';
+  import NewBranchModal from './new-branch-modal';
 
   export default {
-    components: {NewDir, NewBranch, UploadFile},
+    components: {NewDirModal, NewBranchModal, UploadFileModal},
     props: {
       project: {
         required: true,

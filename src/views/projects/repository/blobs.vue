@@ -51,7 +51,10 @@
           </a>
 
           <el-button-group style="margin-right: 20px;">
-            <el-button size="mini">
+            <el-button
+              size="mini"
+              @click="replaceFile"
+            >
               Replace
             </el-button>
             <el-button
@@ -103,15 +106,17 @@
     </div>
 
     <delete-file-modal ref="delete-file" />
+    <replace-file-modal ref="replace-file" />
   </div>
 </template>
 
 <script>
   import ToolsCommit from '../components/tools-commit.vue';
   import DeleteFileModal from './delete-file-modal';
+  import ReplaceFileModal from './replace-file-modal';
 
   export default {
-    components: {ToolsCommit, DeleteFileModal},
+    components: {ToolsCommit, DeleteFileModal, ReplaceFileModal},
     data() {
       return {
         loading: false,
@@ -134,6 +139,9 @@
       },
       deleteFile() {
         this.$refs['delete-file'].show(this.project, this.blobInfo);
+      },
+      replaceFile() {
+        this.$refs['replace-file'].show(this.project, this.blobInfo);
       }
     },
     mounted() {
