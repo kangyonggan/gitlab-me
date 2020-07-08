@@ -154,43 +154,6 @@
 </script>
 
 <style scoped lang="scss">
-  .tools {
-    margin-top: 30px;
-
-    /deep/ .el-input__inner {
-      height: 36px;
-      line-height: 36px;
-    }
-
-    /deep/ .el-input__icon {
-      line-height: 36px;
-    }
-
-    .actions {
-      float: right;
-    }
-
-    .path-breads {
-      float: left;
-      padding: 0;
-      margin: 7px 20px 0 15px;
-      list-style: none;
-
-      li {
-        float: left;
-
-        a {
-          color: #2e2e2e;
-          margin-left: 10px;
-        }
-
-        span {
-          margin-left: 5px;
-        }
-      }
-    }
-  }
-
   .last-commit {
     margin-top: 20px;
     background: #fafafa;

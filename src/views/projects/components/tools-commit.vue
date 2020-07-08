@@ -1,7 +1,43 @@
 <template>
   <div>
     <!--tools-->
-    <div class="tools">
+    <svg
+      v-if="!project || !project.id"
+      width="100%"
+      height="36"
+    >
+      <rect
+        x="0"
+        y="0"
+        rx="3"
+        ry="3"
+        width="193"
+        height="100%"
+        fill="#eaeced"
+      />
+      <rect
+        x="203"
+        y="0"
+        rx="3"
+        ry="3"
+        width="200"
+        height="100%"
+        fill="#eaeced"
+      />
+      <rect
+        x="80%"
+        y="0"
+        rx="3"
+        ry="3"
+        width="20%"
+        height="100%"
+        fill="#eaeced"
+      />
+    </svg>
+    <div
+      class="tools"
+      v-else
+    >
       <el-select
         style="float: left"
         v-model="currentBranch"
@@ -59,7 +95,7 @@
       <new-dropdown
         :project="project"
         :tree-infos="treeInfos"
-        v-if="treeInfos"
+        v-if="treeInfos && treeInfos.length"
         style="float: left"
       />
 
@@ -79,7 +115,7 @@
 
     <!--las commit-->
     <svg
-      v-if="!lastCommit || !lastCommit.commitId"
+      v-if="!project.id"
       width="100%"
       height="70px"
       style="border: 1px solid #e5e5e5;border-radius: 5px;margin-top: 20px;background: #fafafa"
@@ -114,7 +150,7 @@
     </svg>
     <div
       class="last-commit"
-      v-else
+      v-else-if="lastCommit"
     >
       <base-avatar
         style="float: left"
