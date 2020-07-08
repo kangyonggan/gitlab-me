@@ -72,7 +72,6 @@
     },
     methods: {
       reload: function () {
-        this.$store.commit('setLoading', true);
         this.axios.get(this.url + '?' + qs.stringify(this.params)).then(data => {
           if (this.pagination) {
             this.list = data.pageInfo.list;
@@ -83,8 +82,6 @@
         }).catch(() => {
           this.total = 0;
           this.list = [];
-        }).finally(() => {
-          this.$store.commit('setLoading', false);
         });
       },
       jump: function (pageNum) {

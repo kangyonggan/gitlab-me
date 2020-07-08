@@ -76,7 +76,7 @@
     <!--README.md-->
     <div
       class="readme"
-      v-if="readme"
+      v-if="readme && readme.fullName"
     >
       <div class="header">
         <i class="el-icon-document" />
@@ -99,6 +99,84 @@
         :value="readme.content"
       />
     </div>
+
+    <svg
+      v-else-if="readme"
+      width="100%"
+      height="280px"
+      style="border: 1px solid #e5e5e5;border-radius: 5px;margin-top: 20px;"
+    >
+      <rect
+        x="0"
+        y="0"
+        width="100%"
+        height="49"
+        style="fill: #fafafa;stroke: #e5e5e5;stroke-width: 1"
+      />
+      <rect
+        x="10"
+        y="12"
+        rx="3"
+        ry="3"
+        width="200"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="8%"
+        y="65"
+        rx="3"
+        ry="3"
+        width="90%"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="2%"
+        y="101"
+        rx="3"
+        ry="3"
+        width="96%"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="2%"
+        y="137"
+        rx="3"
+        ry="3"
+        width="50%"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="8%"
+        y="173"
+        rx="3"
+        ry="3"
+        width="90%"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="2%"
+        y="209"
+        rx="3"
+        ry="3"
+        width="96%"
+        height="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="2%"
+        y="243"
+        rx="3"
+        ry="3"
+        width="50%"
+        height="20"
+        fill="#eaeced"
+      />
+    </svg>
   </div>
 </template>
 

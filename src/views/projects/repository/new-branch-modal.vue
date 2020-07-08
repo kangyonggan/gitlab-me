@@ -34,6 +34,7 @@
       return {
         project: {},
         params: {
+          branchName: '',
           createFrom: ''
         },
         rules: {
@@ -59,6 +60,7 @@
       },
       show: function (project) {
         this.project = Object.assign({}, project);
+        this.params.branchName = '';
         this.params.createFrom = this.$route.params.pathMatch || 'master';
         this.$refs.modal.show();
       },

@@ -268,10 +268,6 @@ const routers = [
     component: (resolve) => require(['./views/layout.vue'], resolve),
     children: [
       {
-        path: 'overview',
-        redirect: './'
-      },
-      {
         path: '/',
         meta: {
           code: 'PROJECT_OVERVIEW_DETAIL',
