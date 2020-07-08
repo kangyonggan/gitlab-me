@@ -96,7 +96,7 @@
 
     <!--las commit-->
     <svg
-      v-if="!project.id"
+      v-if="!project.id && lastCommit"
       width="100%"
       height="70px"
       style="border: 1px solid #e5e5e5;border-radius: 5px;margin-top: 20px;background: #fafafa"

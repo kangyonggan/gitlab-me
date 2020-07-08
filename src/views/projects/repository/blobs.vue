@@ -75,14 +75,74 @@
           </el-button>
         </div>
       </div>
+      <svg
+        v-if="!blobInfo.ish"
+        width="100%"
+        height="230px"
+      >
+        <rect
+          x="8%"
+          y="15"
+          rx="3"
+          ry="3"
+          width="90%"
+          height="20"
+          fill="#eaeced"
+        />
+        <rect
+          x="2%"
+          y="51"
+          rx="3"
+          ry="3"
+          width="96%"
+          height="20"
+          fill="#eaeced"
+        />
+        <rect
+          x="2%"
+          y="87"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="20"
+          fill="#eaeced"
+        />
+        <rect
+          x="8%"
+          y="123"
+          rx="3"
+          ry="3"
+          width="90%"
+          height="20"
+          fill="#eaeced"
+        />
+        <rect
+          x="2%"
+          y="159"
+          rx="3"
+          ry="3"
+          width="96%"
+          height="20"
+          fill="#eaeced"
+        />
+        <rect
+          x="2%"
+          y="193"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="20"
+          fill="#eaeced"
+        />
+      </svg>
       <div
-        v-if="!blobInfo.size"
+        v-else-if="!blobInfo.size"
         style="text-align: center;line-height: 60px;color: #2e2e2e"
       >
         Empty file
       </div>
       <div
-        v-else-if="!blobInfo.content"
+        v-else-if="!blobInfo.text"
         style="text-align: center;color: #2e2e2e;"
       >
         <a
