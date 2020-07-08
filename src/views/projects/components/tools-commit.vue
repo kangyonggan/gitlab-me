@@ -22,10 +22,27 @@
       <ul class="path-breads">
         <li>
           <router-link
+            v-show="project.projectPath"
             :to="'/' + project.namespace + '/' + project.projectPath + '/tree/' + $route.params.pathMatch"
           >
             {{ project.projectPath }}
           </router-link>
+          <svg
+            v-show="!project.projectPath"
+            width="55px"
+            height="20px"
+            style=""
+          >
+            <rect
+              x="0"
+              y="0"
+              width="100%"
+              rx="3"
+              ry="3"
+              height="100%"
+              fill="#eaeced"
+            />
+          </svg>
 
           <span>
             /

@@ -85,7 +85,7 @@
             style="color: #2e2e2e;font-size: 15px;"
             :to="'/' + project.namespace + '/' + project.projectPath + '/blob/master?fullPath=' + readme.fullName"
           >
-            {{ readme.fullName }}
+            {{ util.getFileSortName(readme.fullName) }}
           </router-link>
         </strong>
         <span style="margin-left: 8px;font-size: 13px;">
@@ -99,7 +99,6 @@
         :value="readme.content"
       />
     </div>
-
     <svg
       v-else-if="readme"
       width="100%"
