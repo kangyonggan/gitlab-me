@@ -78,9 +78,43 @@
     </div>
 
     <!--las commit-->
+    <svg
+      v-if="!lastCommit || !lastCommit.commitId"
+      width="100%"
+      height="70px"
+      style="border: 1px solid #e5e5e5;border-radius: 5px;margin-top: 20px;background: #fafafa"
+    >
+      <circle
+        cx="34"
+        cy="35"
+        r="20"
+        fill="#eaeced"
+      />
+      <rect
+        x="69"
+        y="20"
+        width="150"
+        height="15"
+        fill="#eaeced"
+      />
+      <rect
+        x="69"
+        y="40"
+        width="200"
+        height="15"
+        fill="#eaeced"
+      />
+      <rect
+        x="82.5%"
+        y="20"
+        width="16%"
+        height="35"
+        fill="#eaeced"
+      />
+    </svg>
     <div
       class="last-commit"
-      v-if="lastCommit && lastCommit.commitId"
+      v-else
     >
       <base-avatar
         style="float: left"

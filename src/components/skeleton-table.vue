@@ -18,7 +18,7 @@
       y="12"
       :width="columnWidth + '%'"
       height="24"
-      class="th"
+      class="td"
     />
     <svg
       v-for="row in 4"
@@ -42,6 +42,13 @@
         :cy="24 + 48 * row"
         r="12"
         class="td"
+      />
+      <line
+        x1="0"
+        :y1="48 * row"
+        x2="100%"
+        :y2="48 * row"
+        style="stroke:#EBEEF5;stroke-width:1"
       />
     </svg>
   </svg>
@@ -107,13 +114,9 @@
     border: 1px solid rgb(229, 229, 229);
 
     .header {
-      fill: #eaeced;
+      fill: #fafafa;
       stroke-width: 1;
-      stroke: #e0e0e0;
-    }
-
-    .th {
-      fill: #fff;
+      stroke: #EBEEF5;
     }
 
     .td {
