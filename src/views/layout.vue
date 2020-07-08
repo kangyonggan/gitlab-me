@@ -3,7 +3,7 @@
     <navbar />
     <el-container>
       <sidebar />
-      <el-main v-loading="$store.getters.getLoading">
+      <el-main>
         <breadcrumb />
         <router-view />
       </el-main>

@@ -9,6 +9,7 @@
 
     <!--tree-->
     <el-table
+      v-if="treeInfos.length"
       :data="treeInfos"
       style="width: 100%;margin-top: 20px;border: 1px solid #e5e5e5"
     >
@@ -66,6 +67,11 @@
         </template>
       </el-table-column>
     </el-table>
+    <skeleton-table
+      v-else
+      :display-actions="false"
+      :columns-count="3"
+    />
 
     <!--README.md-->
     <div

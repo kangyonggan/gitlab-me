@@ -14,6 +14,7 @@ import BaseCopy from './base-copy';
 import BaseHljs from './base-hljs';
 import BaseModal from './base-modal';
 import BaseSvg from './base-svg';
+import SkeletonTable from './skeleton-table';
 
 Vue.component('BaseSearchForm', BaseSearchForm);
 Vue.component('BaseInput', BaseInput);
@@ -30,3 +31,4 @@ Vue.component('BaseCopy', BaseCopy);
 Vue.component('BaseHljs', BaseHljs);
 Vue.component('BaseModal', BaseModal);
 Vue.component('BaseSvg', BaseSvg);
+Vue.component('SkeletonTable', SkeletonTable);

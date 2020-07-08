@@ -367,8 +367,6 @@ const router = new VueRouter({
 let dynamicRoutePath = [];
 
 router.beforeEach(async (to, from, next) => {
-  store.commit('setLoading', true);
-
   let code = to.path.substring(1).replace('/', '');
   if (!util.reservedWords.includes(code)
     && !dynamicRoutePath.includes(code)
@@ -429,10 +427,6 @@ router.beforeEach(async (to, from, next) => {
 
   // 鉴权成功，放行
   next();
-});
-
-router.afterEach(() => {
-  store.commit('setLoading', false);
 });
 
 export default router;
