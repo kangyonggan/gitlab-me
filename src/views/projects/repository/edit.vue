@@ -184,7 +184,6 @@
       this.axios.get('projects/' + this.$route.params.namespace + '/' + this.$route.params.projectPath
         + '/blob?branch=' + (this.$route.params.pathMatch || 'master') + '&fullPath=' + encodeURIComponent(this.$route.query.fullPath || '')).then(data => {
         this.project = data.project;
-        console.log(data);
         this.params.content = data.blobInfo.content;
         this.initContent = data.blobInfo.content;
       }).catch(res => {

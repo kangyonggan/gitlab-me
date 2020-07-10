@@ -317,6 +317,15 @@ const routers = [
         component: (resolve) => require(['./views/projects/repository/edit.vue'], resolve)
       },
       {
+        path: 'commit/:commitId',
+        meta: {
+          code: 'PROJECT_REPOSITORY_FILES',
+          permission: true,
+          menuType: 'Projects'
+        },
+        component: (resolve) => require(['./views/projects/repository/commit.vue'], resolve)
+      },
+      {
         path: 'settings',
         redirect: 'members'
       },
